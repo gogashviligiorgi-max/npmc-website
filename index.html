@@ -39,6 +39,78 @@
   <section class="hero" id="hero">
     <div class="hero__bg"></div>
     <div class="hero__grid"></div>
+
+    <!-- Neural Network Background Visual -->
+    <div class="hero__neural" aria-hidden="true">
+      <svg class="neural-svg" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <!-- Neural connections -->
+        <line class="n-line n-l1" x1="400" y1="300" x2="200" y2="150"/>
+        <line class="n-line n-l2" x1="400" y1="300" x2="580" y2="140"/>
+        <line class="n-line n-l3" x1="400" y1="300" x2="650" y2="320"/>
+        <line class="n-line n-l4" x1="400" y1="300" x2="540" y2="480"/>
+        <line class="n-line n-l5" x1="400" y1="300" x2="230" y2="460"/>
+        <line class="n-line n-l6" x1="400" y1="300" x2="140" y2="340"/>
+        <line class="n-line n-l7" x1="200" y1="150" x2="100" y2="80"/>
+        <line class="n-line n-l8" x1="200" y1="150" x2="340" y2="70"/>
+        <line class="n-line n-l9" x1="580" y1="140" x2="700" y2="70"/>
+        <line class="n-line n-l10" x1="580" y1="140" x2="680" y2="220"/>
+        <line class="n-line n-l11" x1="650" y1="320" x2="760" y2="400"/>
+        <line class="n-line n-l12" x1="540" y1="480" x2="680" y2="540"/>
+        <line class="n-line n-l13" x1="230" y1="460" x2="100" y2="520"/>
+        <line class="n-line n-l14" x1="140" y1="340" x2="60" y2="260"/>
+        <line class="n-line n-l15" x1="200" y1="150" x2="140" y2="340"/>
+        <line class="n-line n-l16" x1="580" y1="140" x2="650" y2="320"/>
+        <line class="n-line n-l17" x1="650" y1="320" x2="540" y2="480"/>
+        <line class="n-line n-l18" x1="230" y1="460" x2="540" y2="480"/>
+        <line class="n-line n-l19" x1="340" y1="70" x2="580" y2="140"/>
+        <line class="n-line n-l20" x1="100" y1="80" x2="60" y2="260"/>
+        <!-- Secondary nodes connections -->
+        <line class="n-line n-l21" x1="100" y1="80" x2="200" y2="150"/>
+        <line class="n-line n-l22" x1="680" y1="220" x2="760" y2="400"/>
+        <line class="n-line n-l23" x1="680" y1="540" x2="760" y2="400"/>
+        <line class="n-line n-l24" x1="100" y1="520" x2="60" y2="260"/>
+        <line class="n-line n-l25" x1="340" y1="70" x2="700" y2="70"/>
+        <!-- Main center node -->
+        <circle class="n-node n-node--main" cx="400" cy="300" r="10"/>
+        <circle class="n-node n-node--main-pulse" cx="400" cy="300" r="10"/>
+        <!-- Primary nodes -->
+        <circle class="n-node n-node--primary" cx="200" cy="150" r="6"/>
+        <circle class="n-node n-node--primary" cx="580" cy="140" r="6"/>
+        <circle class="n-node n-node--primary" cx="650" cy="320" r="6"/>
+        <circle class="n-node n-node--primary" cx="540" cy="480" r="6"/>
+        <circle class="n-node n-node--primary" cx="230" cy="460" r="6"/>
+        <circle class="n-node n-node--primary" cx="140" cy="340" r="6"/>
+        <!-- Secondary nodes -->
+        <circle class="n-node n-node--secondary" cx="100" cy="80" r="4"/>
+        <circle class="n-node n-node--secondary" cx="340" cy="70" r="4"/>
+        <circle class="n-node n-node--secondary" cx="700" cy="70" r="4"/>
+        <circle class="n-node n-node--secondary" cx="680" cy="220" r="4"/>
+        <circle class="n-node n-node--secondary" cx="760" cy="400" r="4"/>
+        <circle class="n-node n-node--secondary" cx="680" cy="540" r="4"/>
+        <circle class="n-node n-node--secondary" cx="100" cy="520" r="4"/>
+        <circle class="n-node n-node--secondary" cx="60" cy="260" r="4"/>
+        <!-- Pulse signals traveling along lines -->
+        <circle class="n-pulse n-p1" r="3" fill="rgba(109,130,255,0.8)">
+          <animateMotion dur="3s" repeatCount="indefinite" path="M400,300 L200,150"/>
+        </circle>
+        <circle class="n-pulse n-p2" r="3" fill="rgba(109,130,255,0.8)">
+          <animateMotion dur="2.5s" repeatCount="indefinite" begin="0.8s" path="M400,300 L580,140"/>
+        </circle>
+        <circle class="n-pulse n-p3" r="3" fill="rgba(109,130,255,0.6)">
+          <animateMotion dur="3.5s" repeatCount="indefinite" begin="1.5s" path="M400,300 L650,320"/>
+        </circle>
+        <circle class="n-pulse n-p4" r="3" fill="rgba(109,130,255,0.6)">
+          <animateMotion dur="4s" repeatCount="indefinite" begin="2s" path="M400,300 L230,460"/>
+        </circle>
+        <circle class="n-pulse n-p5" r="2" fill="rgba(109,130,255,0.5)">
+          <animateMotion dur="2s" repeatCount="indefinite" begin="0.3s" path="M200,150 L100,80"/>
+        </circle>
+        <circle class="n-pulse n-p6" r="2" fill="rgba(109,130,255,0.5)">
+          <animateMotion dur="3s" repeatCount="indefinite" begin="1.2s" path="M580,140 L700,70"/>
+        </circle>
+      </svg>
+    </div>
+
     <div class="hero__container">
       <div class="hero__badge fade-up">საქართველოში პირველი · QEEG+TMS+ნეიროფიდბექი</div>
       <h1 class="hero__title fade-up">
@@ -208,7 +280,7 @@
               <circle cx="24" cy="37" r="3" stroke="currentColor" stroke-width="1.5"/>
             </svg>
           </div>
-          <h3 class="service-card__title">ფსიქიატრიული კონსულტაცია</h3>
+          <h3 class="service-card__title">ფსიქიატრის კონსულტაცია</h3>
           <p class="service-card__text">
             სრული კლინიკური შეფასება — ბიოლოგიური, ფსიქოლოგიური, სოციალური
             ფაქტორების გათვალისწინებით. QEEG მონაცემებთან ინტეგრაციით.
@@ -553,11 +625,12 @@
       <div class="section-header fade-up">
         <span class="section-tag">ვის ვეხმარებით</span>
         <h2 class="section-title">დიაგნოზები, რომლებში<br>გვაქვს გამოცდილება</h2>
+        <p class="section-subtitle">დააჭირე ნებისმიერ დაავადებაზე — გაიგე მეტი და ნახე QEEG სურათი</p>
       </div>
 
       <div class="conditions__grid">
 
-        <div class="condition-card fade-up">
+        <button type="button" class="condition-card condition-card--clickable fade-up" data-condition="adhd" aria-label="ADHD — დეტალები">
           <div class="condition-card__icon">
             <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="1.5"/>
@@ -568,9 +641,10 @@
           </div>
           <h3>ADHD</h3>
           <p>ყურადღების დეფიციტი, ჰიპერაქტივობა, იმპულსურობა — ბავშვებსა და მოზრდილებში</p>
-        </div>
+          <span class="condition-card__link">დეტალები →</span>
+        </button>
 
-        <div class="condition-card fade-up">
+        <button type="button" class="condition-card condition-card--clickable fade-up" data-condition="depression" aria-label="დეპრესია — დეტალები">
           <div class="condition-card__icon">
             <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M20 8c-6.6 0-12 5.4-12 12 0 3.5 1.5 6.6 3.8 8.8L10 32h8c.7.2 1.3.3 2 .3 6.6 0 12-5.4 12-12S26.6 8 20 8z" stroke="currentColor" stroke-width="1.5"/>
@@ -580,9 +654,10 @@
           </div>
           <h3>დეპრესია</h3>
           <p>კლინიკური დეპრესია, მათ შორის მკურნალობაზე რეზისტენტული ფორმები</p>
-        </div>
+          <span class="condition-card__link">დეტალები →</span>
+        </button>
 
-        <div class="condition-card fade-up">
+        <button type="button" class="condition-card condition-card--clickable fade-up" data-condition="anxiety" aria-label="შფოთვა — დეტალები">
           <div class="condition-card__icon">
             <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M20 6v4M32 20h-4M8 20H4M28.5 11.5l-2.8 2.8M14.3 25.7l-2.8 2.8M28.5 28.5l-2.8-2.8M14.3 14.3l-2.8-2.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
@@ -591,9 +666,10 @@
           </div>
           <h3>შფოთვა</h3>
           <p>გენერალიზებული შფოთვის აშლილობა, სოციალური შფოთვა, GAD</p>
-        </div>
+          <span class="condition-card__link">დეტალები →</span>
+        </button>
 
-        <div class="condition-card fade-up">
+        <button type="button" class="condition-card condition-card--clickable fade-up" data-condition="panic" aria-label="პანიკური შეტევები — დეტალები">
           <div class="condition-card__icon">
             <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M8 20h6l3-6 5 12 3-8 3 6h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -601,9 +677,10 @@
           </div>
           <h3>პანიკური შეტევები</h3>
           <p>გახშირებული პანიკა, ავტონომიური სისტემის დისრეგულაცია</p>
-        </div>
+          <span class="condition-card__link">დეტალები →</span>
+        </button>
 
-        <div class="condition-card fade-up">
+        <button type="button" class="condition-card condition-card--clickable fade-up" data-condition="ocd" aria-label="OCD — დეტალები">
           <div class="condition-card__icon">
             <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="20" cy="20" r="14" stroke="currentColor" stroke-width="1.5"/>
@@ -613,9 +690,10 @@
           </div>
           <h3>OCD</h3>
           <p>ობსესიურ-კომპულსიური აშლილობა, განმეორებადი ფიქრები და ქცევები</p>
-        </div>
+          <span class="condition-card__link">დეტალები →</span>
+        </button>
 
-        <div class="condition-card fade-up">
+        <button type="button" class="condition-card condition-card--clickable fade-up" data-condition="sleep" aria-label="ძილის პრობლემები — დეტალები">
           <div class="condition-card__icon">
             <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M20 8c-1 4-4 6-6 10a10 10 0 1 0 12 0c-2-4-5-6-6-10z" stroke="currentColor" stroke-width="1.5"/>
@@ -624,9 +702,10 @@
           </div>
           <h3>ძილის პრობლემები</h3>
           <p>ინსომნია, ძილის ხარისხის დარღვევა, ქრონიკული დაღლილობა</p>
-        </div>
+          <span class="condition-card__link">დეტალები →</span>
+        </button>
 
-        <div class="condition-card fade-up">
+        <button type="button" class="condition-card condition-card--clickable fade-up" data-condition="ptsd" aria-label="PTSD — დეტალები">
           <div class="condition-card__icon">
             <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M20 10l-8 14h16L20 10z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
@@ -636,9 +715,10 @@
           </div>
           <h3>PTSD / ტრავმა</h3>
           <p>პოსტტრავმული სტრესის აშლილობა, ტრავმული მოვლენების შედეგები</p>
-        </div>
+          <span class="condition-card__link">დეტალები →</span>
+        </button>
 
-        <div class="condition-card fade-up">
+        <button type="button" class="condition-card condition-card--clickable fade-up" data-condition="phobia" aria-label="ფობიები — დეტალები">
           <div class="condition-card__icon">
             <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect x="10" y="8" width="20" height="24" rx="4" stroke="currentColor" stroke-width="1.5"/>
@@ -647,11 +727,25 @@
           </div>
           <h3>ფობიები</h3>
           <p>სპეციფიური და სოციალური ფობიები, შიშის სისტემის ნეიოლოგიური საფუძველი</p>
-        </div>
+          <span class="condition-card__link">დეტალები →</span>
+        </button>
 
       </div>
     </div>
   </section>
+
+  <!-- ===== CONDITION MODAL ===== -->
+  <div class="condition-modal" id="conditionModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+    <div class="condition-modal__overlay" id="modalOverlay"></div>
+    <div class="condition-modal__content">
+      <button type="button" class="condition-modal__close" id="modalClose" aria-label="დახურვა">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="condition-modal__body" id="modalBody">
+        <!-- Content injected by JS -->
+      </div>
+    </div>
+  </div>
 
   <!-- ===== SPECIALISTS ===== -->
   <section class="specialists section" id="specialists">
@@ -838,12 +932,12 @@
             <span class="pricing-card__currency">₾</span>
           </div>
           <ul class="pricing-card__features">
-            <li>✓ QEEG ჩაწერა (60 წუთი)</li>
-            <li>✓ 19-არხიანი ანალიზი</li>
+            <li>✓ QEEG ტვინის სკანირება (60 წუთი)</li>
+            <li>✓ 19-არხიანი ციფრული ანალიზი</li>
             <li>✓ ტვინის ვიზუალური ანგარიში</li>
             <li>✓ ნორმატიულ მონაცემებთან შედარება</li>
             <li>✓ სამკურნალო გეგმის რეკომენდაცია</li>
-            <li>✓ სპეციალისტის კონსულტაცია</li>
+            <li>✓ ექიმთან კონსულტაცია</li>
           </ul>
           <a href="#contact" class="btn btn--outline btn--full">დაჯავშნე</a>
         </div>
@@ -851,25 +945,63 @@
           <div class="pricing-card__badge">ყველაზე პოპულარული</div>
           <div class="pricing-card__header">
             <h3>სრული სამკურნალო კურსი</h3>
-            <p>დიაგნოსტიკა + 10 სესია</p>
+            <p>ნეიროფსიქომოდულაცია · 10 სესია</p>
           </div>
           <div class="pricing-card__price">
-            <span class="pricing-card__amount">3,300</span>
+            <span class="pricing-card__amount">3,500</span>
             <span class="pricing-card__currency">₾</span>
-            <span class="pricing-card__note">სულ (800 + 2,500)</span>
+            <span class="pricing-card__note">QEEG-ს გარეშე</span>
           </div>
           <ul class="pricing-card__features">
-            <li>✓ QEEG სრული დიაგნოსტიკა</li>
             <li>✓ 10 სამკურნალო სესია</li>
-            <li>✓ TMS — ყოველ სესიაზე</li>
+            <li>✓ TMS — ნეირომოდულაცია</li>
             <li>✓ ნეიროფიდბექი — ყოველ სესიაზე</li>
-            <li>✓ QEEG-ზე მორგებული ფსიქოთერაპია</li>
-            <li>✓ პროგრესის ზომვა</li>
+            <li>✓ ფსიქოთერაპია (QEEG-ზე მორგებული)</li>
+            <li>✓ ნეიროფსიქომოდულაცია — კომბინაციაში</li>
+            <li>✓ პროგრესის ზომვა ყოველ სესიაზე</li>
             <li>✓ კურსის შემდგომი კონსულტაცია</li>
           </ul>
           <a href="#contact" class="btn btn--primary btn--full">დაჯავშნე კურსი</a>
         </div>
       </div>
+
+      <!-- Individual Services Pricing -->
+      <div class="pricing__individual fade-up">
+        <h3 class="pricing__individual-title">ცალკეული პროცედურები</h3>
+        <div class="pricing__individual-grid">
+          <div class="pricing__individual-item">
+            <div class="pricing__individual-icon">
+              <svg viewBox="0 0 32 32" fill="none"><path d="M8 22c2-4 4-7 5.5-7s2 3 3.5 3 2-4 4-4 2 3 3.5 3 2.5-3 5.5-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+            <div class="pricing__individual-info">
+              <strong>TMS 1 პროცედურა</strong>
+              <span>ტრანსკრანიული მაგნიტური სტიმულაცია</span>
+            </div>
+            <div class="pricing__individual-price">250 <span>₾</span></div>
+          </div>
+          <div class="pricing__individual-item">
+            <div class="pricing__individual-icon">
+              <svg viewBox="0 0 32 32" fill="none"><path d="M8 22c2-4 4-7 5.5-7s2 3 3.5 3 2-4 4-4 2 3 3.5 3 2.5-3 5.5-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="22" cy="10" r="3" stroke="currentColor" stroke-width="1.5"/></svg>
+            </div>
+            <div class="pricing__individual-info">
+              <strong>TMS + ფსიქოთერაპია</strong>
+              <span>კომბინირებული სესია</span>
+            </div>
+            <div class="pricing__individual-price">400 <span>₾</span></div>
+          </div>
+          <div class="pricing__individual-item">
+            <div class="pricing__individual-icon">
+              <svg viewBox="0 0 32 32" fill="none"><path d="M6 16h5l3-6 4 12 3-8 3 6h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="pricing__individual-info">
+              <strong>ნეიროფიდბექი</strong>
+              <span>1 სესია</span>
+            </div>
+            <div class="pricing__individual-price">150 <span>₾</span></div>
+          </div>
+        </div>
+      </div>
+
       <div class="pricing__comparison fade-up">
         <h3>შედარება ალტერნატივებთან</h3>
         <div class="comparison-table">
@@ -877,7 +1009,7 @@
             <span>მეთოდი</span><span>ღირებულება</span><span>ხანგრძლივობა</span><span>ეფექტი</span>
           </div>
           <div class="comparison-row comparison-row--highlight">
-            <span>🏆 NPMC სრული კურსი</span><span>3,300 ₾</span><span>5 კვირა</span><span>მიზეზის მკურნალობა</span>
+            <span>🏆 NPMC სრული კურსი</span><span>3,500 ₾</span><span>5 კვირა</span><span>მიზეზის მკურნალობა</span>
           </div>
           <div class="comparison-row">
             <span>ტრადიციული ფსიქოთერაპია (1 წელი)</span><span>3,000–5,000 ₾</span><span>1+ წელი</span><span>სიმპტომური</span>
@@ -1047,7 +1179,10 @@
               <select id="service" name="service">
                 <option value="">აირჩიეთ სერვისი</option>
                 <option>QEEG დიაგნოსტიკა — 800 ₾</option>
-                <option>სრული კურსი (QEEG + 10 სესია) — 3,300 ₾</option>
+                <option>სრული კურსი (10 სესია, ნეიროფსიქომოდულაცია) — 3,500 ₾</option>
+                <option>TMS 1 პროცედურა — 250 ₾</option>
+                <option>TMS + ფსიქოთერაპია — 400 ₾</option>
+                <option>ნეიროფიდბექი — 150 ₾</option>
                 <option>კონსულტაცია (კითხვები)</option>
                 <option>სპეციალისტი ვარ — მიმართვა</option>
               </select>
