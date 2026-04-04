@@ -24,12 +24,13 @@
         <li><a href="#methods" class="nav__link">მეთოდები</a></li>
         <li><a href="#conditions" class="nav__link">დიაგნოზები</a></li>
         <li><a href="#specialists" class="nav__link">სპეციალისტებს</a></li>
+        <li><a href="#screening" class="nav__link">სკრინინგი</a></li>
         <li><a href="#pricing" class="nav__link">ფასები</a></li>
         <li><a href="#team" class="nav__link">გუნდი</a></li>
         <li><a href="#faq" class="nav__link">FAQ</a></li>
         <li><a href="#contact" class="nav__cta">დაჯავშნე</a></li>
       </ul>
-      <button class="nav__burger" id="navBurger" aria-label="მენიუ" aria-expanded="false">
+      <button type="button" class="nav__burger" id="navBurger" aria-label="მენიუ" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>
@@ -126,10 +127,6 @@
         <a href="#methods" class="btn btn--ghost btn--large">გაიგე მეთოდების შესახებ</a>
       </div>
     </div>
-    <div class="hero__scroll">
-      <span>გადმოახვიე</span>
-      <div class="hero__scroll-line"></div>
-    </div>
   </section>
 
   <!-- ===== STATS ===== -->
@@ -148,7 +145,7 @@
         <span class="stats__label">დამტკიცებული TMS</span>
       </div>
       <div class="stats__item fade-up">
-        <span class="stats__number">№1</span>
+        <span class="stats__number">#1</span>
         <span class="stats__label">საქართველოში</span>
       </div>
     </div>
@@ -306,10 +303,10 @@
       </div>
 
       <div class="methods__tabs fade-up" role="tablist">
-        <button class="methods__tab active" data-tab="qeeg" role="tab" aria-selected="true">QEEG</button>
-        <button class="methods__tab" data-tab="tms" role="tab" aria-selected="false">TMS</button>
-        <button class="methods__tab" data-tab="nfb" role="tab" aria-selected="false">ნეიროფიდბექი</button>
-        <button class="methods__tab" data-tab="psycho" role="tab" aria-selected="false">QEEG ფსიქოთერაპია</button>
+        <button type="button" class="methods__tab active" data-tab="qeeg" role="tab" aria-selected="true">QEEG</button>
+        <button type="button" class="methods__tab" data-tab="tms" role="tab" aria-selected="false">TMS</button>
+        <button type="button" class="methods__tab" data-tab="nfb" role="tab" aria-selected="false">ნეიროფიდბექი</button>
+        <button type="button" class="methods__tab" data-tab="psycho" role="tab" aria-selected="false">QEEG ფსიქოთერაპია</button>
       </div>
 
       <!-- QEEG -->
@@ -916,56 +913,185 @@
   <!-- ===== PRICING ===== -->
   <section class="pricing section" id="pricing">
     <div class="pricing__container">
+
       <div class="section-header fade-up">
-        <span class="section-tag">ფასები</span>
-        <h2 class="section-title">გამჭვირვალე, სამართლიანი ფასები</h2>
-        <p class="section-subtitle">საერთაშორისო დონის სერვისი — ადგილობრივ ფასად</p>
+        <span class="section-tag">სერვისები და ფასები</span>
+        <h2 class="section-title">ინვესტიცია შენს ტვინში</h2>
+        <p class="section-subtitle">პირველი ცენტრი საქართველოში, სადაც ნეიროფსიქოლოგია და ტვინის სტიმულაცია ერთ სივრცეშია.</p>
       </div>
-      <div class="pricing__grid">
-        <div class="pricing-card fade-up">
+
+      <!-- ── დიაგნოსტიკა ── -->
+      <div class="pricing__section-label fade-up">დიაგნოსტიკა — ნაბიჯი 01</div>
+      <div class="pricing__grid fade-up">
+
+        <div class="pricing-card">
           <div class="pricing-card__header">
-            <h3>პირველადი დიაგნოსტიკა</h3>
-            <p>პირველი სავალდებულო ნაბიჯი</p>
+            <h3>QEEG პირველადი დიაგნოსტიკა</h3>
+            <p>სამედიცინო კვლევა · პროტოკოლის საფუძველი</p>
           </div>
           <div class="pricing-card__price">
-            <span class="pricing-card__amount">800</span>
+            <span class="pricing-card__amount">900</span>
             <span class="pricing-card__currency">₾</span>
           </div>
           <ul class="pricing-card__features">
-            <li>✓ QEEG ტვინის სკანირება (60 წუთი)</li>
-            <li>✓ 19-არხიანი ციფრული ანალიზი</li>
-            <li>✓ ტვინის ვიზუალური ანგარიში</li>
-            <li>✓ ნორმატიულ მონაცემებთან შედარება</li>
-            <li>✓ სამკურნალო გეგმის რეკომენდაცია</li>
-            <li>✓ ექიმთან კონსულტაცია</li>
+            <li>✓ QEEG ჩაწერა — 19 სენსორი</li>
+            <li>✓ ტვინის სრული ციფრული რუკა</li>
+            <li>✓ სამედიცინო ანგარიში + დოკუმენტაცია</li>
+            <li>✓ პერსონალური სამკურნალო პროტოკოლი</li>
+            <li>✓ სპეციალისტის კონსულტაცია</li>
           </ul>
           <a href="#contact" class="btn btn--outline btn--full">დაჯავშნე</a>
         </div>
-        <div class="pricing-card pricing-card--featured fade-up">
-          <div class="pricing-card__badge">ყველაზე პოპულარული</div>
+
+        <div class="pricing-card">
           <div class="pricing-card__header">
-            <h3>სრული სამკურნალო კურსი</h3>
-            <p>ნეიროფსიქომოდულაცია · 10 სესია</p>
+            <h3>Brain Check</h3>
+            <p>ფუნქციური შეფასება · ტვინის ტიპი და პოტენციალი</p>
           </div>
           <div class="pricing-card__price">
-            <span class="pricing-card__amount">3,500</span>
+            <span class="pricing-card__amount">500</span>
             <span class="pricing-card__currency">₾</span>
-            <span class="pricing-card__note">QEEG-ს გარეშე</span>
           </div>
           <ul class="pricing-card__features">
-            <li>✓ 10 სამკურნალო სესია</li>
-            <li>✓ TMS — ნეირომოდულაცია</li>
-            <li>✓ ნეიროფიდბექი — ყოველ სესიაზე</li>
-            <li>✓ ფსიქოთერაპია (QEEG-ზე მორგებული)</li>
-            <li>✓ ნეიროფსიქომოდულაცია — კომბინაციაში</li>
-            <li>✓ პროგრესის ზომვა ყოველ სესიაზე</li>
-            <li>✓ კურსის შემდგომი კონსულტაცია</li>
+            <li>✓ QEEG ფუნქციური ანალიზი</li>
+            <li>✓ ტვინის ტიპი + ნიმუშები</li>
+            <li>✓ ძლიერი მხარეები + განვითარების ზონები</li>
+            <li>✓ პიროვნული ანგარიში PDF-ში</li>
+            <li>✓ კონსულტაცია შედეგების მიხედვით</li>
+          </ul>
+          <a href="#contact" class="btn btn--outline btn--full">დაჯავშნე</a>
+        </div>
+
+      </div>
+
+      <!-- ── მკურნალობის პაკეტები ── -->
+      <div class="pricing__section-label pricing__section-label--mt fade-up">ნეიროფსიქომოდულაცია — TMS · ნეიროფიდბექი · ფსიქოთერაპია</div>
+      <div class="pricing__grid pricing__grid--4 fade-up">
+
+        <div class="pricing-card">
+          <div class="pricing-card__header">
+            <h3>1 სეანსი</h3>
+            <p>ცალკე · ერთჯერადი</p>
+          </div>
+          <div class="pricing-card__price">
+            <span class="pricing-card__amount">450</span>
+            <span class="pricing-card__currency">₾</span>
+          </div>
+          <ul class="pricing-card__features">
+            <li>✓ TMS სტიმულაცია</li>
+            <li>✓ ნეიროფიდბექი</li>
+            <li>✓ ფსიქოთერაპია</li>
+          </ul>
+          <a href="#contact" class="btn btn--outline btn--full">დაჯავშნე</a>
+        </div>
+
+        <div class="pricing-card">
+          <div class="pricing-card__header">
+            <h3>Starter</h3>
+            <p>5 სეანსი + შეჯამება</p>
+          </div>
+          <div class="pricing-card__price">
+            <span class="pricing-card__amount">2,000</span>
+            <span class="pricing-card__currency">₾</span>
+            <span class="pricing-card__note">400 ₾ / სეანსი</span>
+          </div>
+          <ul class="pricing-card__features">
+            <li>✓ 5 × სრული სეანსი</li>
+            <li>✓ პროგრეს-კონსულტაცია</li>
+            <li>✓ გაგრძელების ვარიანტები</li>
+            <li>✓ 250 ₾ დაზოგვა</li>
+          </ul>
+          <a href="#contact" class="btn btn--outline btn--full">დაჯავშნე</a>
+        </div>
+
+        <div class="pricing-card">
+          <div class="pricing-card__header">
+            <h3>Core 10</h3>
+            <p>10 სეანსი</p>
+          </div>
+          <div class="pricing-card__price">
+            <span class="pricing-card__amount">4,000</span>
+            <span class="pricing-card__currency">₾</span>
+            <span class="pricing-card__note">400 ₾ / სეანსი</span>
+          </div>
+          <ul class="pricing-card__features">
+            <li>✓ 10 × სრული სეანსი</li>
+            <li>✓ შუალედური QEEG კონტროლი</li>
+            <li>✓ პროგრეს-ანგარიში</li>
+            <li>✓ 500 ₾ დაზოგვა</li>
+          </ul>
+          <a href="#contact" class="btn btn--outline btn--full">დაჯავშნე</a>
+        </div>
+
+        <div class="pricing-card pricing-card--featured">
+          <div class="pricing-card__badge">⭐ საუკეთესო</div>
+          <div class="pricing-card__header">
+            <h3>Transform 20</h3>
+            <p>20 სეანსი · სრული კურსი</p>
+          </div>
+          <div class="pricing-card__price">
+            <span class="pricing-card__amount">7,500</span>
+            <span class="pricing-card__currency">₾</span>
+            <span class="pricing-card__note">375 ₾ / სეანსი</span>
+          </div>
+          <ul class="pricing-card__features">
+            <li>✓ 20 × სრული სეანსი</li>
+            <li>✓ 2× QEEG კონტროლი</li>
+            <li>✓ „ადრე–შემდეგ" ტვინის სქემა</li>
+            <li>✓ გასვლის სტრატეგია</li>
+            <li>✓ გადახდა 3 ნაწილად</li>
+            <li>✓ 1,500 ₾ დაზოგვა</li>
           </ul>
           <a href="#contact" class="btn btn--primary btn--full">დაჯავშნე კურსი</a>
         </div>
+
       </div>
 
-      <!-- Individual Services Pricing -->
+      <!-- ── სპეციალური პაკეტები ── -->
+      <div class="pricing__section-label pricing__section-label--mt fade-up">სპეციალური პაკეტები · ნეიროფიდბექი + ნეიროფსიქოთერაპია</div>
+      <div class="pricing__grid fade-up">
+
+        <div class="pricing-card">
+          <div class="pricing-card__header">
+            <h3>🏫 სკოლის მოსწავლე</h3>
+            <p>10 სეანსი · ADHD · ყურადღება · სწავლა</p>
+          </div>
+          <div class="pricing-card__price">
+            <span class="pricing-card__amount">1,700</span>
+            <span class="pricing-card__currency">₾</span>
+            <span class="pricing-card__note">170 ₾ / სეანსი</span>
+          </div>
+          <ul class="pricing-card__features">
+            <li>✓ ნეიროფიდბექი</li>
+            <li>✓ ნეიროფსიქოთერაპია</li>
+            <li>✓ ყურადღება + ემოციური მართვა</li>
+            <li>✓ 1 სეანსი ცალკე — 200 ₾</li>
+          </ul>
+          <a href="#contact" class="btn btn--outline btn--full">დაჯავშნე</a>
+        </div>
+
+        <div class="pricing-card">
+          <div class="pricing-card__header">
+            <h3>🎓 სტუდენტი</h3>
+            <p>10 სეანსი · ფოკუსი · მეხსიერება · სტრესი</p>
+          </div>
+          <div class="pricing-card__price">
+            <span class="pricing-card__amount">1,800</span>
+            <span class="pricing-card__currency">₾</span>
+            <span class="pricing-card__note">180 ₾ / სეანსი</span>
+          </div>
+          <ul class="pricing-card__features">
+            <li>✓ ნეიროფიდბექი</li>
+            <li>✓ ნეიროფსიქოთერაპია</li>
+            <li>✓ კონცენტრაცია + მეხსიერება</li>
+            <li>✓ 1 სეანსი ცალკე — 200 ₾</li>
+          </ul>
+          <a href="#contact" class="btn btn--outline btn--full">დაჯავშნე</a>
+        </div>
+
+      </div>
+
+      <!-- ── ცალკეული პროცედურები ── -->
       <div class="pricing__individual fade-up">
         <h3 class="pricing__individual-title">ცალკეული პროცედურები</h3>
         <div class="pricing__individual-grid">
@@ -974,34 +1100,25 @@
               <svg viewBox="0 0 32 32" fill="none"><path d="M8 22c2-4 4-7 5.5-7s2 3 3.5 3 2-4 4-4 2 3 3.5 3 2.5-3 5.5-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
             </div>
             <div class="pricing__individual-info">
-              <strong>TMS 1 პროცედურა</strong>
+              <strong>TMS — 1 პროცედურა</strong>
               <span>ტრანსკრანიული მაგნიტური სტიმულაცია</span>
             </div>
             <div class="pricing__individual-price">250 <span>₾</span></div>
           </div>
           <div class="pricing__individual-item">
             <div class="pricing__individual-icon">
-              <svg viewBox="0 0 32 32" fill="none"><path d="M8 22c2-4 4-7 5.5-7s2 3 3.5 3 2-4 4-4 2 3 3.5 3 2.5-3 5.5-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="22" cy="10" r="3" stroke="currentColor" stroke-width="1.5"/></svg>
-            </div>
-            <div class="pricing__individual-info">
-              <strong>TMS + ფსიქოთერაპია</strong>
-              <span>კომბინირებული სესია</span>
-            </div>
-            <div class="pricing__individual-price">400 <span>₾</span></div>
-          </div>
-          <div class="pricing__individual-item">
-            <div class="pricing__individual-icon">
               <svg viewBox="0 0 32 32" fill="none"><path d="M6 16h5l3-6 4 12 3-8 3 6h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
             <div class="pricing__individual-info">
-              <strong>ნეიროფიდბექი</strong>
-              <span>1 სესია</span>
+              <strong>ნეიროფიდბექი — 1 სეანსი</strong>
+              <span>EEG ნეიროფიდბექი</span>
             </div>
             <div class="pricing__individual-price">150 <span>₾</span></div>
           </div>
         </div>
       </div>
 
+      <!-- ── შედარება ── -->
       <div class="pricing__comparison fade-up">
         <h3>შედარება ალტერნატივებთან</h3>
         <div class="comparison-table">
@@ -1009,16 +1126,270 @@
             <span>მეთოდი</span><span>ღირებულება</span><span>ხანგრძლივობა</span><span>ეფექტი</span>
           </div>
           <div class="comparison-row comparison-row--highlight">
-            <span>🏆 NPMC სრული კურსი</span><span>3,500 ₾</span><span>5 კვირა</span><span>მიზეზის მკურნალობა</span>
+            <span>🏆 NPMC Transform 20</span><span>7,500 ₾</span><span>6–7 კვირა</span><span>მიზეზის მკურნალობა</span>
           </div>
           <div class="comparison-row">
             <span>ტრადიციული ფსიქოთერაპია (1 წელი)</span><span>3,000–5,000 ₾</span><span>1+ წელი</span><span>სიმპტომური</span>
           </div>
           <div class="comparison-row">
-            <span>TMS ევროპაში</span><span>5,000–15,000 €</span><span>4–6 კვირა</span><span>ნაწილობრივი</span>
+            <span>TMS კლინიკა ევროპაში</span><span>8,000–20,000 €</span><span>4–6 კვირა</span><span>ნაწილობრივი</span>
           </div>
         </div>
       </div>
+
+    </div>
+  </section>
+
+  <!-- ===== TESTIMONIALS ===== -->
+  <section class="testimonials section" id="testimonials">
+    <div class="testimonials__container">
+      <div class="section-header fade-up">
+        <span class="section-tag">პაციენტების შეფასებები</span>
+        <h2 class="section-title">ისინი, ვინც უკვე<br>გაიარა გზა</h2>
+        <p class="section-subtitle">15 პაციენტის გამოცდილება — საკუთარი სიტყვებით</p>
+      </div>
+
+      <div class="testi-track-wrap fade-up">
+        <button type="button" class="testi-arrow testi-arrow--prev" aria-label="წინა">&#8592;</button>
+        <div class="testi-viewport">
+          <div class="testi-track" id="testiTrack">
+
+            <div class="testi-card">
+              <div class="testi-stars">★★★★★</div>
+              <p class="testi-text">„QEEG-ის შემდეგ პირველად ვიგრძენი, რომ ჩემი პრობლემა ნამდვილია — ტვინის სქემაზე ჩანდა. 20 სეანსის შემდეგ დეპრესია, რომელიც 3 წელი მქონდა, თითქმის გაქრა. ანტიდეპრესანტები ვერ მიხმარა, NPMC-მ კი მოახდინა."</p>
+              <div class="testi-author">
+                <div class="testi-avatar">ა</div>
+                <div>
+                  <div class="testi-name">ანა მ.</div>
+                  <div class="testi-meta">34 წელი · დეპრესია · Transform 20</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="testi-card">
+              <div class="testi-stars">★★★★★</div>
+              <p class="testi-text">„მთელი ცხოვრება ADHD-ით ვიყავი, ოღონდ არ ვიცოდი. QEEG-მა ზუსტად გვიჩვენა სად იყო პრობლემა. ნეიროფიდბექის 15 სეანსის შემდეგ სამსახურში ყურადღება 3-ჯერ გამიუმჯობესდა — კოლეგებმაც შენიშნეს."</p>
+              <div class="testi-author">
+                <div class="testi-avatar">გ</div>
+                <div>
+                  <div class="testi-name">გიორგი ბ.</div>
+                  <div class="testi-meta">28 წელი · ADHD · Core 10</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="testi-card">
+              <div class="testi-stars">★★★★★</div>
+              <p class="testi-text">„პანიკური შეტევები 2 წელი მქონდა. ექიმებმა მხოლოდ მედიკამენტები გამიწერეს. NPMC-ში პირველად მოხდა ახსნა — ტვინში ზუსტად რა ხდება. სეანსების შემდეგ პანიკა 90%-ით შემცირდა. ეს ჯადოსნური არ არის — ეს მეცნიერებაა."</p>
+              <div class="testi-author">
+                <div class="testi-avatar">ნ</div>
+                <div>
+                  <div class="testi-name">ნინო ქ.</div>
+                  <div class="testi-meta">31 წელი · პანიკური შეტევები · Transform 20</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="testi-card">
+              <div class="testi-stars">★★★★★</div>
+              <p class="testi-text">„სტუდენტური პაკეტი ავიღე გამოცდებამდე. 5 სეანსის შემდეგ ისეთი სიმშვიდე და ფოკუსი მქონდა, სიცოცხლეში არ მქონია. გამოცდები ჩავაბარე საუკეთესო ქულებით. ეს ყველა სტუდენტს სჭირდება."</p>
+              <div class="testi-author">
+                <div class="testi-avatar">ლ</div>
+                <div>
+                  <div class="testi-name">ლუკა ა.</div>
+                  <div class="testi-meta">22 წელი · სტუდენტი · Exam Boost</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="testi-card">
+              <div class="testi-stars">★★★★★</div>
+              <p class="testi-text">„ძილი 5 წელია პრობლემა იყო. ღამე 2-3 საათი ვიძინებდი. QEEG-მა გვიჩვენა ტვინის ჰიპერაქტივობა ძილის დროს. 12 სეანსის შემდეგ 7 საათი ვიძინებ. ოჯახი ამბობს სულ სხვა ადამიანი გავხდი."</p>
+              <div class="testi-author">
+                <div class="testi-avatar">მ</div>
+                <div>
+                  <div class="testi-name">მარიამ ც.</div>
+                  <div class="testi-meta">38 წელი · ძილის პრობლემა · Core 10</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="testi-card">
+              <div class="testi-stars">★★★★★</div>
+              <p class="testi-text">„3 განსხვავებული ანტიდეპრესანტი ვცადე — არცერთმა სრულად არ უშველა. NPMC-ში ჩამოვედი სიმწარით. TMS + ნეიროფიდბექის კომბინაციამ 3 კვირაში გააკეთა ის, რაც მედიკამენტებს 3 წელი არ შეეძლო."</p>
+              <div class="testi-author">
+                <div class="testi-avatar">დ</div>
+                <div>
+                  <div class="testi-name">დავით შ.</div>
+                  <div class="testi-meta">47 წელი · რეზისტენტული დეპრ. · Transform 20</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="testi-card">
+              <div class="testi-stars">★★★★★</div>
+              <p class="testi-text">„ჩემმა 9 წლის შვილმა სკოლაში სწავლასა და ყურადღებასთან გაუჭირდა. Young Mind პროგრამა ავიღეთ. 10 სეანსის შემდეგ მასწავლებელი ჩვენ დაგვიკავშირდა — ბავშვი გარდაიქმნა. მადლობა გიორგის."</p>
+              <div class="testi-author">
+                <div class="testi-avatar">ს</div>
+                <div>
+                  <div class="testi-name">სალომე კ.</div>
+                  <div class="testi-meta">დედა · ADHD (9 წ. შვილი) · Young Mind</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="testi-card">
+              <div class="testi-stars">★★★★★</div>
+              <p class="testi-text">„IT კომპანიის დირექტორი ვარ. Burnout-მა ფაქტობრივად გამანადგურა. Brain Check-ით დავიწყე — ანგარიშმა ზუსტად გვიჩვენა სად იყო გადატვირთვა. Executive Protocol-ის შემდეგ სამუშაო ეფექტიანობა გაორმაგდა."</p>
+              <div class="testi-author">
+                <div class="testi-avatar">ი</div>
+                <div>
+                  <div class="testi-name">ირაკლი ხ.</div>
+                  <div class="testi-meta">41 წელი · Burnout · Brain Check + Core 10</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="testi-card">
+              <div class="testi-stars">★★★★★</div>
+              <p class="testi-text">„შფოთვა და OCD მქონდა. ვფიქრობდი, ეს უბრალოდ ჩემი „ხასიათია". QEEG-მა გვიჩვენა კონკრეტული ტვინის ნიმუში. ახლა, 18 სეანსის შემდეგ, ის ჩვეული „ხმა" თავში გაჩუმდა."</p>
+              <div class="testi-author">
+                <div class="testi-avatar">ქ</div>
+                <div>
+                  <div class="testi-name">ქეთი ლ.</div>
+                  <div class="testi-meta">29 წელი · OCD + შფოთვა · Transform 20</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="testi-card">
+              <div class="testi-stars">★★★★★</div>
+              <p class="testi-text">„სპეციალისტები ძალიან კარგები არიან — ახსნა-განმარტება, თბილი მიდგომა, პროფესიონალიზმი. ჩვეულებრივი ფსიქოლოგისგან განსხვავება ის არის, რომ აქ ტვინს ხედავ — ობიექტური, ციფრული, უდავო. ეს ანდობს."</p>
+              <div class="testi-author">
+                <div class="testi-avatar">ბ</div>
+                <div>
+                  <div class="testi-name">ბექა მ.</div>
+                  <div class="testi-meta">35 წელი · განწყობა · Core 10</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="testi-card">
+              <div class="testi-stars">★★★★★</div>
+              <p class="testi-text">„მიგრენი და დეპრესია ერთდროულად. ნევროლოგი და ფსიქიატრი ცალ-ცალკე მკურნალობდნენ. NPMC-ში პირველად მოხდა ამ ორის კავშირის გაგება — QEEG-ზე ჩანდა. ახლა ორივე გაუმჯობესებულია."</p>
+              <div class="testi-author">
+                <div class="testi-avatar">ე</div>
+                <div>
+                  <div class="testi-name">ეკატერინე ფ.</div>
+                  <div class="testi-meta">33 წელი · მიგრენი + დეპრ. · Transform 20</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="testi-card">
+              <div class="testi-stars">★★★★★</div>
+              <p class="testi-text">„სტარტაპის დამფუძნებელი ვარ. Brain Check ავიღე ბიზნეს-გადაწყვეტილებების მიმღების „ოპტიმიზაციისთვის". ანგარიში გასაოცარი იყო — ზუსტად ახსნა ჩემი სიძლიერეები და სუსტი წერტილები. ეს ფული ყველაზე ჭკვიანურად ჩავდე."</p>
+              <div class="testi-author">
+                <div class="testi-avatar">თ</div>
+                <div>
+                  <div class="testi-name">თორნიკე გ.</div>
+                  <div class="testi-meta">30 წელი · Performance · Brain Check</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="testi-card">
+              <div class="testi-stars">★★★★★</div>
+              <p class="testi-text">„60 წლის ვარ. ყველა ამბობდა „ასაკია". Silver Mind პროგრამა ვცადე. 15 სეანსის შემდეგ მეხსიერება, სიმახვილე, განწყობა — ყველა გაუმჯობესდა. ახლა ჩემს შვილს ვეუბნები: ტვინს ასაკი არ აქვს — მხოლოდ ვარჯიში სჭირდება."</p>
+              <div class="testi-author">
+                <div class="testi-avatar">მ</div>
+                <div>
+                  <div class="testi-name">მაია ო.</div>
+                  <div class="testi-meta">60 წელი · მეხსიერება · Silver Mind</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="testi-card">
+              <div class="testi-stars">★★★★★</div>
+              <p class="testi-text">„PTSD-ი მქონდა ავარიის შემდეგ. ტრადიციული თერაპია ერთი წელი ვცადე — ნელი პროცესი. NPMC-ში TMS + ფსიქოთერაპიის კომბინაციამ 2 თვეში მეტი გააკეთა. ახლა მანქანაში ჩვეულებრივად ვზივარ."</p>
+              <div class="testi-author">
+                <div class="testi-avatar">ნ</div>
+                <div>
+                  <div class="testi-name">ნათია ვ.</div>
+                  <div class="testi-meta">27 წელი · PTSD · Transform 20</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="testi-card">
+              <div class="testi-stars">★★★★★</div>
+              <p class="testi-text">„ჩემი 14 წლის გოგო დეპრესიაში ჩავარდა. Young Mind 14–17 პროგრამა ავიღეთ. სპეციალისტის მიდგომა ახალგაზრდებთან განსხვავებულია — თბილი, მოთმინებიანი. 3 თვეში გოგო ისევ ცოცხალია, ეცინება, მეგობრებთან ურთიერთობს."</p>
+              <div class="testi-author">
+                <div class="testi-avatar">ლ</div>
+                <div>
+                  <div class="testi-name">ლელა დ.</div>
+                  <div class="testi-meta">დედა · მოზარდის დეპრ. · Young Mind 14–17</div>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /testi-track -->
+        </div><!-- /testi-viewport -->
+        <button type="button" class="testi-arrow testi-arrow--next" aria-label="შემდეგი">&#8594;</button>
+      </div>
+
+      <div class="testi-dots" id="testiDots"></div>
+
+    </div>
+  </section>
+
+  <!-- ===== SCREENING ===== -->
+  <section class="screening section" id="screening">
+    <div class="screening__container">
+      <div class="section-header fade-up">
+        <span class="section-tag">სკრინინგი</span>
+        <h2 class="section-title">ფსიქიკური ჯანმრთელობის<br>სკრინინგი</h2>
+        <p class="section-subtitle">საერთაშორისო აპრობირებული კითხვარები. შეავსეთ ტესტი — მიიღეთ დასკვნა.</p>
+      </div>
+
+      <!-- Test Tabs -->
+      <div class="scr-tabs fade-up">
+        <button type="button" class="scr-tab active" data-test="phq9">PHQ-9 — დეპრესია</button>
+        <button type="button" class="scr-tab" data-test="gad7">GAD-7 — შფოთვა</button>
+        <button type="button" class="scr-tab" data-test="asrs">ASRS — ADHD</button>
+        <button type="button" class="scr-tab" data-test="cbi">CBI — გადაწვა</button>
+      </div>
+
+      <!-- Form Card -->
+      <div class="scr-card fade-up">
+
+        <!-- Patient Info -->
+        <p class="scr-info-label">თქვენი მონაცემები</p>
+        <div class="scr-info-grid">
+          <input type="text"  id="scrName"    class="scr-input" placeholder="სახელი"    autocomplete="given-name">
+          <input type="text"  id="scrSurname" class="scr-input" placeholder="გვარი"     autocomplete="family-name">
+          <input type="email" id="scrEmail"   class="scr-input" placeholder="ელ-ფოსტა" autocomplete="email">
+          <input type="tel"   id="scrPhone"   class="scr-input" placeholder="ტელეფონი"  autocomplete="tel">
+        </div>
+
+        <div class="scr-divider"></div>
+
+        <!-- Questions (rendered by JS) -->
+        <div id="scrQuestions"></div>
+
+        <!-- Error -->
+        <p class="scr-error-msg" id="scrErrorMsg"></p>
+
+        <!-- Submit -->
+        <div class="scr-submit-wrap">
+          <button type="button" class="scr-submit-btn" id="scrSubmit">შედეგის ნახვა →</button>
+        </div>
+
+        <!-- Result (shown by JS) -->
+        <div id="scrResult" hidden></div>
+
+      </div><!-- /scr-card -->
     </div>
   </section>
 
@@ -1075,35 +1446,35 @@
       </div>
       <div class="faq__list">
         <div class="faq__item fade-up">
-          <button class="faq__question" aria-expanded="false">QEEG ტკივილიანია?<span class="faq__icon">+</span></button>
+          <button type="button" class="faq__question" aria-expanded="false">QEEG ტკივილიანია?<span class="faq__icon">+</span></button>
           <div class="faq__answer"><p>არა, სრულიად ტკივილის გარეშე. QEEG ჩაწერისთვის ვიყენებთ სენსორების ქუდს, რომელიც გეხებათ სკალპზე — ისევე, როგორც ყურსასმენი. ელექტრული სიგნალები ტვინიდან ვიღებთ — ვერავითარ სიგნალს ვერ ვუგზავნით.</p></div>
         </div>
         <div class="faq__item fade-up">
-          <button class="faq__question" aria-expanded="false">რამდენ ხანს გრძელდება მთელი კურსი?<span class="faq__icon">+</span></button>
+          <button type="button" class="faq__question" aria-expanded="false">რამდენ ხანს გრძელდება მთელი კურსი?<span class="faq__icon">+</span></button>
           <div class="faq__answer"><p>სრული კურსი 5 კვირაა — კვირაში 2 სესია. QEEG დიაგნოსტიკა — ცალკე ვიზიტი, 1–2 კვირის შემდეგ კი სამკურნალო კურსი იწყება. ყოველი სამკურნალო სესია 90–120 წუთს გრძელდება.</p></div>
         </div>
         <div class="faq__item fade-up">
-          <button class="faq__question" aria-expanded="false">TMS-ს გვერდითი ეფექტები აქვს?<span class="faq__icon">+</span></button>
+          <button type="button" class="faq__question" aria-expanded="false">TMS-ს გვერდითი ეფექტები აქვს?<span class="faq__icon">+</span></button>
           <div class="faq__answer"><p>TMS FDA-ს მიერ დამტკიცებული, მეტად უსაფრთხო პროცედურაა. ზოგიერთ პაციენტს სესიის დროს სკალპზე ადგილობრივი შეგრძნება ან მსუბუქი ტკივილი შეიძლება ჰქონდეს — ეს ნორმალურია და გადის. სერიოზული გვერდითი ეფექტები ძალზე იშვიათია.</p></div>
         </div>
         <div class="faq__item fade-up">
-          <button class="faq__question" aria-expanded="false">შედეგი გარანტირებულია?<span class="faq__icon">+</span></button>
+          <button type="button" class="faq__question" aria-expanded="false">შედეგი გარანტირებულია?<span class="faq__icon">+</span></button>
           <div class="faq__answer"><p>ყოველი ორგანიზმი განსხვავებულია — ამიტომ შედეგი ინდივიდუალურია. ჩვენი პაციენტების დიდი უმრავლესობა ასახელებს მნიშვნელოვან გაუმჯობესებას. ამ მეთოდების ეფექტურობა მეცნიერულად დასაბუთებულია მრავალი კვლევით. პროგრესს ყოველ სესიაზე ვზომავთ.</p></div>
         </div>
         <div class="faq__item fade-up">
-          <button class="faq__question" aria-expanded="false">ვისთვის არ არის ეს მეთოდი?<span class="faq__icon">+</span></button>
+          <button type="button" class="faq__question" aria-expanded="false">ვისთვის არ არის ეს მეთოდი?<span class="faq__icon">+</span></button>
           <div class="faq__answer"><p>TMS უკუნაჩვენებია: ეპილეფსიის ისტორიის, ტვინში ლითონის ფერომაგნიტური ობიექტის (ანევრიზმის კლიპი, კოქლეარული იმპლანტი), კარდიოსტიმულატორის შემთხვევაში. QEEG პირველი ვიზიტის დროს გავარკვევთ ყველა ინდივიდუალურ ფაქტორს.</p></div>
         </div>
         <div class="faq__item fade-up">
-          <button class="faq__question" aria-expanded="false">სხვა მკურნალობასთან ერთად შეიძლება?<span class="faq__icon">+</span></button>
+          <button type="button" class="faq__question" aria-expanded="false">სხვა მკურნალობასთან ერთად შეიძლება?<span class="faq__icon">+</span></button>
           <div class="faq__answer"><p>კი, ჩვეულებრივ. ჩვენი მეთოდები ავსებს სხვა მიდგომებს, მათ შორის მედიკამენტურ მკურნალობას. პირველ კონსულტაციაზე გაგვიზიარეთ ინფო ამჟამინდელ მკურნალობაზე.</p></div>
         </div>
         <div class="faq__item fade-up">
-          <button class="faq__question" aria-expanded="false">ADHD-ის მქონე ბავშვებს ეხმარებით?<span class="faq__icon">+</span></button>
+          <button type="button" class="faq__question" aria-expanded="false">ADHD-ის მქონე ბავშვებს ეხმარებით?<span class="faq__icon">+</span></button>
           <div class="faq__answer"><p>კი. ნეიროფიდბექი და QEEG დიაგნოსტიკა ბავშვებისთვის განსაკუთრებით ეფექტურია — 6 წლიდან. TMS — მხოლოდ 18+ წლიდან. QEEG + ნეიროფიდბექი ბავშვებში ADHD-ის ერთ-ერთი ყველაზე კვლევით დასაბუთებული მეთოდია.</p></div>
         </div>
         <div class="faq__item fade-up">
-          <button class="faq__question" aria-expanded="false">რამდენი სესიის შემდეგ ვიგრძნობ შედეგს?<span class="faq__icon">+</span></button>
+          <button type="button" class="faq__question" aria-expanded="false">რამდენი სესიის შემდეგ ვიგრძნობ შედეგს?<span class="faq__icon">+</span></button>
           <div class="faq__answer"><p>ბევრი პაციენტი 3-5 სესიის შემდეგ ასახელებს პირველ ცვლილებებს. სრული შედეგი — კურსის დასრულებიდან 2-4 კვირაში იკვეთება, ვინაიდან ნეიოპლასტიური ცვლილებები კონსოლიდირდება. QEEG-ის გამეორება კურსის შემდეგ გვიჩვენებს ობიექტურ ცვლილებებს.</p></div>
         </div>
       </div>
@@ -1153,13 +1524,13 @@
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
               Instagram
             </a>
+            <a href="https://www.facebook.com/profile.php?id=61574839560496" target="_blank" rel="noopener" class="social-btn">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+              Facebook
+            </a>
             <a href="https://wa.me/995511440099" target="_blank" rel="noopener" class="social-btn">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
               WhatsApp
-            </a>
-            <a href="https://m.me/npmcgeorgia" target="_blank" rel="noopener" class="social-btn">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 4.975 0 11.111c0 3.497 1.745 6.616 4.472 8.652V24l4.086-2.242c1.09.301 2.246.464 3.442.464 6.626 0 12-4.974 12-11.111C24 4.975 18.626 0 12 0zm1.191 14.963l-3.055-3.26-5.963 3.26L10.732 8.1l3.131 3.26L19.752 8.1l-6.561 6.863z"/></svg>
-              Messenger
             </a>
           </div>
         </div>
@@ -1240,5 +1611,8 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script src="js/testimonials.js"></script>
+  <script src="js/screening.js"></script>
+  <script src="js/neural-bg.js"></script>
 </body>
 </html>

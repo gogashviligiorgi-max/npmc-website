@@ -281,22 +281,30 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && !conditionModal.hidden) closeConditionModal();
 });
 
-// ---- CONTACT FORM ----
+// ---- CONTACT FORM → WHATSAPP ----
 const form = document.getElementById('contactForm');
 const formSuccess = document.getElementById('formSuccess');
 
 if (form) {
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    // Simulate sending
-    const btn = form.querySelector('button[type="submit"]');
-    btn.textContent = 'იგზავნება...';
-    btn.disabled = true;
 
-    setTimeout(() => {
-      form.style.display = 'none';
-      formSuccess.classList.add('visible');
-    }, 1200);
+    const name    = document.getElementById('name').value.trim();
+    const phone   = document.getElementById('phone').value.trim();
+    const service = document.getElementById('service').value.trim();
+    const message = document.getElementById('message').value.trim();
+
+    let text = `🏥 *NPMC — ახალი მომართვა*\n\n`;
+    text += `👤 სახელი: ${name}\n`;
+    text += `📞 ტელეფონი: ${phone}\n`;
+    if (service) text += `🔬 სერვისი: ${service}\n`;
+    if (message) text += `💬 შეტყობინება: ${message}\n`;
+
+    const url = `https://wa.me/995511440099?text=${encodeURIComponent(text)}`;
+    window.open(url, '_blank');
+
+    form.style.display = 'none';
+    formSuccess.classList.add('visible');
   });
 }
 
