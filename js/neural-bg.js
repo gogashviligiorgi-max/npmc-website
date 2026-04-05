@@ -30,17 +30,19 @@
   }
 
   /* ── config ── */
+  const isMobile = window.innerWidth < 768;
+
   const CFG = {
-    nodeCount:      55,
-    connectDist:    200,
+    nodeCount:      isMobile ? 25 : 55,
+    connectDist:    isMobile ? 120 : 200,
     nodeMinR:       1.5,
     nodeMaxR:       3.5,
     nodePulseSpeed: 0.012,
     driftSpeed:     0.18,
     signalSpeed:    1.4,
     signalRadius:   2.8,
-    signalSpawnMs:  320,
-    maxSignals:     38,
+    signalSpawnMs:  isMobile ? 600 : 320,
+    maxSignals:     isMobile ? 12 : 38,
     connectionAlpha:0.10,
     nodeAlpha:      0.35,
     signalAlpha:    0.85,
