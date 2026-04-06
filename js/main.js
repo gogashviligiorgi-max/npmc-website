@@ -17,11 +17,22 @@ burger.addEventListener('click', () => {
   burger.setAttribute('aria-expanded', isOpen);
 });
 
-// Close menu when a link is clicked
+// Close menu when a link is clicked (mobile fix: manual scroll after menu closes)
 navMenu.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => {
-    navMenu.classList.remove('open');
-    burger.setAttribute('aria-expanded', 'false');
+  link.addEventListener('click', (e) => {
+    const href = link.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      e.preventDefault();
+      navMenu.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+      setTimeout(() => {
+        const target = document.querySelector(href);
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      }, 50);
+    } else {
+      navMenu.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+    }
   });
 });
 
