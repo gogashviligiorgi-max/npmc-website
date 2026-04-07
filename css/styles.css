@@ -1145,6 +1145,27 @@ h4 { font-size: 1.1rem; }
   color: var(--text-3);
 }
 
+.team-card__detail-btn {
+  margin-top: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  background: transparent;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.team-card__detail-btn:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
 /* ============================================================
    FAQ
    ============================================================ */

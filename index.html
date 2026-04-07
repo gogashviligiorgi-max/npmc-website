@@ -728,6 +728,19 @@
   </section>
 
   <!-- ===== CONDITION MODAL ===== -->
+  <!-- Team Member Modal -->
+  <div class="condition-modal" id="teamModal" role="dialog" aria-modal="true" aria-labelledby="teamModalTitle" hidden>
+    <div class="condition-modal__overlay" id="teamModalOverlay"></div>
+    <div class="condition-modal__content">
+      <button type="button" class="condition-modal__close" id="teamModalClose" aria-label="დახურვა">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="condition-modal__body" id="teamModalBody">
+        <!-- Content injected by JS -->
+      </div>
+    </div>
+  </div>
+
   <div class="condition-modal" id="conditionModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
     <div class="condition-modal__overlay" id="modalOverlay"></div>
     <div class="condition-modal__content">
@@ -1382,33 +1395,35 @@
         <div class="team-card fade-up">
           <div class="team-card__photo">
             <div class="team-card__photo-placeholder">GG</div>
-            <div class="team-card__photo-badge">დამფუძნებელი</div>
+            <div class="team-card__photo-badge">დირექტორი</div>
           </div>
           <div class="team-card__content">
             <h3>George Gogashvili</h3>
-            <span class="team-card__role">დამფუძნებელი · მთავარი სპეციალისტი</span>
-            <p>ნეიროფსიქომოდულაციის ცენტრის დამფუძნებელი. სპეციალიზება: QEEG ანალიზი, TMS პროტოკოლი, ნეიროფიდბექი. საქართველოში ამ მეთოდის პიონერი. 10+ წლიანი გამოცდილება.</p>
+            <span class="team-card__role">ნეიროფსიქომოდულაციის დირექტორი</span>
+            <p>ნეიროფსიქომოდულაციის ცენტრის დირექტორი. სპეციალიზება: QEEG ანალიზი, TMS პროტოკოლი, ნეიროფიდბექი. საქართველოში ამ მეთოდის პიონერი. 10+ წლიანი გამოცდილება.</p>
             <div class="team-card__certs">
               <span>QEEG სპეციალისტი</span>
               <span>TMS სერტიფიცირებული</span>
               <span>ნეიროფიდბექი</span>
             </div>
+            <button type="button" class="team-card__detail-btn" onclick="openTeamModal('gg')">დეტალები →</button>
           </div>
         </div>
         <div class="team-card fade-up">
           <div class="team-card__photo">
             <div class="team-card__photo-placeholder">AM</div>
-            <div class="team-card__photo-badge">კლინიკური სპეციალისტი</div>
+            <div class="team-card__photo-badge">MD · M.S.</div>
           </div>
           <div class="team-card__content">
-            <h3>Aza Mantasashvili</h3>
-            <span class="team-card__role">კლინიკური სპეციალისტი</span>
-            <p>ნეიროფსიქომოდულაციის სპეციალისტი. QEEG-ზე დაფუძნებული ფსიქოთერაპია, ნეიროფიდბექი. ემპათიური, მეცნიერულ მიდგომაზე ორიენტირებული.</p>
+            <h3>Dr. Aza Mantasashvili</h3>
+            <span class="team-card__role">ნეიროფსიქოთერაპევტი · Mental Azademy-ს დამფუძნებელი</span>
+            <p>MD, M.S. — ნეირომეცნიერებაზე დაფუძნებული ინტეგრაციული მენტალური ჯანმრთელობის წამყვანი სპეციალისტი. კლინიკური გამოცდილება ნიუ-იორკსა და თბილისში.</p>
             <div class="team-card__certs">
-              <span>ფსიქოთერაპევტი</span>
-              <span>ნეიროფიდბექი</span>
-              <span>QEEG სერტიფიცირებული</span>
+              <span>MD — TSMU</span>
+              <span>M.S. — Capella University</span>
+              <span>ნეიროფიდბექის დირექტორი (NYC)</span>
             </div>
+            <button type="button" class="team-card__detail-btn" onclick="openTeamModal('am')">დეტალები →</button>
           </div>
         </div>
       </div>

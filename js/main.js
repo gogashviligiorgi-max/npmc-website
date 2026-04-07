@@ -105,6 +105,115 @@ document.querySelectorAll('.faq__question').forEach(btn => {
   });
 });
 
+// ---- TEAM MODAL ----
+const teamData = {
+  gg: {
+    initials: 'GG',
+    name: 'George Gogashvili',
+    role: 'ნეიროფსიქომოდულაციის დირექტორი',
+    content: `
+      <div class="modal-section">
+        <p>ნეიროფსიქომოდულაციის ცენტრის დირექტორი. სპეციალიზება: QEEG ანალიზი, TMS პროტოკოლი, ნეიროფიდბექი. საქართველოში ამ მეთოდის პიონერი. 10+ წლიანი გამოცდილება.</p>
+      </div>
+      <div class="modal-section">
+        <h4>სერტიფიკაციები</h4>
+        <ul><li>QEEG სპეციალისტი</li><li>TMS სერტიფიცირებული</li><li>ნეიროფიდბექი</li></ul>
+      </div>
+    `
+  },
+  am: {
+    initials: 'AM',
+    name: 'Dr. Aza Mantasashvili (MD, M.S.)',
+    role: 'ნეიროფსიქოთერაპევტი | Mental Azademy-ს დამფუძნებელი',
+    content: `
+      <div class="modal-section">
+        <p>Dr. აზა მანთაშაშვილი წარმოადგენს ნეირომეცნიერებაზე დაფუძნებული ინტეგრაციული მენტალური ჯანმრთელობის მიმართულების წამყვან სპეციალისტს. მისი საქმიანობა აერთიანებს კლასიკურ მედიცინას, ფსიქოლოგიასა და თანამედროვე ნეირომოდულაციურ ტექნოლოგიებს.</p>
+        <p><em>მისი პროფესიული ფილოსოფია მარტივია: მენტალური ჯანმრთელობის საფუძველი ტვინის ფუნქციური რეგულაციაა.</em></p>
+      </div>
+      <div class="modal-section">
+        <h4>🛡️ პროფესიული გამოცდილება</h4>
+        <ul>
+          <li>ექიმი (MD) — თბილისის სახელმწიფო სამედიცინო უნივერსიტეტი</li>
+          <li>M.S. კლინიკური მენტალური ჯანმრთელობის კონსულტირებაში — Capella University (USA)</li>
+          <li>ნეიროფიდბექის დირექტორი (ნიუ-იორკი)</li>
+          <li>Mental Azademy-ს დამფუძნებელი (ნიუ-იორკი და თბილისი)</li>
+        </ul>
+      </div>
+      <div class="modal-section">
+        <h4>🧬 მეთოდოლოგია: Neuropsychomodulation Therapy (NPMT)</h4>
+        <ul>
+          <li>QEEG Brain Mapping — ტვინის ფუნქციური დიაგნოსტიკა და "რუკის" შექმნა</li>
+          <li>Neurofeedback — ტვინის თვითრეგულაციის სწავლება და ტრენინგი</li>
+          <li>Neuromodulation — არაინვაზიური ტექნოლოგიები: TMS, tDCS და PEMF</li>
+          <li>Evidence-based Psychotherapy — მტკიცებულებებზე დაფუძნებული თერაპია (CBT)</li>
+        </ul>
+      </div>
+      <div class="modal-section">
+        <h4>📑 კლინიკური ინტერესის სფეროები</h4>
+        <ul>
+          <li>დეპრესია და შფოთვითი აშლილობები</li>
+          <li>ADHD (ყურადღების დეფიციტისა და ჰიპერაქტივობის სინდრომი)</li>
+          <li>OCD (ობსესიურ-კომპულსიური აშლილობა)</li>
+          <li>ძილის დარღვევები და სტრესული მდგომარეობები</li>
+        </ul>
+      </div>
+      <div class="modal-section">
+        <h4>💡 პროფესიული ხედვა</h4>
+        <p>„მენტალური ჯანმრთელობის პრობლემები ხშირად ტვინის აქტივობის დისბალანსის შედეგია. ჩვენი მიზანია არა მხოლოდ სიმპტომების შემცირება, არამედ ტვინის ფუნქციური მდგომარეობის ღრმა და მდგრადი ცვლილება ნეიროპლასტიურობის პრინციპების გამოყენებით."</p>
+      </div>
+      <div class="modal-section">
+        <h4>✨ რატომ უნდა აირჩიოთ ჩვენი ცენტრი?</h4>
+        <ul>
+          <li><strong>ობიექტურობა:</strong> ტვინის აქტივობა არის გაზომვადი (QEEG)</li>
+          <li><strong>ინდივიდუალიზმი:</strong> ყოველი მკურნალობის გეგმა იქმნება პაციენტის ტვინის "რუკის" მიხედვით</li>
+          <li><strong>ინოვაცია:</strong> თანამედროვე, არაინვაზიური და სრულიად უსაფრთხო ტექნოლოგიები</li>
+          <li><strong>საერთაშორისო სტანდარტი:</strong> ამერიკული გამოცდილება და სამეცნიერო მიდგომა</li>
+        </ul>
+      </div>
+      <div class="modal-section">
+        <p><em>მომავალი ნეირომეცნიერებაშია.</em></p>
+      </div>
+    `
+  }
+};
+
+const teamModal = document.getElementById('teamModal');
+const teamModalBody = document.getElementById('teamModalBody');
+const teamModalClose = document.getElementById('teamModalClose');
+const teamModalOverlay = document.getElementById('teamModalOverlay');
+
+function openTeamModal(key) {
+  const d = teamData[key];
+  if (!d) return;
+  teamModalBody.innerHTML = `
+    <div class="modal-header">
+      <div class="modal-header__icon" style="font-size:1.4rem;font-weight:700;color:var(--accent)">${d.initials}</div>
+      <div>
+        <h2 id="teamModalTitle">${d.name}</h2>
+        <p>${d.role}</p>
+      </div>
+    </div>
+    ${d.content}
+    <div class="modal-cta">
+      <a href="#contact" class="btn btn--primary" onclick="closeTeamModal()">დაჯავშნე კონსულტაცია</a>
+    </div>
+  `;
+  teamModal.hidden = false;
+  document.body.style.overflow = 'hidden';
+  teamModalClose.focus();
+}
+
+function closeTeamModal() {
+  teamModal.hidden = true;
+  document.body.style.overflow = '';
+}
+
+if (teamModalClose) teamModalClose.addEventListener('click', closeTeamModal);
+if (teamModalOverlay) teamModalOverlay.addEventListener('click', closeTeamModal);
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && teamModal && !teamModal.hidden) closeTeamModal();
+});
+
 // ---- CONDITION MODAL ----
 const conditionData = {
   adhd: {
