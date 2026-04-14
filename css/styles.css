@@ -288,6 +288,44 @@ h4 { font-size: 1.1rem; }
   transition: all var(--transition);
 }
 
+/* ── Language Switcher ── */
+.lang-switcher {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+.lang-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-3);
+  padding: 5px 11px;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-family: var(--font-ui, inherit);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: all var(--transition);
+  line-height: 1;
+}
+.lang-btn:hover:not(.active) {
+  border-color: var(--accent);
+  color: var(--text);
+}
+.lang-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #08080f;
+}
+@media (max-width: 900px) {
+  .lang-switcher {
+    margin-left: auto;
+    margin-right: 8px;
+  }
+}
+
 /* ============================================================
    HERO
    ============================================================ */
