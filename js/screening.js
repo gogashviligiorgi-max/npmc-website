@@ -14,106 +14,106 @@
   const TESTS = {
     phq9: {
       name: 'PHQ-9',
-      title: 'PHQ-9 — დეპრესიის სკრინინგი',
+      title: 'PHQ-9 — Depression Screening',
       source: 'Patient Health Questionnaire-9 (Kroenke et al., 2001)',
-      preamble: 'ბოლო 2 კვირის განმავლობაში, რამდენად ხშირად შეგაწუხეთ შემდეგი პრობლემები?',
-      options: ['საერთოდ არ', 'რამდენიმე დღე', 'ნახევარზე\nმეტი', 'თითქმის\nყოველდღე'],
+      preamble: 'Over the last 2 weeks, how often have you been bothered by the following problems?',
+      options: ['Not at all', 'Several days', 'More than\nhalf the days', 'Nearly\nevery day'],
       values: [0, 1, 2, 3],
       questions: [
-        'ინტერესის დაკარგვა ან სიამოვნების განცდის დაქვეითება ჩვეული საქმიანობისას.',
-        'დათრგუნული განწყობა, სევდა ან უიმედობის განცდა.',
-        'ძილის დარღვევა — ჩაძინების გაძნელება ან ჭარბი ძილიანობა.',
-        'მუდმივი დაღლილობის შეგრძნება ან ენერგიის ნაკლებობა.',
-        'მადის დარღვევა — მადის მკვეთრი დაქვეითება ან გადამეტებული კვება.',
-        'საკუთარი თავით უკმაყოფილება — წარუმატებლობის განცდა ან იმის შეგრძნება, რომ ოჯახს ტვირთად აწევხართ.',
-        'კონცენტრაციის გაძნელება (მაგალითად: კითხვისას, ტელევიზორის ყურებისას ან გადაწყვეტილების მიღებისას).',
-        'სხვებისთვის შესამჩნევი შენელებული მოძრაობა და მეტყველება, ან, პირიქით — განსაკუთრებული მოუსვენრობა და აჟიტირება.',
-        'ფიქრები სიკვდილზე ან საკუთარი თავისთვის რაიმე სახის ზიანის მიყენების სურვილი.',
+        'Little interest or pleasure in doing things.',
+        'Feeling down, depressed, or hopeless.',
+        'Trouble falling or staying asleep, or sleeping too much.',
+        'Feeling tired or having little energy.',
+        'Poor appetite or overeating.',
+        'Feeling bad about yourself — or feeling like a failure, or feeling that you have let yourself or your family down.',
+        'Trouble concentrating on things, such as reading, watching television, or making decisions.',
+        'Moving or speaking so slowly that other people could have noticed — or the opposite: being so fidgety or restless that you have been moving around a lot more than usual.',
+        'Thoughts that you would be better off dead, or thoughts of hurting yourself in some way.',
       ],
       score(total) {
-        if (total <= 4)  return { level: 'მინიმალური ან არ არის',   band: 'green',  desc: 'დეპრესიის სიმპტომები პრაქტიკულად არ გამოვლინდა. ეს კარგი ნიშანია — გააგრძელეთ ჯანმრთელი ცხოვრების წესი.', cta: 'გირჩევთ პრევენციული QEEG Brain Check-ის გაკეთებას ტვინის ფუნქციური პოტენციალის შეფასებისთვის.' };
-        if (total <= 9)  return { level: 'მსუბუქი დეპრესია',         band: 'yellow', desc: 'გამოვლინდა მსუბუქი სიმპტომები. მდგომარეობა მართვადია, თუმცა ყურადღება სასარგებლო იქნება.', cta: 'რეკომენდებულია კონსულტაცია სპეციალისტთან. NPMC-ში QEEG დიაგნოსტიკა გეხმარებათ ზუსტი სურათის მიღებაში.' };
-        if (total <= 14) return { level: 'ზომიერი დეპრესია',        band: 'orange', desc: 'სიმპტომები საგრძნობია და ყოველდღიურ ფუნქციონირებაზე შეიძლება ახდენდეს გავლენა.', cta: 'მნიშვნელოვანია სპეციალისტთან კონსულტაცია. NPMC გთავაზობთ QEEG + ნეიროფსიქომოდულაციის პროტოკოლს.' };
-        if (total <= 19) return { level: 'ზომიერად მძიმე დეპრესია', band: 'red',    desc: 'სიმპტომები მნიშვნელოვანია. ეს მაჩვენებელი მიუთითებს კლინიკური შეფასების საჭიროებაზე.', cta: 'გთხოვთ, რაც შეიძლება მალე მიმართეთ სპეციალისტს. NPMC-ში ჩვენ მზად ვართ დაგეხმაროთ.' };
-        return             { level: 'მძიმე დეპრესია',               band: 'red',    desc: 'სიმპტომები სერიოზულია. გთხოვთ, დაუყოვნებლივ მიმართეთ სპეციალისტს.', cta: 'გთხოვთ, დღეს დაგვიკავშირდეთ. NPMC-ი მზადაა გადაუდებელ კონსულტაციაზე.' };
+        if (total <= 4)  return { level: 'Minimal or none',          band: 'green',  desc: 'Depression symptoms are practically absent. This is a good sign — continue with a healthy lifestyle.', cta: 'We recommend a preventive QEEG Brain Check to assess your brain\'s functional potential.' };
+        if (total <= 9)  return { level: 'Mild depression',          band: 'yellow', desc: 'Mild symptoms were detected. The condition is manageable, but some attention would be beneficial.', cta: 'A consultation with a specialist is recommended. At NPMC, QEEG diagnostics will help you get a clear picture.' };
+        if (total <= 14) return { level: 'Moderate depression',      band: 'orange', desc: 'Symptoms are noticeable and may be affecting daily functioning.', cta: 'A specialist consultation is important. NPMC offers a QEEG + Neuropsychomodulation protocol.' };
+        if (total <= 19) return { level: 'Moderately severe depression', band: 'red', desc: 'Symptoms are significant. This score indicates the need for clinical evaluation.', cta: 'Please consult a specialist as soon as possible. At NPMC, we are ready to help you.' };
+        return             { level: 'Severe depression',             band: 'red',    desc: 'Symptoms are serious. Please seek specialist help immediately.', cta: 'Please contact us today. NPMC is available for an urgent consultation.' };
       },
     },
 
     gad7: {
       name: 'GAD-7',
-      title: 'GAD-7 — შფოთვის სკრინინგი',
+      title: 'GAD-7 — Anxiety Screening',
       source: 'Generalized Anxiety Disorder-7 (Spitzer et al., 2006)',
-      preamble: 'ბოლო 2 კვირის განმავლობაში, რამდენად ხშირად შეგაწუხეთ შემდეგი პრობლემები?',
-      options: ['საერთოდ არ', 'რამდენიმე დღე', 'ნახევარზე\nმეტი', 'თითქმის\nყოველდღე'],
+      preamble: 'Over the last 2 weeks, how often have you been bothered by the following problems?',
+      options: ['Not at all', 'Several days', 'More than\nhalf the days', 'Nearly\nevery day'],
       values: [0, 1, 2, 3],
       questions: [
-        'ნერვიულობა, შფოთვა ან დაძაბულობის („ზღვარზე ყოფნის") განცდა.',
-        'შფოთვისა თუ ნერვიულობის გაკონტროლების შეუძლებლობა.',
-        'გადაჭარბებული ღელვა სხვადასხვა საკითხზე.',
-        'მოდუნების ან დამშვიდების სიძნელე.',
-        'გამოხატული მოუსვენრობა, რის გამოც ერთ ადგილზე გაჩერება გიჭირთ.',
-        'ადვილად გაღიზიანება ან გაბრაზება.',
-        'მოსალოდნელი საფრთხის შეგრძნება ან შიში, რომ რაიმე ცუდი მოხდება.',
+        'Feeling nervous, anxious, or on edge.',
+        'Not being able to stop or control worrying.',
+        'Worrying too much about different things.',
+        'Trouble relaxing.',
+        'Being so restless that it is hard to sit still.',
+        'Becoming easily annoyed or irritable.',
+        'Feeling afraid, as if something awful might happen.',
       ],
       score(total) {
-        if (total <= 4)  return { level: 'მინიმალური შფოთვა', band: 'green',  desc: 'შფოთვის სიმპტომები მინიმალურია. ეს კარგი მაჩვენებელია.', cta: 'გირჩევთ Brain Check-ის გაკეთებას პრევენციული მიზნით.' };
-        if (total <= 9)  return { level: 'მსუბუქი შფოთვა',   band: 'yellow', desc: 'მსუბუქი შფოთვის სიმპტომები გამოვლინდა. ყოველდღიურ ცხოვრებაზე გავლენა შეიძლება ჰქონდეს.', cta: 'გირჩევთ კონსულტაციას. NPMC-ში ნეიროფიდბექი ეფექტური საშუალებაა შფოთვის საწინააღმდეგოდ.' };
-        if (total <= 14) return { level: 'ზომიერი შფოთვა',   band: 'orange', desc: 'შფოთვის სიმპტომები საგრძნობია. კლინიკური შეფასება რეკომენდებულია.', cta: 'მნიშვნელოვანია სპეციალისტთან ვიზიტი. NPMC-ი გთავაზობთ QEEG + TMS + ნეიროფიდბექ პროტოკოლს.' };
-        return             { level: 'მძიმე შფოთვა',          band: 'red',    desc: 'შფოთვის სიმპტომები სერიოზულია. გთხოვთ, მიმართეთ სპეციალისტს.', cta: 'გთხოვთ, დაგვიკავშირდეთ — NPMC-ი მზადაა გეხმაროთ.' };
+        if (total <= 4)  return { level: 'Minimal anxiety',  band: 'green',  desc: 'Anxiety symptoms are minimal. This is a good score.', cta: 'We recommend a Brain Check for preventive purposes.' };
+        if (total <= 9)  return { level: 'Mild anxiety',     band: 'yellow', desc: 'Mild anxiety symptoms were detected. They may have some impact on daily life.', cta: 'We recommend a consultation. At NPMC, neurofeedback is an effective tool against anxiety.' };
+        if (total <= 14) return { level: 'Moderate anxiety', band: 'orange', desc: 'Anxiety symptoms are noticeable. Clinical evaluation is recommended.', cta: 'A specialist visit is important. NPMC offers a QEEG + TMS + Neurofeedback protocol.' };
+        return             { level: 'Severe anxiety',        band: 'red',    desc: 'Anxiety symptoms are serious. Please consult a specialist.', cta: 'Please contact us — NPMC is ready to help you.' };
       },
     },
 
     asrs: {
       name: 'ASRS-v1.1',
-      title: 'ASRS-v1.1 — ADHD სკრინინგი',
+      title: 'ASRS-v1.1 — ADHD Screening',
       source: 'Adult ADHD Self-Report Scale v1.1, Part A (WHO/Kessler et al., 2005)',
-      preamble: 'ბოლო 6 თვის განმავლობაში, რამდენად ხშირად...',
-      options: ['არასდროს', 'იშვიათად', 'ზოგჯერ', 'ხშირად', 'ძალიან ხშირად'],
+      preamble: 'Over the past 6 months, how often have you...',
+      options: ['Never', 'Rarely', 'Sometimes', 'Often', 'Very often'],
       values: [0, 1, 2, 3, 4],
-      // Part A scoring: Q1-3 positive if ≥2 (ზოგჯერ+); Q4-6 positive if ≥3 (ხშირად+)
+      // Part A scoring: Q1-3 positive if ≥2 (Sometimes+); Q4-6 positive if ≥3 (Often+)
       thresholds: [2, 2, 2, 3, 3, 3],
       questions: [
-        'გიჭირთ პროექტის დასკვნითი ეტაპების დასრულება მას შემდეგ, რაც მისი ყველაზე საინტერესო ნაწილი უკვე შესრულებულია?',
-        'გიჭირთ ისეთი დავალებების ორგანიზება, რომლებიც სისტემატიზაციასა და წესრიგს მოითხოვს?',
-        'გიჭირთ შეხვედრების, დათქმული ვიზიტებისა თუ ვალდებულებების დამახსოვრება?',
-        'როდესაც დავალება დიდ გონებრივ ძალისხმევას მოითხოვს, ხშირად არიდებთ მას თავს ან სამომავლოდ გადადებთ?',
-        'ხანგრძლივი შეხვედრებისას გიჭირთ თუ არა ერთ ადგილზე გაჩერება (მაგალითად, აწვალებთ ხელებს, ფეხებს ან ცქმუტავთ)?',
-        'გრძნობთ თუ არა ჭარბ ენერგიას ან მოუსვენრობას, თითქოს „დაქოქილი" ხართ და გაჩერება არ შეგიძლიათ?',
+        'Had trouble wrapping up the final details of a project, once the challenging parts have been done?',
+        'Had difficulty getting things in order when you have to do a task that requires organization?',
+        'Had problems remembering appointments or obligations?',
+        'When a task requires a lot of mental effort, how often do you avoid or delay getting started?',
+        'Fidgeted or squirmed with your hands or feet when you had to sit down for a long time?',
+        'Felt overly active and compelled to do things, as if you were driven by a motor and couldn\'t stop?',
       ],
       score(_total, raw) {
         // raw = array of answer values per question
         const thresholds = [2, 2, 2, 3, 3, 3];
         const positives = raw.filter((v, i) => v >= thresholds[i]).length;
         if (positives >= 4) {
-          return { level: 'ADHD-ის სიმპტომებთან შესაბამისი', band: 'orange', desc: `${positives} კითხვაზე 6-დან დადებითი პასუხი. ეს შედეგი მაღალ შესაბამისობაზე მიუთითებს მოზრდილ ADHD-თან.`, cta: 'QEEG დიაგნოსტიკა + ნეიროფიდბექი ADHD-ის ერთ-ერთი ყველაზე კვლევით დასაბუთებული მეთოდია. NPMC-ი მოგამზადებთ ინდივიდუალურ გეგმას.' };
+          return { level: 'Consistent with ADHD symptoms', band: 'orange', desc: `${positives} out of 6 questions answered positively. This result indicates high consistency with adult ADHD.`, cta: 'QEEG diagnostics + neurofeedback is one of the most research-supported methods for ADHD. NPMC will prepare an individualized plan for you.' };
         }
-        return { level: 'ADHD-ის სიმპტომები ნაკლებად გამოხატული', band: 'green', desc: `${positives} კითხვაზე 6-დან დადებითი პასუხი. სიმპტომები ADHD-ისთვის დამახასიათებელ ზღვარს ქვემოთ არის.`, cta: 'თუ მაინც გაქვთ კითხვები ყურადღებისა და ფოკუსის შესახებ, NPMC-ში Brain Check გეხმარებათ პასუხის პოვნაში.' };
+        return { level: 'ADHD symptoms less pronounced', band: 'green', desc: `${positives} out of 6 questions answered positively. Symptoms are below the threshold characteristic of ADHD.`, cta: 'If you still have questions about attention and focus, a Brain Check at NPMC will help you find answers.' };
       },
     },
     cbi: {
       name: 'CBI',
-      title: 'CBI — გადაწვის სკრინინგი',
+      title: 'CBI — Burnout Screening',
       source: 'Copenhagen Burnout Inventory — Personal & Work Burnout (Kristensen et al., 2005)',
-      preamble: 'ბოლო 4 კვირის განმავლობაში, რამდენად ხშირად განიცადეთ შემდეგი?',
-      options: ['ყოველთვის', 'ხშირად', 'ზოგჯერ', 'იშვიათად', 'არასდროს'],
+      preamble: 'Over the past 4 weeks, how often have you experienced the following?',
+      options: ['Always', 'Often', 'Sometimes', 'Rarely', 'Never'],
       values: [4, 3, 2, 1, 0],
       questions: [
-        'გრძნობთ თუ არა ფიზიკურ დაღლილობას?',
-        'გრძნობთ თუ არა ემოციურ გამოფიტვას?',
-        'გრძნობთ თუ არა სხეულში ძლიერ სისუსტესა და სიმძიმეს?',
-        'გიჭირთ თუ არა ყოველდღიური საქმიანობის შესრულება?',
-        'გეუფლებათ თუ არა ფიქრი: „აღარ შემიძლია" ან „ვეღარ ვუძლებ"?',
-        'გიჩენთ თუ არა სამუშაო ან ყოველდღიური ვალდებულებები გამოფიტვის განცდას?',
-        'სამუშაო დღის დასრულების შემდეგ, გიჭირთ თუ არა დასვენება და სხვა აქტივობებზე გადართვა?',
-        'თქვენი საქმიანობის სფერო სულ უფრო ერთფეროვანი და დამღლელი გეჩვენებათ?',
-        'შეგიმცირდათ ენთუზიაზმი, რომელიც ადრე გქონდათ?',
-        'გაქვთ თუ არა შეგრძნება, რომ ენერგია სრულად ამოგეწურათ?',
+        'Do you feel physically fatigued?',
+        'Do you feel emotionally exhausted?',
+        'Do you feel weak and heavy throughout your body?',
+        'Do you find it hard to carry out your daily tasks?',
+        'Do you find yourself thinking "I can\'t take it anymore" or "I can\'t cope"?',
+        'Does your work or daily obligations leave you feeling drained?',
+        'After a working day, do you find it difficult to rest and switch to other activities?',
+        'Does your field of work seem increasingly monotonous and exhausting?',
+        'Has the enthusiasm you once had diminished?',
+        'Do you feel that your energy has been completely depleted?',
       ],
       score(total) {
-        if (total <= 10) return { level: 'გადაწვა არ გამოვლინდა',     band: 'green',  desc: 'გადაწვის სიმპტომები მინიმალურია. ენერგიის ბალანსი კარგ მდგომარეობაშია.', cta: 'გირჩევთ Brain Check-ს — ტვინის ფუნქციური პოტენციალის შეფასებისთვის.' };
-        if (total <= 20) return { level: 'მსუბუქი გადაწვა',            band: 'yellow', desc: 'ფიზიკური ან ემოციური დაღლილობის სიმპტომები გამოვლინდა. ყურადღება სასარგებლო იქნება.', cta: 'ნეიროფიდბექი ეფექტური საშუალებაა სტრეს-რეგულაციისთვის. NPMC-ი მოგამზადებთ ინდივიდუალურ გეგმას.' };
-        if (total <= 30) return { level: 'ზომიერი გადაწვა',            band: 'orange', desc: 'გადაწვის სიმპტომები მნიშვნელოვანია. ყოველდღიური ფუნქციონირება შეიძლება ზარალდებოდეს.', cta: 'კლინიკური შეფასება რეკომენდებულია. NPMC-ი გთავაზობთ QEEG + TMS + ნეიროფიდბექ პროტოკოლს.' };
-        return             { level: 'მძიმე გადაწვა',                   band: 'red',    desc: 'გადაწვის სიმპტომები სერიოზულია. გთხოვთ, არ გადადოთ სპეციალისტთან ვიზიტი.', cta: 'გთხოვთ, დაგვიკავშირდეთ. NPMC-ი მზადაა გეხმაროთ.' };
+        if (total <= 10) return { level: 'No burnout detected', band: 'green',  desc: 'Burnout symptoms are minimal. Your energy balance is in good shape.', cta: 'We recommend a Brain Check to assess your brain\'s functional potential.' };
+        if (total <= 20) return { level: 'Mild burnout',        band: 'yellow', desc: 'Symptoms of physical or emotional fatigue were detected. Some attention would be beneficial.', cta: 'Neurofeedback is an effective tool for stress regulation. NPMC will prepare an individualized plan for you.' };
+        if (total <= 30) return { level: 'Moderate burnout',    band: 'orange', desc: 'Burnout symptoms are significant. Daily functioning may be affected.', cta: 'Clinical evaluation is recommended. NPMC offers a QEEG + TMS + Neurofeedback protocol.' };
+        return             { level: 'Severe burnout',           band: 'red',    desc: 'Burnout symptoms are serious. Please do not delay visiting a specialist.', cta: 'Please contact us. NPMC is ready to help you.' };
       },
     },
   };
@@ -238,14 +238,14 @@
 
     const info = getInfo();
     if (!info) {
-      errorMsg.textContent = 'გთხოვთ შეავსოთ სახელი, გვარი, ელ-ფოსტა და ტელეფონი.';
+      errorMsg.textContent = 'Please fill in your first name, last name, email, and phone number.';
       errorMsg.classList.add('visible');
       return;
     }
 
     const raw = getAnswers(activeTest);
     if (!raw) {
-      errorMsg.textContent = 'გთხოვთ უპასუხოთ ყველა კითხვას.';
+      errorMsg.textContent = 'Please answer all questions.';
       errorMsg.classList.add('visible');
       return;
     }
@@ -278,8 +278,8 @@
       const notice = document.createElement('p');
       notice.className = 'scr-sent-notice ' + (r.ok ? 'ok' : 'err');
       notice.textContent = r.ok
-        ? '✓ შედეგები წარმატებით გაიგზავნა. ჩვენ დაგიკავშირდებით.'
-        : 'გაგზავნა ვერ მოხერხდა. გთხოვთ, დაგვიკავშირდეთ პირდაპირ.';
+        ? '✓ Results sent successfully. We will contact you.'
+        : 'Sending failed. Please contact us directly.';
       resultEl.appendChild(notice);
     } catch {
       /* silent — result is already shown */
