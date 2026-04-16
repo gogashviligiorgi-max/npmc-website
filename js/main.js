@@ -545,3 +545,135 @@ if (statsSection) statsObserver.observe(statsSection);
     drawAll();
   }
 })();
+
+/* ============================================================
+   QEEG TOPOGRAPHIC MAP
+   IDW colour interpolation over 19 electrodes — head view
+   ============================================================ */
+(function () {
+  const cv = document.getElementById('qeegTopoMap');
+  if (!cv) return;
+  const ctx = cv.getContext('2d');
+  const W = 220, H = 220;
+  const CX = 110, CY = 110, HR = 100;
+
+  const ELEC = [
+    {n:'Fp1',x:-.28,y:-.85,ph:0.00,fr:.72},
+    {n:'Fp2',x: .28,y:-.85,ph:0.80,fr:.72},
+    {n:'F7', x:-.72,y:-.52,ph:1.60,fr:.65},
+    {n:'F3', x:-.38,y:-.46,ph:2.30,fr:.68},
+    {n:'Fz', x: .00,y:-.50,ph:3.00,fr:.70},
+    {n:'F4', x: .38,y:-.46,ph:3.70,fr:.68},
+    {n:'F8', x: .72,y:-.52,ph:4.40,fr:.65},
+    {n:'T3', x:-.96,y: .02,ph:1.20,fr:.60},
+    {n:'C3', x:-.50,y: .00,ph:2.00,fr:.75},
+    {n:'Cz', x: .00,y: .00,ph:2.70,fr:.80},
+    {n:'C4', x: .50,y: .00,ph:3.40,fr:.75},
+    {n:'T4', x: .96,y: .02,ph:0.50,fr:.60},
+    {n:'T5', x:-.78,y: .55,ph:1.80,fr:.62},
+    {n:'P3', x:-.38,y: .44,ph:4.20,fr:.78},
+    {n:'Pz', x: .00,y: .44,ph:0.30,fr:.82},
+    {n:'P4', x: .38,y: .44,ph:1.10,fr:.78},
+    {n:'T6', x: .78,y: .55,ph:2.60,fr:.62},
+    {n:'O1', x:-.24,y: .86,ph:3.30,fr:.90},
+    {n:'O2', x: .24,y: .86,ph:4.00,fr:.90},
+  ].map(e => ({
+    ...e,
+    px: CX + e.x * HR * 0.94,
+    py: CY + e.y * HR * 0.94,
+  }));
+
+  function topoRGB(v) {
+    v = Math.max(0, Math.min(1, v));
+    if (v < .20) { const u=v/.20;        return [Math.round(u*10),   Math.round(u*90),   220]; }
+    if (v < .40) { const u=(v-.20)/.20;  return [0, Math.round(90+u*165), Math.round(220*(1-u))]; }
+    if (v < .60) { const u=(v-.40)/.20;  return [Math.round(u*255), 240, 0]; }
+    if (v < .80) { const u=(v-.60)/.20;  return [255, Math.round(240-u*240), 0]; }
+    return [255, 0, 0];
+  }
+
+  /* offscreen canvas for IDW render (half-res for speed) */
+  const OS = 110;
+  const oc = document.createElement('canvas');
+  oc.width = oc.height = OS;
+  const ox = oc.getContext('2d');
+  const scale = (HR * 2 * 1.02) / OS;
+  const ox0 = CX - HR * 1.02;
+  const oy0 = CY - HR * 1.02;
+
+  function renderMap(acts) {
+    const imgd = ox.createImageData(OS, OS);
+    const d = imgd.data;
+    for (let row = 0; row < OS; row++) {
+      for (let col = 0; col < OS; col++) {
+        const cpx = ox0 + col * scale;
+        const cpy = oy0 + row * scale;
+        const dx0 = cpx - CX, dy0 = cpy - CY;
+        if (dx0*dx0 + dy0*dy0 > HR*HR) continue;
+        let wSum = 0, vSum = 0;
+        for (let i = 0; i < ELEC.length; i++) {
+          const dx = cpx - ELEC[i].px, dy = cpy - ELEC[i].py;
+          const d2 = dx*dx + dy*dy;
+          const w = d2 < 1 ? 1e6 : 1 / d2;
+          wSum += w; vSum += w * acts[i];
+        }
+        const v = wSum > 0 ? vSum / wSum : 0.5;
+        const [r, g, b] = topoRGB(v);
+        const idx = (row * OS + col) * 4;
+        d[idx]=r; d[idx+1]=g; d[idx+2]=b; d[idx+3]=255;
+      }
+    }
+    ox.putImageData(imgd, 0, 0);
+  }
+
+  function draw(t) {
+    ctx.clearRect(0, 0, W, H);
+    const acts = ELEC.map(e => 0.5 + 0.46 * Math.sin(t * e.fr + e.ph));
+    renderMap(acts);
+
+    /* colour map clipped to circle */
+    ctx.save();
+    ctx.beginPath(); ctx.arc(CX, CY, HR, 0, Math.PI * 2); ctx.clip();
+    ctx.drawImage(oc, ox0, oy0, HR*2*1.02, HR*2*1.02);
+    ctx.restore();
+
+    /* head outline + ears + nose */
+    [[-1], [1]].forEach(([sx]) => {
+      ctx.beginPath();
+      ctx.ellipse(CX + sx*(HR+4), CY+8, 7, 12, 0, 0, Math.PI*2);
+      ctx.strokeStyle = 'rgba(200,185,175,0.80)';
+      ctx.lineWidth = 2; ctx.stroke();
+    });
+    ctx.beginPath();
+    ctx.moveTo(CX-9, CY-HR+4);
+    ctx.quadraticCurveTo(CX, CY-HR-15, CX+9, CY-HR+4);
+    ctx.strokeStyle = 'rgba(200,185,175,0.80)';
+    ctx.lineWidth = 2; ctx.stroke();
+    ctx.beginPath(); ctx.arc(CX, CY, HR, 0, Math.PI*2);
+    ctx.strokeStyle = 'rgba(200,185,175,0.88)'; ctx.lineWidth = 2; ctx.stroke();
+
+    /* electrode dots */
+    ELEC.forEach(e => {
+      ctx.beginPath(); ctx.arc(e.px, e.py, 2.5, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(0,0,0,0.70)'; ctx.fill();
+      ctx.beginPath(); ctx.arc(e.px, e.py, 1.5, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(255,255,255,0.88)'; ctx.fill();
+    });
+  }
+
+  let running = false;
+  let startTime = null;
+  function loop(ts) {
+    if (!startTime) startTime = ts;
+    draw((ts - startTime) / 1000);
+    requestAnimationFrame(loop);
+  }
+
+  const obs = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting && !running) {
+      running = true;
+      requestAnimationFrame(loop);
+    }
+  }, { threshold: 0.1 });
+  obs.observe(cv);
+})();
