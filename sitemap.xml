@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <url>
+    <loc>https://npmc.ge/</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="ka" href="https://npmc.ge/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://npmc.ge/"/>
+  </url>
+
+  <url>
+    <loc>https://npmc.ge/qeeg.html</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="ka" href="https://npmc.ge/qeeg.html"/>
+  </url>
+
+  <url>
+    <loc>https://npmc.ge/tms.html</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="ka" href="https://npmc.ge/tms.html"/>
+  </url>
+
+  <url>
+    <loc>https://npmc.ge/neurofeedback.html</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="ka" href="https://npmc.ge/neurofeedback.html"/>
+  </url>
+
+  <url>
+    <loc>https://npmc.ge/packages.html</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+</urlset>
