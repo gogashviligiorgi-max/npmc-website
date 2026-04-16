@@ -342,37 +342,47 @@
           </div>
 
           <div class="methods__waves" style="margin-top:32px;">
-            <p style="font-size:0.8rem;color:var(--text-3);margin-bottom:8px;letter-spacing:0.05em;text-transform:uppercase;font-weight:600;">ტვინის ტალღები — რასაც ვხედავთ:</p>
-            <div class="methods__wave">
-              <span class="methods__wave-name">Delta</span>
-              <span class="methods__wave-hz">0.5–4 Hz</span>
-              <div class="methods__wave-bar" style="background:linear-gradient(90deg,#4a3fcc,transparent);width:30%"></div>
+            <p style="font-size:0.8rem;color:var(--text-3);margin-bottom:16px;letter-spacing:0.05em;text-transform:uppercase;font-weight:600;">ტვინის ტალღები — რასაც ვხედავთ:</p>
+            <div class="eeg-wave-row">
+              <div class="eeg-wave-meta">
+                <span class="eeg-wave-name eeg-wave-name--delta">Delta</span>
+                <span class="eeg-wave-hz">0.5–4 Hz</span>
+              </div>
+              <canvas class="eeg-canvas" id="wave-delta" width="260" height="44"></canvas>
+              <span class="eeg-wave-desc">ძილი, გამოჯანმრთელება. ჭარბი სიგნალი — ყურადღების სირთულე</span>
             </div>
-            <div style="font-size:0.78rem;color:var(--text-3);margin:-6px 0 8px 0;padding-left:172px;">ძილი, გამოჯანმრთელება. ჭარბი სიგნალი — ყურადღების სირთულე</div>
-            <div class="methods__wave">
-              <span class="methods__wave-name">Theta</span>
-              <span class="methods__wave-hz">4–8 Hz</span>
-              <div class="methods__wave-bar" style="background:linear-gradient(90deg,#3f8fcc,transparent);width:45%"></div>
+            <div class="eeg-wave-row">
+              <div class="eeg-wave-meta">
+                <span class="eeg-wave-name eeg-wave-name--theta">Theta</span>
+                <span class="eeg-wave-hz">4–8 Hz</span>
+              </div>
+              <canvas class="eeg-canvas" id="wave-theta" width="260" height="44"></canvas>
+              <span class="eeg-wave-desc">კრეატიულობა, ოცნება. ჭარბი — ADHD-ის ნიმუში, ფოკუსის სირთულე</span>
             </div>
-            <div style="font-size:0.78rem;color:var(--text-3);margin:-6px 0 8px 0;padding-left:172px;">კრეატიულობა, ოცნება. ჭარბი — ADHD-ის ნიმუში, ფოკუსის სირთულე</div>
-            <div class="methods__wave">
-              <span class="methods__wave-name">Alpha</span>
-              <span class="methods__wave-hz">8–12 Hz</span>
-              <div class="methods__wave-bar" style="background:linear-gradient(90deg,#3fcc8f,transparent);width:65%"></div>
+            <div class="eeg-wave-row">
+              <div class="eeg-wave-meta">
+                <span class="eeg-wave-name eeg-wave-name--alpha">Alpha</span>
+                <span class="eeg-wave-hz">8–12 Hz</span>
+              </div>
+              <canvas class="eeg-canvas" id="wave-alpha" width="260" height="44"></canvas>
+              <span class="eeg-wave-desc">სიმშვიდე, რელაქსაცია. დეფიციტი — შფოთვა, ჰიპერმეფხვილეობა</span>
             </div>
-            <div style="font-size:0.78rem;color:var(--text-3);margin:-6px 0 8px 0;padding-left:172px;">სიმშვიდე, რელაქსაცია. დეფიციტი — შფოთვა, ჰიპერმეფხვილეობა</div>
-            <div class="methods__wave">
-              <span class="methods__wave-name">Beta</span>
-              <span class="methods__wave-hz">12–30 Hz</span>
-              <div class="methods__wave-bar" style="background:linear-gradient(90deg,#ccb03f,transparent);width:80%"></div>
+            <div class="eeg-wave-row">
+              <div class="eeg-wave-meta">
+                <span class="eeg-wave-name eeg-wave-name--beta">Beta</span>
+                <span class="eeg-wave-hz">12–30 Hz</span>
+              </div>
+              <canvas class="eeg-canvas" id="wave-beta" width="260" height="44"></canvas>
+              <span class="eeg-wave-desc">ფოკუსი, კოგნიცია. ჭარბი — შფოთვა, OCD; დეფიციტი — დეპრესია</span>
             </div>
-            <div style="font-size:0.78rem;color:var(--text-3);margin:-6px 0 8px 0;padding-left:172px;">ფოკუსი, კოგნიციი. ჭარბი — შფოთვა, OCD; დეფიციტი — დეპრესია</div>
-            <div class="methods__wave">
-              <span class="methods__wave-name">Gamma</span>
-              <span class="methods__wave-hz">30+ Hz</span>
-              <div class="methods__wave-bar" style="background:linear-gradient(90deg,#cc3f3f,transparent);width:55%"></div>
+            <div class="eeg-wave-row">
+              <div class="eeg-wave-meta">
+                <span class="eeg-wave-name eeg-wave-name--gamma">Gamma</span>
+                <span class="eeg-wave-hz">30+ Hz</span>
+              </div>
+              <canvas class="eeg-canvas" id="wave-gamma" width="260" height="44"></canvas>
+              <span class="eeg-wave-desc">მაღალი კოგნიტიური ფუნქცია, ინტეგრაცია</span>
             </div>
-            <div style="font-size:0.78rem;color:var(--text-3);margin:-6px 0 8px 0;padding-left:172px;">მაღალი კოგნიტიური ფუნქცია, ინტეგრაცია</div>
           </div>
         </div>
 

@@ -2276,3 +2276,46 @@ h4 { font-size: 1.1rem; }
     min-width: 80px;
   }
 }
+
+/* ── EEG Wave Animations ── */
+.eeg-wave-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.eeg-wave-meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 80px;
+}
+.eeg-wave-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.eeg-wave-name--delta { color: #7b6ff0; }
+.eeg-wave-name--theta { color: #4fa8e8; }
+.eeg-wave-name--alpha { color: #3fcca0; }
+.eeg-wave-name--beta  { color: #e8c94f; }
+.eeg-wave-name--gamma { color: #e85a5a; }
+.eeg-wave-hz {
+  font-size: 0.72rem;
+  color: var(--text-3);
+  margin-top: 2px;
+}
+.eeg-canvas {
+  border-radius: 6px;
+  background: rgba(255,255,255,0.03);
+  flex-shrink: 0;
+}
+.eeg-wave-desc {
+  font-size: 0.75rem;
+  color: var(--text-3);
+  line-height: 1.4;
+}
+@media (max-width: 600px) {
+  .eeg-wave-row { flex-wrap: wrap; }
+  .eeg-canvas { width: 100%; }
+  .eeg-wave-desc { width: 100%; padding-left: 92px; margin-top: -4px; }
+}

@@ -480,3 +480,68 @@ const statsObserver = new IntersectionObserver((entries) => {
 
 const statsSection = document.querySelector('.stats');
 if (statsSection) statsObserver.observe(statsSection);
+
+// ---- EEG WAVE ANIMATIONS ----
+(function () {
+  const waves = [
+    { id: 'wave-delta', color: '#7b6ff0', freq: 1.8,  amp: 16, speed: 0.4 },
+    { id: 'wave-theta', color: '#4fa8e8', freq: 4.0,  amp: 13, speed: 0.9 },
+    { id: 'wave-alpha', color: '#3fcca0', freq: 8.0,  amp: 11, speed: 1.6 },
+    { id: 'wave-beta',  color: '#e8c94f', freq: 18.0, amp: 8,  speed: 3.2 },
+    { id: 'wave-gamma', color: '#e85a5a', freq: 35.0, amp: 5,  speed: 6.0 },
+  ];
+
+  const offsets = {};
+  let running = false;
+
+  waves.forEach(w => { offsets[w.id] = 0; });
+
+  function drawAll() {
+    waves.forEach(w => {
+      const canvas = document.getElementById(w.id);
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const W = canvas.width;
+      const H = canvas.height;
+      const cy = H / 2;
+
+      ctx.clearRect(0, 0, W, H);
+
+      // glow effect
+      ctx.shadowColor = w.color;
+      ctx.shadowBlur = 6;
+      ctx.strokeStyle = w.color;
+      ctx.lineWidth = 1.8;
+      ctx.lineJoin = 'round';
+      ctx.lineCap = 'round';
+
+      ctx.beginPath();
+      for (let x = 0; x <= W; x++) {
+        const angle = ((x + offsets[w.id]) / W) * Math.PI * 2 * w.freq;
+        const y = cy + Math.sin(angle) * w.amp;
+        if (x === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+
+      offsets[w.id] += w.speed;
+    });
+
+    requestAnimationFrame(drawAll);
+  }
+
+  // Start only when QEEG tab is visible
+  const qeegPanel = document.getElementById('tab-qeeg');
+  if (qeegPanel) {
+    const observer = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && !running) {
+        running = true;
+        drawAll();
+      }
+    }, { threshold: 0.1 });
+    observer.observe(qeegPanel);
+  } else {
+    drawAll();
+  }
+})();
