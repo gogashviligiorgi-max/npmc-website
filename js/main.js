@@ -547,17 +547,14 @@ if (statsSection) statsObserver.observe(statsSection);
 })();
 
 /* ============================================================
-   QEEG TOPOGRAPHIC MAP
-   IDW colour interpolation over 19 electrodes — head view
+   QEEG TWO-PANEL VISUAL
+   Left:  EEG head recording animation
+   Right: Topographic brain map (IDW colour interpolation)
    ============================================================ */
 (function () {
-  const cv = document.getElementById('qeegTopoMap');
-  if (!cv) return;
-  const ctx = cv.getContext('2d');
-  const W = 220, H = 220;
-  const CX = 110, CY = 110, HR = 100;
 
-  const ELEC = [
+  /* shared electrode layout */
+  const ELEC_DEF = [
     {n:'Fp1',x:-.28,y:-.85,ph:0.00,fr:.72},
     {n:'Fp2',x: .28,y:-.85,ph:0.80,fr:.72},
     {n:'F7', x:-.72,y:-.52,ph:1.60,fr:.65},
@@ -577,7 +574,92 @@ if (statsSection) statsObserver.observe(statsSection);
     {n:'T6', x: .78,y: .55,ph:2.60,fr:.62},
     {n:'O1', x:-.24,y: .86,ph:3.30,fr:.90},
     {n:'O2', x: .24,y: .86,ph:4.00,fr:.90},
-  ].map(e => ({
+  ];
+
+  /* ── LEFT: EEG head ── */
+  const headCv = document.getElementById('qeegEegHead');
+  if (headCv) {
+    const hx   = headCv.getContext('2d');
+    const HW   = 200, HH = 200;
+    const hCX  = 100, hCY = 100, hRX = 82, hRY = 88;
+    const elecs = ELEC_DEF.map(e => ({
+      ...e,
+      px: hCX + e.x * hRX * 0.93,
+      py: hCY + e.y * hRY * 0.93,
+    }));
+
+    window._drawQeegHead = function(t) {
+      hx.clearRect(0, 0, HW, HH);
+
+      /* head fill */
+      const bg = hx.createRadialGradient(hCX, hCY-10, 10, hCX, hCY, 96);
+      bg.addColorStop(0, 'rgba(22,18,50,.95)');
+      bg.addColorStop(1, 'rgba(8,8,20,.98)');
+      hx.save();
+      hx.beginPath(); hx.ellipse(hCX, hCY, hRX, hRY, 0, 0, Math.PI*2);
+      hx.fillStyle = bg; hx.fill(); hx.restore();
+
+      /* connection lines */
+      const rows = [
+        ['Fp1','F3','C3','P3','O1'],['Fp2','F4','C4','P4','O2'],
+        ['F7','T3','T5'],['F8','T4','T6'],['Fz','Cz','Pz'],
+      ];
+      hx.save();
+      hx.beginPath(); hx.ellipse(hCX, hCY, hRX, hRY, 0, 0, Math.PI*2); hx.clip();
+      rows.forEach(r => {
+        const pts = r.map(n => elecs.find(e => e.n===n)).filter(Boolean);
+        if (pts.length < 2) return;
+        hx.beginPath(); hx.moveTo(pts[0].px, pts[0].py);
+        pts.slice(1).forEach(p => hx.lineTo(p.px, p.py));
+        hx.strokeStyle = 'rgba(100,120,200,.10)';
+        hx.lineWidth = 1; hx.stroke();
+      });
+      hx.restore();
+
+      /* head outline */
+      hx.beginPath(); hx.ellipse(hCX, hCY, hRX, hRY, 0, 0, Math.PI*2);
+      hx.strokeStyle = 'rgba(201,169,110,.5)'; hx.lineWidth = 2; hx.stroke();
+
+      /* nose */
+      hx.beginPath();
+      hx.moveTo(hCX-7, hCY-hRY+2);
+      hx.quadraticCurveTo(hCX, hCY-hRY-14, hCX+7, hCY-hRY+2);
+      hx.strokeStyle = 'rgba(201,169,110,.3)'; hx.lineWidth = 1.5; hx.stroke();
+
+      /* ears */
+      [-1,1].forEach(s => {
+        hx.beginPath(); hx.ellipse(hCX+s*(hRX+5), hCY+4, 6, 11, 0, 0, Math.PI*2);
+        const eg = hx.createRadialGradient(hCX+s*(hRX+5), hCY+4, 0, hCX+s*(hRX+5), hCY+4, 12);
+        eg.addColorStop(0,'rgba(22,18,50,1)'); eg.addColorStop(1,'rgba(8,8,20,1)');
+        hx.fillStyle = eg; hx.fill();
+        hx.strokeStyle = 'rgba(201,169,110,.3)'; hx.lineWidth = 1.5; hx.stroke();
+      });
+
+      /* animated electrode dots */
+      elecs.forEach((e, i) => {
+        const act   = Math.sin(t * e.fr + e.ph) * .5 + .5;
+        const pulse = Math.sin(t * 1.1 + i * 1.3);
+        if (pulse > .6) {
+          const rr = (pulse - .6) * 16;
+          hx.beginPath(); hx.arc(e.px, e.py, 3 + rr, 0, Math.PI*2);
+          hx.strokeStyle = `rgba(99,179,237,${(1-rr/16)*.28})`; hx.lineWidth=1; hx.stroke();
+        }
+        const col = `hsl(${200+act*70},85%,${40+act*30}%)`;
+        hx.shadowColor = col; hx.shadowBlur = 8;
+        hx.beginPath(); hx.arc(e.px, e.py, 3, 0, Math.PI*2);
+        hx.fillStyle = col; hx.fill(); hx.shadowBlur = 0;
+      });
+    };
+  }
+
+  /* ── RIGHT: Topo map ── */
+  const cv = document.getElementById('qeegTopoMap');
+  if (!cv) return;
+  const ctx = cv.getContext('2d');
+  const W = 200, H = 200;
+  const CX = 100, CY = 100, HR = 90;
+
+  const ELEC = ELEC_DEF.map(e => ({
     ...e,
     px: CX + e.x * HR * 0.94,
     py: CY + e.y * HR * 0.94,
@@ -665,7 +747,9 @@ if (statsSection) statsObserver.observe(statsSection);
   let startTime = null;
   function loop(ts) {
     if (!startTime) startTime = ts;
-    draw((ts - startTime) / 1000);
+    const t = (ts - startTime) / 1000;
+    draw(t);
+    if (window._drawQeegHead) window._drawQeegHead(t);
     requestAnimationFrame(loop);
   }
 
