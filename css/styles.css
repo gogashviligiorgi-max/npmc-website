@@ -1563,7 +1563,8 @@ h4 { font-size: 1.1rem; }
 /* ============================================================
    CONDITION MODAL
    ============================================================ */
-.condition-modal {
+/* ── Modal Overlay (Option 1 — centered popup) ── */
+.fs-overlay {
   position: fixed;
   inset: 0;
   z-index: 9000;
@@ -1571,43 +1572,49 @@ h4 { font-size: 1.1rem; }
   align-items: center;
   justify-content: center;
   padding: 20px;
+  background: rgba(5, 5, 12, 0.78);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  animation: fsBackdropIn 0.25s ease;
 }
 
-.condition-modal[hidden] {
-  display: none;
+.fs-overlay.fs-hidden { display: none; }
+
+@keyframes fsBackdropIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
-.condition-modal__overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(5, 5, 10, 0.75);
-  backdrop-filter: blur(6px);
-  cursor: pointer;
-}
-
-.condition-modal__content {
+/* the white card */
+.fs-body {
   position: relative;
-  z-index: 1;
   background: var(--surface-1);
   border: 1px solid var(--border);
   border-radius: 20px;
   width: 100%;
   max-width: 680px;
-  max-height: 85vh;
+  max-height: 88vh;
   overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 40px;
-  animation: modalIn 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  animation: fsCardIn 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@keyframes modalIn {
-  from { opacity: 0; transform: scale(0.96) translateY(16px); }
+@keyframes fsCardIn {
+  from { opacity: 0; transform: scale(0.96) translateY(18px); }
   to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 
-.condition-modal__close {
+/* back = X close button (top-right of card) */
+.fs-nav {
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 18px;
+  right: 18px;
+}
+
+.fs-nav__logo { display: none; }
+
+.fs-nav__back {
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -1615,19 +1622,28 @@ h4 { font-size: 1.1rem; }
   background: var(--surface-2);
   color: var(--text-2);
   cursor: pointer;
+  font-family: inherit;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s, color 0.2s;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  font-size: 1rem;
+  line-height: 1;
 }
 
-.condition-modal__close:hover {
+.fs-nav__back:hover {
   background: var(--accent);
   color: #fff;
   border-color: var(--accent);
 }
 
-.condition-modal__close svg { width: 16px; height: 16px; }
+/* hide the arrow icon, show ✕ instead */
+.fs-nav__back svg { display: none; }
+.fs-nav__back::after { content: '✕'; font-size: 0.85rem; }
+
+@media (max-width: 600px) {
+  .fs-body { padding: 28px 18px; max-height: 92vh; border-radius: 16px; }
+}
 
 .modal-header {
   display: flex;
@@ -1840,10 +1856,10 @@ h4 { font-size: 1.1rem; }
 }
 
 @media (max-width: 600px) {
-  .condition-modal__content { padding: 28px 20px; }
   .modal-cta { flex-direction: column; }
   .modal-cta .btn { width: 100%; justify-content: center; }
   .modal-wave-row { flex-wrap: wrap; }
+  .modal-brain-wrap { flex-direction: column; align-items: center; }
 }
 
 /* ============================================================
@@ -1960,6 +1976,7 @@ h4 { font-size: 1.1rem; }
   gap: 20px;
   transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
+  -webkit-user-select: text;
   user-select: text;
 }
 

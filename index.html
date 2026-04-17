@@ -882,29 +882,17 @@
     </div>
   </section>
 
-  <!-- ===== CONDITION MODAL ===== -->
-  <!-- Team Member Modal -->
-  <div class="condition-modal" id="teamModal" role="dialog" aria-modal="true" aria-labelledby="teamModalTitle" hidden>
-    <div class="condition-modal__overlay" id="teamModalOverlay"></div>
-    <div class="condition-modal__content">
-      <button type="button" class="condition-modal__close" id="teamModalClose" aria-label="დახურვა">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  <!-- ===== FULLSCREEN OVERLAY ===== -->
+  <div id="fsOverlay" class="fs-overlay fs-hidden" role="dialog" aria-modal="true" aria-labelledby="fsTitle">
+    <nav class="fs-nav">
+      <span class="fs-nav__logo">NPMC</span>
+      <button class="fs-nav__back" id="fsBack" aria-label="უკან დაბრუნება">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="15 18 9 12 15 6"/></svg>
+        უკან
       </button>
-      <div class="condition-modal__body" id="teamModalBody">
-        <!-- Content injected by JS -->
-      </div>
-    </div>
-  </div>
-
-  <div class="condition-modal" id="conditionModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
-    <div class="condition-modal__overlay" id="modalOverlay"></div>
-    <div class="condition-modal__content">
-      <button type="button" class="condition-modal__close" id="modalClose" aria-label="დახურვა">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
-      <div class="condition-modal__body" id="modalBody">
-        <!-- Content injected by JS -->
-      </div>
+    </nav>
+    <div class="fs-body" id="fsBody">
+      <!-- Content injected by JS -->
     </div>
   </div>
 

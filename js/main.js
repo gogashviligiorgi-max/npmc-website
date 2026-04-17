@@ -177,42 +177,53 @@ const teamData = {
   }
 };
 
-const teamModal = document.getElementById('teamModal');
-const teamModalBody = document.getElementById('teamModalBody');
-const teamModalClose = document.getElementById('teamModalClose');
-const teamModalOverlay = document.getElementById('teamModalOverlay');
+// ── Fullscreen Overlay (shared for all detail views) ──
+const fsOverlay = document.getElementById('fsOverlay');
+const fsBody    = document.getElementById('fsBody');
+const fsBack    = document.getElementById('fsBack');
+
+function openFs(html) {
+  if (!fsOverlay || !fsBody) return;
+  fsBody.innerHTML = html;
+  fsOverlay.style.cssText = 'position:fixed!important;inset:0!important;z-index:99999!important;display:flex!important;align-items:center;justify-content:center;padding:20px;background:rgba(5,5,12,.82);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);';
+  fsBody.scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+  if (fsBack) fsBack.focus();
+}
+
+function closeFs() {
+  if (!fsOverlay) return;
+  fsOverlay.style.cssText = 'display:none!important;';
+  document.body.style.overflow = '';
+}
+
+if (fsBack) fsBack.addEventListener('click', closeFs);
+
+if (fsOverlay) fsOverlay.addEventListener('click', e => {
+  if (e.target === fsOverlay) closeFs();
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && fsOverlay && !fsOverlay.hidden) closeFs();
+});
 
 function openTeamModal(key) {
   const d = teamData[key];
   if (!d) return;
-  teamModalBody.innerHTML = `
+  openFs(`
     <div class="modal-header">
       <div class="modal-header__icon" style="font-size:1.4rem;font-weight:700;color:var(--accent)">${d.initials}</div>
       <div>
-        <h2 id="teamModalTitle">${d.name}</h2>
+        <h2>${d.name}</h2>
         <p>${d.role}</p>
       </div>
     </div>
     ${d.content}
     <div class="modal-cta">
-      <a href="#contact" class="btn btn--primary" onclick="closeTeamModal()">დაჯავშნე კონსულტაცია</a>
+      <a href="#contact" class="btn btn--primary" onclick="closeFs()">დაჯავშნე კონსულტაცია</a>
     </div>
-  `;
-  teamModal.hidden = false;
-  document.body.style.overflow = 'hidden';
-  teamModalClose.focus();
+  `);
 }
-
-function closeTeamModal() {
-  teamModal.hidden = true;
-  document.body.style.overflow = '';
-}
-
-if (teamModalClose) teamModalClose.addEventListener('click', closeTeamModal);
-if (teamModalOverlay) teamModalOverlay.addEventListener('click', closeTeamModal);
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && teamModal && !teamModal.hidden) closeTeamModal();
-});
 
 // ---- CONDITION MODAL ----
 const conditionData = {
@@ -361,11 +372,6 @@ const conditionData = {
   }
 };
 
-const conditionModal = document.getElementById('conditionModal');
-const modalBody = document.getElementById('modalBody');
-const modalClose = document.getElementById('modalClose');
-const modalOverlay = document.getElementById('modalOverlay');
-
 function openConditionModal(key) {
   const d = conditionData[key];
   if (!d) return;
@@ -460,11 +466,11 @@ function openConditionModal(key) {
     </div>
   ` : '';
 
-  modalBody.innerHTML = `
+  openFs(`
     <div class="modal-header">
       <div class="modal-header__icon">${d.icon}</div>
       <div>
-        <h2 id="modalTitle">${d.title}</h2>
+        <h2>${d.title}</h2>
         <p>${d.subtitle}</p>
       </div>
     </div>
@@ -486,32 +492,18 @@ function openConditionModal(key) {
       <p>${d.treatment}</p>
     </div>
     <div class="modal-cta">
-      <a href="#contact" class="btn btn--primary" onclick="closeConditionModal()">დაჯავშნე კონსულტაცია</a>
-      <a href="#pricing" class="btn btn--ghost" onclick="closeConditionModal()">ნახე ფასები</a>
+      <a href="#contact" class="btn btn--primary" onclick="closeFs()">დაჯავშნე კონსულტაცია</a>
+      <a href="#pricing" class="btn btn--ghost" onclick="closeFs()">ნახე ფასები</a>
     </div>
-  `;
-
-  conditionModal.hidden = false;
-  document.body.style.overflow = 'hidden';
-  modalClose.focus();
+  `);
 
   if (bmCfg) startConditionBrainMap(bmCfg.canvasId, key);
 }
 
-function closeConditionModal() {
-  conditionModal.hidden = true;
-  document.body.style.overflow = '';
-}
+function closeConditionModal() { closeFs(); }
 
 document.querySelectorAll('.condition-card--clickable').forEach(card => {
   card.addEventListener('click', () => openConditionModal(card.dataset.condition));
-});
-
-if (modalClose) modalClose.addEventListener('click', closeConditionModal);
-if (modalOverlay) modalOverlay.addEventListener('click', closeConditionModal);
-
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && !conditionModal.hidden) closeConditionModal();
 });
 
 // ---- CONTACT FORM → WHATSAPP ----
