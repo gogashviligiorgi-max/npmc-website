@@ -2354,6 +2354,137 @@ h4 { font-size: 1.1rem; }
 
 @media (max-width: 600px) {
   .eeg-wave-row { flex-wrap: wrap; }
-  .eeg-canvas { width: 100%; }
-  .eeg-wave-desc { width: 100%; padding-left: 92px; margin-top: -4px; }
+  .eeg-canvas { width: 100%; height: 38px; }
+  .eeg-wave-desc { width: 100%; padding-left: 0; margin-top: 2px; }
+}
+
+/* ============================================================
+   MOBILE FIXES — comprehensive responsive repair
+   ============================================================ */
+
+/* Prevent ANY horizontal overflow on all screens */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+* { box-sizing: border-box; }
+
+/* Neural decorations — hide on small screens to prevent overflow */
+@media (max-width: 900px) {
+  .neural-deco--left,
+  .neural-deco--right { display: none; }
+}
+
+/* QEEG two-panel — stack vertically on phones */
+@media (max-width: 520px) {
+  .qeeg-visual-pair {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .qeeg-visual-arrow {
+    transform: rotate(90deg);
+  }
+  .qeeg-visual-item canvas {
+    width: 160px !important;
+    height: 160px !important;
+  }
+}
+
+/* EEG wave canvases — must never exceed container width */
+.eeg-canvas {
+  max-width: 100%;
+}
+@media (max-width: 480px) {
+  .eeg-canvas { height: 36px; }
+  .eeg-wave-row { gap: 8px; }
+  .eeg-wave-meta { min-width: 72px; }
+}
+
+/* Methods panel — fix tab overflow on phones */
+@media (max-width: 480px) {
+  .methods__tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .methods__tab {
+    padding: 8px 10px;
+    font-size: 0.72rem;
+    text-align: center;
+  }
+  .methods__panel-intro { padding: 0; }
+  .methods__detail-cards { grid-template-columns: 1fr; }
+}
+
+/* Hero — text and buttons on small phones */
+@media (max-width: 380px) {
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.45rem; }
+  .hero__badge { font-size: 0.65rem; }
+  .btn { padding: 12px 20px; font-size: 0.85rem; }
+}
+
+/* Stats — 2 per row on phones, not 4 */
+@media (max-width: 480px) {
+  .stats__container { grid-template-columns: 1fr 1fr; gap: 1px; }
+}
+
+/* Services grid — single column on all phones */
+@media (max-width: 600px) {
+  .services__grid { grid-template-columns: 1fr; gap: 16px; }
+  .service-card { padding: 24px 20px; }
+}
+
+/* Comparison / pricing table — 2 cols on phones */
+@media (max-width: 400px) {
+  .comparison-row { grid-template-columns: 1.2fr 1fr; }
+  .comparison-row span { padding: 10px 8px; font-size: 0.75rem; }
+}
+
+/* Conditions grid — 1 col on small phones */
+@media (max-width: 360px) {
+  .conditions__grid { grid-template-columns: 1fr; }
+}
+
+/* Screening form — full width inputs */
+@media (max-width: 600px) {
+  .scr-info-grid { grid-template-columns: 1fr; }
+  .scr-question { font-size: 0.85rem; }
+  .scr-radio-cell { min-width: 40px; }
+}
+
+/* Team section */
+@media (max-width: 480px) {
+  .team__grid { grid-template-columns: 1fr; max-width: 320px; margin: 0 auto; }
+}
+
+/* Contact form */
+@media (max-width: 480px) {
+  .contact__form { gap: 12px; }
+  .contact__form input,
+  .contact__form textarea,
+  .contact__form select { font-size: 16px; } /* prevents iOS zoom */
+}
+
+/* Footer */
+@media (max-width: 480px) {
+  .footer__links { flex-direction: column; gap: 8px; }
+  .footer__bottom { gap: 8px; }
+}
+
+/* Testimonials */
+@media (max-width: 600px) {
+  .testimonials__grid { grid-template-columns: 1fr; }
+}
+
+/* CTA banner */
+@media (max-width: 480px) {
+  .cta-banner { padding: 40px 20px; text-align: center; }
+  .cta-banner__actions { flex-direction: column; align-items: stretch; }
+  .cta-banner__actions .btn { width: 100%; justify-content: center; }
+}
+
+/* General images and canvases — never overflow */
+img, canvas, svg, video {
+  max-width: 100%;
 }
