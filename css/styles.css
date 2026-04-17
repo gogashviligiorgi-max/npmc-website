@@ -1716,6 +1716,63 @@ h4 { font-size: 1.1rem; }
   margin-bottom: 24px;
 }
 
+/* ADHD brain map inside modal */
+.modal-brain-wrap {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(109,130,255,.12);
+}
+.modal-brain-map-box {
+  position: relative;
+  flex-shrink: 0;
+}
+.modal-brain-map-box canvas {
+  display: block;
+  border-radius: 50%;
+  box-shadow: 0 0 24px rgba(255,60,0,.2), 0 0 50px rgba(255,60,0,.07);
+}
+.modal-brain-rec {
+  position: absolute;
+  bottom: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.58rem;
+  color: #ff5040;
+  letter-spacing: .07em;
+  white-space: nowrap;
+}
+.modal-brain-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: #ff3020;
+  animation: brainRecBlink 1.1s ease-in-out infinite;
+}
+@keyframes brainRecBlink { 0%,100%{opacity:1} 50%{opacity:.12} }
+.modal-brain-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.modal-brain-legend-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.68rem;
+  color: #999;
+}
+.modal-brain-swatch {
+  display: inline-block;
+  width: 26px; height: 7px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
 .modal-qeeg h4 {
   font-size: 0.75rem;
   font-weight: 700;

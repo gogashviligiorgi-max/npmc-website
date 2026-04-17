@@ -350,6 +350,20 @@ function openConditionModal(key) {
 
   const symptomsHTML = d.symptoms.map(s => `<li>${s}</li>`).join('');
 
+  const brainMapHTML = key === 'adhd' ? `
+    <div class="modal-brain-wrap">
+      <div class="modal-brain-map-box">
+        <canvas id="adhdModalMap" width="180" height="180"></canvas>
+        <div class="modal-brain-rec"><span class="modal-brain-dot"></span>LIVE EEG</div>
+      </div>
+      <div class="modal-brain-legend">
+        <div class="modal-brain-legend-row"><span class="modal-brain-swatch" style="background:linear-gradient(90deg,#ff2200,#ff8800)"></span>Theta ↑ ფრონტალური</div>
+        <div class="modal-brain-legend-row"><span class="modal-brain-swatch" style="background:linear-gradient(90deg,#ffdd00,#00ee88)"></span>ნორმა</div>
+        <div class="modal-brain-legend-row"><span class="modal-brain-swatch" style="background:linear-gradient(90deg,#0088ff,#0044cc)"></span>Beta ↓ პარიეტ./ოქციპ.</div>
+      </div>
+    </div>
+  ` : '';
+
   modalBody.innerHTML = `
     <div class="modal-header">
       <div class="modal-header__icon">${d.icon}</div>
@@ -368,6 +382,7 @@ function openConditionModal(key) {
     </div>
     <div class="modal-qeeg">
       <h4>QEEG სურათი — ტვინში რას ვხედავთ</h4>
+      ${brainMapHTML}
       ${wavesHTML}
     </div>
     <div class="modal-section">
@@ -383,6 +398,8 @@ function openConditionModal(key) {
   conditionModal.hidden = false;
   document.body.style.overflow = 'hidden';
   modalClose.focus();
+
+  if (key === 'adhd') startAdhdBrainMap('adhdModalMap');
 }
 
 function closeConditionModal() {
@@ -761,3 +778,126 @@ if (statsSection) statsObserver.observe(statsSection);
   }, { threshold: 0.1 });
   obs.observe(cv);
 })();
+
+/* ── ADHD Modal Brain Map ── */
+function startAdhdBrainMap(canvasId) {
+  const cv = document.getElementById(canvasId);
+  if (!cv) return;
+  const ctx = cv.getContext('2d');
+  const W = 180, H = 180, CX = 90, CY = 90, HR = 80;
+  const OS = 100;
+
+  const ELEC_DEF2 = [
+    {n:'Fp1',x:-.18,y:-.92},{n:'Fp2',x:.18,y:-.92},
+    {n:'F7',x:-.72,y:-.52},{n:'F3',x:-.38,y:-.46},
+    {n:'Fz',x:.00,y:-.50},{n:'F4',x:.38,y:-.46},
+    {n:'F8',x:.72,y:-.52},
+    {n:'T3',x:-.96,y:.02},{n:'C3',x:-.50,y:.00},
+    {n:'Cz',x:.00,y:.00},{n:'C4',x:.50,y:.00},
+    {n:'T4',x:.96,y:.02},
+    {n:'T5',x:-.78,y:.55},{n:'P3',x:-.38,y:.44},
+    {n:'Pz',x:.00,y:.44},{n:'P4',x:.38,y:.44},
+    {n:'T6',x:.78,y:.55},
+    {n:'O1',x:-.24,y:.86},{n:'O2',x:.24,y:.86},
+  ];
+  const PARAMS = {
+    Fp1:[0.88,0.09,0.01,0.03,0.00],Fp2:[0.87,0.09,0.01,0.03,0.30],
+    F7:[0.82,0.10,0.01,0.03,0.70],F3:[0.86,0.10,0.01,0.03,1.10],
+    Fz:[0.90,0.08,0.01,0.02,1.50],F4:[0.85,0.10,0.01,0.03,1.90],
+    F8:[0.81,0.10,0.01,0.03,2.30],
+    T3:[0.55,0.04,0.03,0.04,2.60],C3:[0.50,0.03,0.04,0.04,3.00],
+    Cz:[0.48,0.03,0.04,0.03,3.40],C4:[0.50,0.03,0.04,0.04,3.80],
+    T4:[0.54,0.04,0.03,0.04,0.90],
+    T5:[0.32,0.02,0.05,0.04,4.20],P3:[0.22,0.02,0.06,0.04,4.60],
+    Pz:[0.20,0.01,0.06,0.03,5.00],P4:[0.23,0.02,0.06,0.04,5.40],
+    T6:[0.33,0.02,0.05,0.04,5.80],
+    O1:[0.14,0.01,0.07,0.04,6.20],O2:[0.15,0.01,0.07,0.04,6.60],
+  };
+
+  const elecs = ELEC_DEF2.map(e => ({
+    ...e, params: PARAMS[e.n],
+    noise: Math.random() * Math.PI * 2,
+    px: CX + e.x * HR * 0.93,
+    py: CY + e.y * HR * 0.93,
+  }));
+
+  const oc = document.createElement('canvas');
+  oc.width = oc.height = OS;
+  const ox = oc.getContext('2d');
+  const scale2 = (HR * 2 * 1.02) / OS;
+  const ox0 = CX - HR * 1.02, oy0 = CY - HR * 1.02;
+
+  function topoRGB2(v) {
+    v = Math.max(0, Math.min(1, v));
+    if (v < .20){const u=v/.20;return[Math.round(u*10),Math.round(u*90),220];}
+    if (v < .40){const u=(v-.20)/.20;return[0,Math.round(90+u*165),Math.round(220*(1-u))];}
+    if (v < .60){const u=(v-.40)/.20;return[Math.round(u*255),240,0];}
+    if (v < .80){const u=(v-.60)/.20;return[255,Math.round(240-u*240),0];}
+    return [255,0,0];
+  }
+
+  function renderMap2(acts) {
+    const imgd = ox.createImageData(OS, OS);
+    const d = imgd.data;
+    for (let row = 0; row < OS; row++) {
+      for (let col = 0; col < OS; col++) {
+        const cpx = ox0 + col * scale2, cpy = oy0 + row * scale2;
+        const dx0 = cpx - CX, dy0 = cpy - CY;
+        if (dx0*dx0 + dy0*dy0 > HR*HR) continue;
+        let wSum = 0, vSum = 0;
+        for (let i = 0; i < elecs.length; i++) {
+          const dx = cpx - elecs[i].px, dy = cpy - elecs[i].py;
+          const d2 = dx*dx + dy*dy;
+          const w = d2 < 1 ? 1e6 : 1/d2;
+          wSum += w; vSum += w * acts[i];
+        }
+        const v = wSum > 0 ? vSum/wSum : 0.5;
+        const [r,g,b] = topoRGB2(v);
+        const idx = (row*OS+col)*4;
+        d[idx]=r;d[idx+1]=g;d[idx+2]=b;d[idx+3]=255;
+      }
+    }
+    ox.putImageData(imgd, 0, 0);
+  }
+
+  let _raf = null;
+  function loop2(ts) {
+    const t = ts / 1000;
+    elecs.forEach(e => { e.noise += 0.008 + Math.random()*0.004; });
+    const acts = elecs.map(e => {
+      const [base,tAmp,bAmp,nAmp,ph] = e.params;
+      return Math.max(0, Math.min(1,
+        base + tAmp*Math.sin(t*0.75*Math.PI*2+ph)
+             + bAmp*Math.sin(t*2.1*Math.PI*2+ph*1.3)
+             + nAmp*Math.sin(e.noise)
+      ));
+    });
+    renderMap2(acts);
+    ctx.clearRect(0, 0, W, H);
+    ctx.save();
+    ctx.beginPath(); ctx.arc(CX,CY,HR,0,Math.PI*2); ctx.clip();
+    ctx.drawImage(oc, ox0, oy0, HR*2*1.02, HR*2*1.02);
+    ctx.restore();
+    [[-1],[1]].forEach(([sx]) => {
+      ctx.beginPath();
+      ctx.ellipse(CX+sx*(HR+4),CY+8,6,10,0,0,Math.PI*2);
+      ctx.strokeStyle='rgba(200,185,175,.7)';ctx.lineWidth=1.5;ctx.stroke();
+    });
+    ctx.beginPath();
+    ctx.moveTo(CX-8,CY-HR+3);
+    ctx.quadraticCurveTo(CX,CY-HR-12,CX+8,CY-HR+3);
+    ctx.strokeStyle='rgba(200,185,175,.7)';ctx.lineWidth=1.5;ctx.stroke();
+    ctx.beginPath();ctx.arc(CX,CY,HR,0,Math.PI*2);
+    ctx.strokeStyle='rgba(200,185,175,.8)';ctx.lineWidth=1.5;ctx.stroke();
+    elecs.forEach(e => {
+      ctx.beginPath();ctx.arc(e.px,e.py,2.4,0,Math.PI*2);
+      ctx.fillStyle='rgba(0,0,0,.65)';ctx.fill();
+      ctx.beginPath();ctx.arc(e.px,e.py,1.3,0,Math.PI*2);
+      ctx.fillStyle='rgba(255,255,255,.88)';ctx.fill();
+    });
+    if (document.getElementById(canvasId)) {
+      _raf = requestAnimationFrame(loop2);
+    }
+  }
+  _raf = requestAnimationFrame(loop2);
+}
