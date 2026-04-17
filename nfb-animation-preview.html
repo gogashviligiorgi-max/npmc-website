@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NFB Neural Animation Preview</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background:#07070e;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    min-height:100vh; gap:16px;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    padding: 40px 20px;
+  }
+  h1 { color:#c9a96e; font-size:.85rem; letter-spacing:.12em; text-transform:uppercase; }
+  .sub { color:#38384e; font-size:.72rem; letter-spacing:.04em; }
+
+  .wrap { position:relative; }
+  canvas { display:block; border-radius:14px; }
+
+  .dots {
+    display:flex; gap:10px; justify-content:center; margin-top:14px;
+  }
+  .dot {
+    width:7px; height:7px; border-radius:50%;
+    background:#13121f;
+    border:1px solid rgba(201,169,110,.25);
+    transition: all .4s;
+    cursor:pointer;
+  }
+  .dot.active {
+    background:#c9a96e;
+    box-shadow: 0 0 10px rgba(201,169,110,.5);
+    transform: scale(1.3);
+  }
+  .stage-lbl {
+    color:rgba(201,169,110,.45);
+    font-size:.68rem; letter-spacing:.07em;
+    text-align:center; margin-top:8px;
+    text-transform:uppercase; min-height:16px;
+  }
+</style>
+</head>
+<body>
+
+<h1>NFB — Neural Training</h1>
+<p class="sub">ნეიროფიდბექი — ტვინი სწავლობს</p>
+
+<div class="wrap">
+  <canvas id="c" width="620" height="400"></canvas>
+  <div class="dots">
+    <div class="dot active" id="d0"></div>
+    <div class="dot" id="d1"></div>
+    <div class="dot" id="d2"></div>
+    <div class="dot" id="d3"></div>
+    <div class="dot" id="d4"></div>
+  </div>
+  <div class="stage-lbl" id="lbl"></div>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+const canvas = document.getElementById('c');
+const ctx    = canvas.getContext('2d');
+const W = 620, H = 400;
+
+/* ── constants ──────────────────────────────────────────────── */
+const GOLD  = [201,169,110];
+const BLUE  = [100,160,255];
+const GREEN = [80,220,140];
+const AMBER = [220,160,70];
+const PURP  = [180,100,255];
+
+const STAGE_DUR = 260;
+const NUM_STAGES = 5;
+
+const LABELS = [
+  'საფ. 1 — EEG: სიგნალის წაკითხვა',
+  'საფ. 2 — ტვინის ტალღების ანალიზი',
+  'საფ. 3 — ოპტიმალური პატერნი → ჯილდო',
+  'საფ. 4 — სინაფსური კავშირები მყარდება',
+  'საფ. 5 — ნეიროპლასტიურობა: ბალანსი მიღწეულია',
+];
+
+let t = 0, stage = 0, sT = 0;
+
+/* ── helpers ────────────────────────────────────────────────── */
+function rgb(c, a){ return `rgba(${c[0]},${c[1]},${c[2]},${a})`; }
+function lerp(a,b,v){ return a+(b-a)*v; }
+function ease(x){ return x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2; }
+
+function glow(color, blur){
+  ctx.shadowColor = rgb(color,0.9);
+  ctx.shadowBlur  = blur;
+}
+function noGlow(){ ctx.shadowBlur = 0; }
+
+/* ── brain shape ────────────────────────────────────────────── */
+function brainPath(side){ // side: 'L' | 'R'
+  ctx.beginPath();
+  if(side==='L'){
+    ctx.moveTo(-4,-88); ctx.bezierCurveTo(-28,-92,-72,-72,-88,-38);
+    ctx.bezierCurveTo(-105,-6,-100,34,-84,64);
+    ctx.bezierCurveTo(-68,92,-36,102,-4,97); ctx.closePath();
+  } else {
+    ctx.moveTo(4,-88); ctx.bezierCurveTo(28,-92,72,-72,88,-38);
+    ctx.bezierCurveTo(105,-6,100,34,84,64);
+    ctx.bezierCurveTo(68,92,36,102,4,97); ctx.closePath();
+  }
+}
+
+function drawBrain(cx,cy,sc,outAlpha,glowCol,glowStr){
+  ctx.save();
+  ctx.translate(cx,cy); ctx.scale(sc,sc);
+
+  if(glowCol){ glow(glowCol, (glowStr||18)/sc); }
+
+  ['L','R'].forEach(s=>{
+    brainPath(s);
+    ctx.fillStyle='rgba(22,18,42,0.96)';
+    ctx.fill();
+    ctx.strokeStyle=rgb(GOLD,outAlpha);
+    ctx.lineWidth=1.6/sc;
+    ctx.stroke();
+  });
+
+  /* sulci */
+  ctx.strokeStyle=rgb(GOLD,.15);
+  ctx.lineWidth=.9/sc;
+  const sulci=[
+    'M-18,-88 C-16,-60,-14,-30,-16,0 C-18,30,-20,60,-18,97',
+    'M-40,-82 C-38,-55,-36,-25,-38,5 C-40,35,-42,65,-40,95',
+    'M-88,10 C-65,8,-40,7,-18,7 C-4,7,4,7,18,7 C40,7,65,8,88,10',
+    'M-85,35 C-62,33,-38,32,-18,32 C-4,32,4,32,18,32 C38,32,62,33,85,35',
+    'M18,-88 C16,-60,14,-30,16,0 C18,30,20,60,18,97',
+    'M40,-82 C38,-55,36,-25,38,5 C40,35,42,65,40,95',
+  ];
+  sulci.forEach(d=>{
+    const p=new Path2D(d); ctx.stroke(p);
+  });
+
+  /* fissure */
+  ctx.fillStyle='#07070e';
+  ctx.fillRect(-4,-90,8,192);
+  ctx.beginPath(); ctx.moveTo(0,-88); ctx.lineTo(0,100);
+  ctx.strokeStyle=rgb(GOLD,.2); ctx.lineWidth=.8/sc;
+  ctx.setLineDash([3,3]); ctx.stroke(); ctx.setLineDash([]);
+
+  noGlow();
+  ctx.restore();
+}
+
+/* ── EEG wave ───────────────────────────────────────────────── */
+function wave(x,y,w,freq,amp,phase,col,alpha){
+  ctx.beginPath();
+  for(let i=0;i<=w;i++){
+    const wy=y+Math.sin((i/w)*freq*Math.PI*2+phase)*amp;
+    i?ctx.lineTo(x+i,wy):ctx.moveTo(x+i,wy);
+  }
+  ctx.strokeStyle=rgb(col,alpha);
+  ctx.lineWidth=1.4;
+  ctx.stroke();
+}
+
+/* ── particles ──────────────────────────────────────────────── */
+const parts=[];
+function burst(x,y,col,n=10){
+  for(let i=0;i<n;i++){
+    const a=(i/n)*Math.PI*2+Math.random()*.4;
+    const s=1.2+Math.random()*2;
+    parts.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-1,life:1,col});
+  }
+}
+function tickParts(){
+  for(let i=parts.length-1;i>=0;i--){
+    const p=parts[i]; p.x+=p.vx; p.y+=p.vy;
+    p.vy+=.04; p.life-=.022;
+    if(p.life<=0){parts.splice(i,1);continue;}
+    ctx.beginPath(); ctx.arc(p.x,p.y,2.4*p.life,0,Math.PI*2);
+    ctx.fillStyle=rgb(p.col,p.life*.9); ctx.fill();
+  }
+}
+
+/* ── synaptic nodes ─────────────────────────────────────────── */
+let nodes=[], conns=[];
+function initNet(cx,cy){
+  nodes=[]; conns=[];
+  const pos=[
+    [-52,-32],[-20,-55],[22,-55],[54,-32],
+    [-64,8],[-24,4],[0,16],[24,4],[64,8],
+    [-42,52],[-10,46],[10,46],[42,52],
+  ];
+  pos.forEach(([x,y])=>nodes.push({x:cx+x,y:cy+y,str:0}));
+  nodes.forEach((a,i)=>nodes.forEach((b,j)=>{
+    if(j<=i)return;
+    const d=Math.hypot(a.x-b.x,a.y-b.y);
+    if(d<95) conns.push({i,j,str:0,spd:.008+Math.random()*.008});
+  }));
+}
+
+/* ══════════════════════════════════════════════════════════════
+   STAGE 0  —  EEG cap: სიგნალის წაკითხვა
+══════════════════════════════════════════════════════════════ */
+const eegPts=[
+  {rx:-.52,ry:-.88,lbl:'Fz'},{rx:.52,ry:-.88,lbl:null},
+  {rx:-.83,ry:-.40,lbl:'F3'},{rx:.83,ry:-.40,lbl:'F4'},
+  {rx:-.95,ry:.08, lbl:'C3'},{rx:.95,ry:.08, lbl:'C4'},
+  {rx:-.65,ry:.60, lbl:'P3'},{rx:.65,ry:.60, lbl:'P4'},
+  {rx:0,   ry:-.86,lbl:'Cz'},
+];
+const BRAIN_R=96; // approx radius
+function stage0(p){
+  const a=Math.min(1,p*3);
+  drawBrain(W/2,H/2-8,.92,a*.7,null);
+
+  /* electrodes appear one by one */
+  const nActive=Math.floor(ease(p)*eegPts.length*1.2);
+  eegPts.forEach(({rx,ry,lbl},i)=>{
+    const ea=Math.min(1,(a-i*.08)*4);
+    if(ea<=0)return;
+    const ex=W/2+rx*BRAIN_R, ey=H/2-8+ry*BRAIN_R;
+    ctx.save(); ctx.globalAlpha=ea;
+    const active=i<nActive;
+    if(active){glow(GOLD,10);}
+    ctx.beginPath(); ctx.arc(ex,ey,active?5:3.5,0,Math.PI*2);
+    ctx.fillStyle=active?rgb(GOLD,.9):rgb(GOLD,.25); ctx.fill();
+    noGlow();
+    if(lbl){
+      ctx.fillStyle=rgb(GOLD,.55);
+      ctx.font='8px system-ui'; ctx.textAlign='center';
+      ctx.fillText(lbl,ex,ey-9);
+    }
+    ctx.restore();
+  });
+
+  /* signal wire flowing out from C4 */
+  if(p>.45){
+    const fa=(p-.45)/.55;
+    const sx=W/2+.95*BRAIN_R, sy=H/2-8+.08*BRAIN_R;
+    const len=130*fa;
+    ctx.beginPath();
+    for(let i=0;i<=len;i++){
+      const wy=sy+Math.sin(i*.22+t*.14)*9;
+      i?ctx.lineTo(sx+i,wy):ctx.moveTo(sx+i,wy);
+    }
+    ctx.strokeStyle=rgb(GOLD,fa*.7); ctx.lineWidth=1.4; ctx.stroke();
+    /* label */
+    ctx.fillStyle=rgb(GOLD,fa*.5);
+    ctx.font='9px system-ui'; ctx.textAlign='left';
+    ctx.fillText('EEG სიგნალი →',sx+len-60,sy-14);
+  }
+
+  label('EEG — 9 ელექტროდი ტვინის ელექტრულ აქტივობას კითხულობს',a*.7);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   STAGE 1  —  ტალღების ანალიზი
+══════════════════════════════════════════════════════════════ */
+const WAVES=[
+  {n:'δ Delta',  f:1.8, amp:13, col:AMBER,  yOff:0},
+  {n:'θ Theta',  f:5,   amp:11, col:[220,120,60], yOff:1},
+  {n:'α Alpha',  f:10,  amp:7,  col:GREEN,  yOff:2},
+  {n:'β Beta',   f:20,  amp:5,  col:BLUE,   yOff:3},
+  {n:'γ Gamma',  f:35,  amp:3,  col:PURP,   yOff:4},
+];
+function stage1(p){
+  const a=Math.min(1,p*3);
+  drawBrain(156,H/2,.56,a*.55,null);
+
+  const wx=265, ww=260, wy0=90, wGap=52;
+
+  WAVES.forEach((w,i)=>{
+    const wa=Math.min(1,(p-i*.11)*4); if(wa<=0)return;
+    const wy=wy0+i*wGap;
+    /* bg strip */
+    ctx.fillStyle=`rgba(16,14,32,${wa*.45})`;
+    ctx.fillRect(wx,wy-20,ww,40);
+    /* label */
+    ctx.fillStyle=rgb(w.col,wa*.75);
+    ctx.font='9px system-ui'; ctx.textAlign='right';
+    ctx.fillText(w.n,wx-8,wy+4);
+    /* wave */
+    wave(wx,wy,ww*Math.min(1,p*1.8),w.f,w.amp*wa,t*.07,w.col,wa*.85);
+  });
+
+  /* Theta/Beta highlight for ADHD */
+  if(p>.6){
+    const ha=(p-.6)/.4;
+    /* Theta box */
+    ctx.strokeStyle=rgb(AMBER,ha*.7); ctx.lineWidth=1.2;
+    ctx.strokeRect(wx,wy0+wGap-20,ww,40);
+    ctx.fillStyle=rgb(AMBER,ha*.55);
+    ctx.font='8px system-ui'; ctx.textAlign='left';
+    ctx.fillText('↑ Theta — ჭარბი (ADHD)',wx+ww+6,wy0+wGap+4);
+    /* Beta box */
+    ctx.strokeStyle=rgb(BLUE,ha*.7);
+    ctx.strokeRect(wx,wy0+3*wGap-20,ww,40);
+    ctx.fillStyle=rgb(BLUE,ha*.55);
+    ctx.fillText('↓ Beta — ნაკლები (ADHD)',wx+ww+6,wy0+3*wGap+4);
+  }
+
+  label('QEEG-ის შემდეგ ვიცით — რომელი ტალღა სჭარბობს, რომელი — ნაკლია',a*.7);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   STAGE 2  —  ჯილდო (reward loop)
+══════════════════════════════════════════════════════════════ */
+let rewardCount=0;
+function stage2(p){
+  const a=Math.min(1,p*3);
+
+  const glowPulse=p>.3? GREEN:null;
+  drawBrain(W/2,H/2,.88,a*.75,glowPulse,20*(p-.3));
+
+  /* monitor / screen */
+  const sx=448,sy=H/2-72,sw=130,sh=96;
+  ctx.fillStyle='rgba(10,8,24,.95)';
+  ctx.strokeStyle=rgb(GOLD,a*.5); ctx.lineWidth=1.5;
+  ctx.beginPath(); ctx.roundRect(sx,sy,sw,sh,8); ctx.fill(); ctx.stroke();
+
+  if(p>.25){
+    const fa=(p-.25)/.75;
+    /* reward bar */
+    const bw=(sw-20)*Math.min(1,ease(fa)*1.5);
+    ctx.fillStyle=rgb(GREEN,.12); ctx.fillRect(sx+10,sy+sh-24,sw-20,14);
+    ctx.fillStyle=rgb(GREEN,.85); ctx.fillRect(sx+10,sy+sh-24,bw,14);
+    /* ✓ text */
+    if(p>.5){
+      const ta=(p-.5)/.5;
+      ctx.fillStyle=rgb(GREEN,ta*.9);
+      ctx.font=`bold ${11+ta*2}px system-ui`; ctx.textAlign='center';
+      ctx.fillText('✓ ჯილდო!',sx+sw/2,sy+42);
+    }
+  }
+
+  /* animated dotted line brain → screen */
+  if(p>.2){
+    const la=(p-.2)/.8;
+    const x0=W/2+90, x1=sx, y0=H/2;
+    const len=x1-x0;
+    /* dashes */
+    for(let i=0;i<len;i+=14){
+      const prog=(t*.06-i/len)%1;
+      ctx.beginPath();
+      ctx.arc(x0+i,y0+Math.sin(i*.04)*5,1.8,0,Math.PI*2);
+      ctx.fillStyle=rgb(GREEN,la*(prog>.5?.9:.3)); ctx.fill();
+    }
+    /* moving pulse */
+    const px=x0+(((t*.04)%1)*len);
+    glow(GREEN,12);
+    ctx.beginPath(); ctx.arc(px,y0+Math.sin((px-x0)*.04)*5,3.5,0,Math.PI*2);
+    ctx.fillStyle=rgb(GREEN,.9); ctx.fill(); noGlow();
+  }
+
+  /* reward counter */
+  if(p>.35){
+    const ca=(p-.35)/.65;
+    rewardCount=Math.floor(ease(ca)*500);
+    ctx.fillStyle=rgb(GOLD,ca*.6);
+    ctx.font='9px system-ui'; ctx.textAlign='center';
+    ctx.fillText(`${rewardCount} ჯილდო სესიაზე ≈ 400–500`,W/2,H-22);
+  }
+
+  /* particles on reward */
+  if(p>.5 && Math.random()<.18) burst(W/2,H/2,GREEN,8);
+  tickParts();
+
+  label('ოპტიმალური ტალღა → ეკრანი გამოეხმაურება → ტვინი სწავლობს',a*.7);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   STAGE 3  —  სინაფსური კავშირები
+══════════════════════════════════════════════════════════════ */
+function stage3(p){
+  const a=Math.min(1,p*3);
+  if(!nodes.length) initNet(W/2,H/2-5);
+
+  /* strengthen */
+  conns.forEach((c,i)=>{ if(p>i*.018) c.str=Math.min(1,c.str+c.spd); });
+  nodes.forEach((n,i)=>{ if(p>i*.04) n.str=Math.min(1,n.str+.014); });
+
+  drawBrain(W/2,H/2-5,.9,a*.35,null);
+
+  /* connections */
+  conns.forEach(c=>{
+    if(c.str<=0)return;
+    const a=nodes[c.i], b=nodes[c.j];
+    ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y);
+    ctx.strokeStyle=rgb(BLUE,c.str*.55);
+    ctx.lineWidth=c.str*2.5; ctx.stroke();
+  });
+
+  /* nodes */
+  nodes.forEach(n=>{
+    if(n.str<=0)return;
+    if(n.str>.6){glow(BLUE,10+n.str*8);}
+    ctx.beginPath(); ctx.arc(n.x,n.y,2.5+n.str*4,0,Math.PI*2);
+    ctx.fillStyle=rgb(BLUE,n.str*.85); ctx.fill(); noGlow();
+  });
+
+  /* Hebb quote */
+  if(p>.55){
+    const qa=(p-.55)/.45;
+    ctx.fillStyle=rgb(BLUE,qa*.55);
+    ctx.font='italic 9px system-ui'; ctx.textAlign='center';
+    ctx.fillText('"Neurons that fire together, wire together" — Hebb, 1949',W/2,H-22);
+  }
+
+  label('სინაფსური კავშირები მყარდება — ნეიროპლასტიურობა',a*.7);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   STAGE 4  —  ბალანსი
+══════════════════════════════════════════════════════════════ */
+function stage4(p){
+  const a=Math.min(1,p*3);
+
+  /* pulsing glow */
+  const gStr=(.25+Math.sin(t*.055)*.12)*a;
+  drawBrain(W/2,H/2-8,.88,a*.85,GOLD,gStr*30);
+
+  /* LEFT panel — before */
+  if(p>.15){
+    const fa=(p-.15)/.85;
+    panelBefore(60,fa);
+  }
+
+  /* RIGHT panel — after */
+  if(p>.45){
+    const fa=(p-.45)/.55;
+    panelAfter(W-60,fa);
+  }
+
+  /* arrow */
+  if(p>.38){
+    const aa=(p-.38)/.62;
+    ctx.fillStyle=rgb(GOLD,aa*.6);
+    ctx.font='22px system-ui'; ctx.textAlign='center';
+    ctx.fillText('→',W/2,H/2+115);
+  }
+
+  /* confetti */
+  if(p>.82 && Math.random()<.15){
+    burst(W/2,H/2-8,GOLD,6); burst(W/2,H/2-8,GREEN,4);
+  }
+  tickParts();
+
+  label('ახალი ნეიროლოგიური ნიმუში — გრძელვადიანი, სტაბილური',a*.7);
+}
+
+function panelBefore(cx,a){
+  ctx.fillStyle=rgb(GOLD,a*.35);
+  ctx.font='8.5px system-ui'; ctx.textAlign='center';
+  ctx.fillText('მანამდე',cx,75);
+
+  wave(cx-65,110,130,4.8,16,t*.09,[220,120,60],a*.75);
+  wave(cx-65,150,130,18,3,t*.09,BLUE,a*.75);
+
+  ctx.fillStyle=rgb(AMBER,a*.6); ctx.textAlign='center';
+  ctx.font='8px system-ui';
+  ctx.fillText('Theta ↑',cx,100);
+  ctx.fillStyle=rgb(BLUE,a*.6);
+  ctx.fillText('Beta ↓',cx,140);
+}
+
+function panelAfter(cx,a){
+  ctx.fillStyle=rgb(GREEN,a*.35);
+  ctx.font='8.5px system-ui'; ctx.textAlign='center';
+  ctx.fillText('შემდეგ',cx,75);
+
+  wave(cx-65,110,130,5,8,t*.09,AMBER,a*.75);
+  wave(cx-65,150,130,19,9,t*.09,BLUE,a*.75);
+
+  ctx.fillStyle=rgb(AMBER,a*.6); ctx.textAlign='center';
+  ctx.font='8px system-ui';
+  ctx.fillText('Theta ↓',cx,100);
+  ctx.fillStyle=rgb(BLUE,a*.6);
+  ctx.fillText('Beta ↑',cx,140);
+
+  if(a>.65){
+    const ca=(a-.65)/.35;
+    glow(GREEN,14);
+    ctx.fillStyle=rgb(GREEN,ca*.9);
+    ctx.font=`bold ${12+ca*3}px system-ui`;
+    ctx.textAlign='center';
+    ctx.fillText('✓ ბალანსი',cx,195);
+    noGlow();
+  }
+}
+
+/* ── bottom label ───────────────────────────────────────────── */
+function label(txt,a){
+  ctx.fillStyle=rgb(GOLD,a*.55);
+  ctx.font='9px system-ui'; ctx.textAlign='center';
+  ctx.fillText(txt,W/2,H-8);
+}
+
+/* ── stage map ──────────────────────────────────────────────── */
+const STAGES=[stage0,stage1,stage2,stage3,stage4];
+
+/* ── update dots ────────────────────────────────────────────── */
+function updateUI(){
+  for(let i=0;i<NUM_STAGES;i++){
+    document.getElementById(`d${i}`).className='dot'+(i===stage?' active':'');
+  }
+  document.getElementById('lbl').textContent=LABELS[stage];
+}
+
+/* ── main loop ──────────────────────────────────────────────── */
+function loop(){
+  /* bg */
+  ctx.fillStyle='#07070e'; ctx.fillRect(0,0,W,H);
+  /* subtle grid */
+  ctx.strokeStyle='rgba(201,169,110,.025)'; ctx.lineWidth=1;
+  for(let x=0;x<W;x+=50){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+  for(let y=0;y<H;y+=50){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+
+  /* stage title */
+  ctx.fillStyle=rgb(GOLD,.22);
+  ctx.font='bold 9px system-ui'; ctx.textAlign='right';
+  ctx.fillText(`${stage+1} / ${NUM_STAGES}`,W-12,18);
+
+  const p=Math.min(1,sT/STAGE_DUR);
+  STAGES[stage](p);
+
+  /* progress bar */
+  ctx.fillStyle=rgb(GOLD,.08); ctx.fillRect(0,H-2,W,2);
+  ctx.fillStyle=rgb(GOLD,.55); ctx.fillRect(0,H-2,W*((stage+p)/NUM_STAGES),2);
+
+  t++; sT++;
+  if(sT>=STAGE_DUR){
+    sT=0;
+    stage=(stage+1)%NUM_STAGES;
+    if(stage===3) initNet(W/2,H/2-5);
+    rewardCount=0;
+    updateUI();
+  }
+  requestAnimationFrame(loop);
+}
+
+updateUI();
+loop();
+
+})();
+</script>
+</body>
+</html>

@@ -2392,6 +2392,53 @@ h4 { font-size: 1.1rem; }
   .tms-anim-wrap { height: 200px; }
 }
 
+/* ── NFB Animation ──────────────────────────────────────────── */
+.nfb-anim-wrap {
+  position: relative;
+  width: 620px;
+  max-width: 100%;
+  height: 400px;
+  margin: 32px auto 0;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #07070e;
+  border: 1px solid rgba(201,169,110,.12);
+}
+.nfb-anim-wrap canvas {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+}
+.nfb-anim-caption {
+  text-align: center;
+  font-size: 0.72rem;
+  color: rgba(201,169,110,.35);
+  letter-spacing: .05em;
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+.nfb-stage-dots {
+  display: flex;
+  gap: 9px;
+  justify-content: center;
+  margin-top: 10px;
+}
+.nfb-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #13121f;
+  border: 1px solid rgba(201,169,110,.22);
+  transition: all .35s;
+}
+.nfb-dot.active {
+  background: #c9a96e;
+  box-shadow: 0 0 8px rgba(201,169,110,.5);
+  transform: scale(1.35);
+}
+@media (max-width: 640px) {
+  .nfb-anim-wrap { height: 260px; }
+}
+
 /* ============================================================
    MOBILE FIXES — comprehensive responsive repair
    ============================================================ */
