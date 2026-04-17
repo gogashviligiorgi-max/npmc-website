@@ -372,20 +372,241 @@ const conditionData = {
   }
 };
 
+const conditionData_en = {
+  adhd: {
+    title: 'ADHD',
+    subtitle: 'Attention Deficit Hyperactivity Disorder',
+    icon: conditionData.adhd.icon,
+    description: 'ADHD (Attention Deficit Hyperactivity Disorder) is a neurodevelopmental condition that affects concentration, impulse control, and physical activity levels. It occurs in both children and adults. In many cases, medication alone provides only partial relief — it masks symptoms but does not change the underlying neural activity patterns in the brain.',
+    symptoms: [
+      'Difficulty sustaining focus and persistent distractibility',
+      'Impulsive decisions and behaviors',
+      'Physical hyperactivity or an internal sense of restlessness',
+      'Problems with time management and organization',
+      'Forgetfulness and difficulty completing everyday tasks'
+    ],
+    qeeg: [
+      { name: 'Theta', hz: '4–8 Hz', status: 'high', desc: 'Excess activity in the frontal region — the classic ADHD signature pattern' },
+      { name: 'Beta', hz: '13–30 Hz', status: 'low', desc: 'Deficiency in the frontal lobe, causing difficulty with sustained focus and concentration' },
+      { name: 'Alpha', hz: '8–12 Hz', status: 'normal', desc: 'Typically within normal range; mild asymmetry may occasionally be present' },
+      { name: 'Delta', hz: '0.5–4 Hz', status: 'high', desc: 'Sometimes elevated, indicating frontal hypoactivation and reduced cortical arousal' }
+    ],
+    treatment: 'Neurofeedback — one of the most rigorously studied treatments for ADHD, with over 50 years of research. TMS — to strengthen frontal Beta-wave activity, enhancing mental clarity and cognitive engagement. Objective Theta/Beta ratio measurement via QEEG — enabling an individualized, targeted therapy plan.'
+  },
+  depression: {
+    title: 'Depression',
+    subtitle: 'Clinical Depression and Treatment-Resistant Forms',
+    icon: conditionData.depression.icon,
+    description: 'Clinical depression is not simply "a bad mood" — it is a complex disruption of the brain\'s biochemistry and electrical activity. Conventional treatment (antidepressants) helps only approximately 50% of patients. For those who do not respond to medication, direct, targeted correction of the brain\'s neural patterns becomes essential.',
+    symptoms: [
+      'Persistent sadness, emptiness, and a pervasive sense of hopelessness',
+      'Loss of interest in activities that were once enjoyable',
+      'Marked decrease in energy and chronic fatigue',
+      'Sleep disturbances (insomnia or, conversely, excessive sleepiness)',
+      'Difficulty concentrating and making decisions',
+      'Somatic complaints (unexplained pain, heaviness throughout the body)'
+    ],
+    qeeg: [
+      { name: 'Alpha', hz: '8–12 Hz', status: 'high', desc: 'Asymmetry: excess right frontal activity relative to the left — a classic neurological marker of depression' },
+      { name: 'Theta', hz: '4–8 Hz', status: 'high', desc: 'Elevated in anterior regions — associated with rumination (repetitive, intrusive negative thinking)' },
+      { name: 'Beta', hz: '13–30 Hz', status: 'low', desc: 'Reduced activity, contributing to a deficit in energy and motivation' },
+      { name: 'Delta', hz: '0.5–4 Hz', status: 'normal', desc: 'Generally within normal limits, unless severe organic sleep disturbances are present' }
+    ],
+    treatment: 'TMS — an FDA-approved method that effectively targets treatment-resistant depression. We stimulate the left DLPFC (dorsolateral prefrontal cortex) to correct alpha asymmetry. QEEG-guided protocol + Neurofeedback + targeted psychotherapy — a synergistic approach that works where other methods have failed.'
+  },
+  anxiety: {
+    title: 'Anxiety',
+    subtitle: 'Generalized Anxiety Disorder (GAD) and Social Anxiety',
+    icon: conditionData.anxiety.icon,
+    description: 'Anxiety disorders represent a state of chronic brain hyperarousal. The amygdala (the brain\'s "fear center") is chronically overactive, while the alpha-wave barrier responsible for calm is weakened. As a result, the individual perceives threat even where none exists, generating a constant state of internal tension.',
+    symptoms: [
+      'Persistent, uncontrollable worry and restlessness',
+      'Chronic muscle tension (especially in the shoulders and neck)',
+      'Difficulty falling asleep or disrupted, fragmented sleep',
+      'Physical manifestations: racing heart, sweating, trembling',
+      'Difficulty focusing and a feeling of mental "shutdown"'
+    ],
+    qeeg: [
+      { name: 'Beta', hz: '13–30 Hz', status: 'high', desc: 'Elevated in frontal and central regions — indicative of persistent hyperarousal' },
+      { name: 'High Beta', hz: '20–30 Hz', status: 'high', desc: 'Excess activity causing anxious mental blocking and cognitive fog' },
+      { name: 'Alpha', hz: '8–12 Hz', status: 'low', desc: 'Deficit of calm; the alpha barrier is weak and the brain can no longer achieve relaxation' },
+      { name: 'Theta', hz: '4–8 Hz', status: 'normal', desc: 'Generally within normal limits, unless anxiety co-occurs with another disorder' }
+    ],
+    treatment: 'Neurofeedback (Alpha protocol) — we train the brain to generate alpha waves, increasing resilience to stress. TMS — to dampen excess beta activity in frontal regions. QEEG-monitored normalization of the alpha/beta ratio — resolving chronic anxiety at the neurological level.'
+  },
+  panic: {
+    title: 'Panic Attacks',
+    subtitle: 'Acute Panic Episodes and Autonomic Nervous System Dysregulation',
+    icon: conditionData.panic.icon,
+    description: 'A panic attack is a sudden "overload" of the brain\'s emotional regulatory system. The amygdala (the brain\'s alarm center) sends a false threat signal, while the frontal cortex (the rational brain) fails to suppress it in time. The individual experiences a sense of imminent physical death — this is not imagination, it is a real biochemical process.',
+    symptoms: [
+      'Sudden, intense racing heartbeat (palpitations)',
+      'Shortness of breath and a sensation of air hunger',
+      'Pressure or pain in the chest area',
+      'Dizziness and a feeling of unreality (derealization)',
+      'Overwhelming fear of dying or "losing one\'s mind"'
+    ],
+    qeeg: [
+      { name: 'High Beta', hz: '20–30 Hz', status: 'high', desc: 'The amygdala is in a state of hyperactivation, continuously generating "alarm" signals' },
+      { name: 'Alpha', hz: '8–12 Hz', status: 'low', desc: 'Calm resources are blocked; frontal regulatory control is weakened' },
+      { name: 'Theta', hz: '4–8 Hz', status: 'high', desc: 'Sometimes elevated in amygdala projection zones — reflecting emotional instability' },
+      { name: 'Beta', hz: '13–20 Hz', status: 'high', desc: 'Excess activity sustaining a state of persistent hyperarousal' }
+    ],
+    treatment: 'TMS — amplifies alpha waves and reduces high beta ("alarm") activity; helps the brain reclaim regulatory control. Neurofeedback (Alpha-Theta protocol) — neural training for deep relaxation; patients learn to transition from a state of anxiety to a state of calm. QEEG — objective measurement of progress at every session.'
+  },
+  ocd: {
+    title: 'OCD',
+    subtitle: 'Obsessive-Compulsive Disorder',
+    icon: conditionData.ocd.icon,
+    description: 'OCD is characterized by hyperactivity within the brain\'s fronto-striato-thalamic circuit. Obsessive thoughts create a specific "looping" pattern in the brain that the patient cannot interrupt by will alone — the brain becomes trapped in the same repeating cycle. TMS is currently one of the most well-studied and FDA-authorized treatment methods for OCD.',
+    symptoms: [
+      'Repetitive, uncontrollable intrusive thoughts (obsessions)',
+      'Compulsive behaviors or rituals (compulsions)',
+      'Excessive striving for symmetry, cleanliness, and control',
+      'Intense anxiety when a ritual cannot be completed for any reason',
+      'Significant deterioration of daily functioning and quality of life'
+    ],
+    qeeg: [
+      { name: 'Beta', hz: '13–30 Hz', status: 'high', desc: 'Excess activity in fronto-central regions — reflecting the obsessive-compulsive cycle' },
+      { name: 'Theta', hz: '4–8 Hz', status: 'high', desc: 'Elevated readings indicate the "locking" of intrusive thoughts in a fixed loop' },
+      { name: 'Alpha', hz: '8–12 Hz', status: 'low', desc: 'Deficit of calm; patients struggle to "release" thoughts and shift attention' },
+      { name: 'Gamma', hz: '30–100 Hz', status: 'high', desc: 'Hypersynchrony: excess activity in basal ganglia and frontal networks' }
+    ],
+    treatment: 'TMS (FDA-authorized) — stimulation of the SMA (Supplementary Motor Area) reduces compulsive behaviors and the urge to perform rituals. Neurofeedback — alpha enhancement helps the brain gain freedom from intrusive thoughts. QEEG connectivity analysis — precise mapping of inter-regional synchrony, with stimulation targets determined to millimeter accuracy.'
+  },
+  sleep: {
+    title: 'Sleep Problems',
+    subtitle: 'Insomnia, Chronic Fatigue, and Sleep Quality Deterioration',
+    icon: conditionData.sleep.icon,
+    description: 'Sleep problems are often the result of an imbalance in the brain\'s electrical patterns — not simply stress or poor habits. When delta waves are deficient during deep sleep stages and beta activity is excessive at night, the brain cannot "switch off" and regenerate. This produces a state in which the body is physically at rest, but the brain continues to operate.',
+    symptoms: [
+      'Difficulty falling asleep and a flood of thoughts at bedtime',
+      'Frequent awakenings throughout the night',
+      'Shallow, unrestorative sleep and early morning waking',
+      'Waking with a feeling of exhaustion and fatigue',
+      'Chronic daytime weakness and persistent mental fog (Brain Fog)'
+    ],
+    qeeg: [
+      { name: 'Beta', hz: '13–30 Hz', status: 'high', desc: 'Elevated frontal activity — an "active" brain that cannot transition into a resting state' },
+      { name: 'Delta', hz: '0.5–4 Hz', status: 'low', desc: 'Deficiency indicates that deep sleep stages are inadequate and the body cannot fully recover' },
+      { name: 'Alpha', hz: '8–12 Hz', status: 'low', desc: 'Weakness of the alpha-delta barrier makes sleep shallow and easily disrupted' },
+      { name: 'Theta', hz: '4–8 Hz', status: 'normal', desc: 'Often within normal range, though its reduction can impair the transition into hypnagogic sleep' }
+    ],
+    treatment: 'Neurofeedback (Delta/Theta protocol) — strengthens the brainwave activity responsible for deep sleep. Alpha-Theta Training — neural learning for deep relaxation, supporting peaceful sleep onset. TMS — reduces excessive nighttime beta activity, "switching off" excess mental noise. PEMF Therapy — pulsed electromagnetic field therapy promotes cellular relaxation and recovery.'
+  },
+  ptsd: {
+    title: 'PTSD & Trauma',
+    subtitle: 'Post-Traumatic Stress Disorder',
+    icon: conditionData.ptsd.icon,
+    description: 'PTSD is a condition in which, following a traumatic event, the brain becomes "locked" in a threat-detection mode. The amygdala (the alarm center) is chronically hyperactive, while the hippocampus (the memory center) is weakened. As a result, the traumatic memory cannot be properly integrated, and the individual continues to re-experience it repeatedly. This is a biological process and a structural brain change — it has no connection to willpower or strength of character.',
+    symptoms: [
+      '<strong>Intrusion:</strong> Flashbacks (re-experiencing the event) and recurring nightmares',
+      '<strong>Hyperarousal:</strong> Persistent tension and an exaggerated startle response to sudden stimuli',
+      '<strong>Emotional numbing:</strong> A sense of "freezing" and social withdrawal',
+      '<strong>Anhedonia:</strong> Loss of the capacity to experience joy and pleasure',
+      '<strong>Avoidance:</strong> Deliberately avoiding places or memories associated with the trauma'
+    ],
+    qeeg: [
+      { name: 'Alpha', hz: '8–12 Hz', status: 'low', desc: 'Asymmetry: right hypoactivity and overload of the left hemisphere — the classic neurological picture of trauma' },
+      { name: 'Theta', hz: '4–8 Hz', status: 'high', desc: 'Excess activity underlying the "locking in" of traumatic memories and their continuous replaying' },
+      { name: 'High Beta', hz: '20–30 Hz', status: 'high', desc: 'Chronic hyperarousal — the brain is perpetually on alert, anticipating threat' },
+      { name: 'Delta', hz: '0.5–4 Hz', status: 'normal', desc: 'Generally within normal limits, though disruptions during deep sleep stages may occur' }
+    ],
+    treatment: 'Neurofeedback (Alpha-Theta protocol) — one of the most recognized treatments for PTSD; helps the brain safely process traumatic memories and achieve deep neurological relaxation. EMDR + QEEG-guided psychotherapy — combined with brain mapping data, therapy becomes targeted and precise. TMS — corrects alpha asymmetry and restores emotional regulation. Comprehensive program — addressing all structural disruptions simultaneously for durable, long-term results.'
+  },
+  phobia: {
+    title: 'Phobias',
+    subtitle: 'Specific and Social Phobias — Neurobiological Basis of the Fear System',
+    icon: conditionData.phobia.icon,
+    description: 'A phobia is not simply fear — it is a hyperreactivity of the amygdala (the brain\'s fear center) to a specific stimulus. This "mistaken learning" is encoded at the neural level, which is why the frontal cortex (the rational brain) cannot logically suppress the fear response. QEEG mapping precisely reveals where in the brain this unconscious hyperreactivity is occurring.',
+    symptoms: [
+      'Intense, uncontrollable fear in response to a specific object or situation',
+      'Avoidance behavior — evading contact with the triggering stimulus at any cost',
+      'Awareness that the fear is irrational, yet an inability to overcome it',
+      'Physical signs of panic upon exposure — sweating, trembling, rapid breathing',
+      'Significant restriction of daily life and social engagement'
+    ],
+    qeeg: [
+      { name: 'High Beta', hz: '20–30 Hz', status: 'high', desc: 'Excess activity in the fronto-amygdalar network — systemic hypersensitivity' },
+      { name: 'Alpha', hz: '8–12 Hz', status: 'low', desc: 'Calm resources are blocked; the frontal inhibitory mechanism is weakened' },
+      { name: 'Theta', hz: '4–8 Hz', status: 'high', desc: 'Sometimes elevated — reflecting a deeply encoded structure of fear-based emotional memory' },
+      { name: 'Beta', hz: '13–20 Hz', status: 'high', desc: 'Elevated — hyperactivity associated with conditioned (learned) anxiety responses' }
+    ],
+    treatment: 'Neurofeedback (Alpha enhancement) — training the brain\'s inhibitory system; the brain learns to maintain calm in the presence of previously feared stimuli. TMS — normalizes amygdala-frontal connectivity, restoring rational brain control over fear responses. QEEG-guided exposure therapy — with objective monitoring of the patient\'s physiological response, for a safe and effective therapeutic process.'
+  }
+};
+
 function openConditionModal(key) {
-  const d = conditionData[key];
+  const lang = document.documentElement.lang;
+  const d = (lang === 'en' && conditionData_en[key]) ? conditionData_en[key] : conditionData[key];
   if (!d) return;
+
+  const isEn = lang === 'en';
+  const lbl = {
+    high:        isEn ? '↑ Elevated'  : '↑ მომატებული',
+    low:         isEn ? '↓ Reduced'   : '↓ შემცირებული',
+    normal:      isEn ? '✓ Normal'    : '✓ ნორმა',
+    whatIs:      isEn ? 'What is it?' : 'რა არის?',
+    symptoms:    isEn ? 'Key Symptoms'                       : 'ძირითადი სიმპტომები',
+    qeeg:        isEn ? 'QEEG Profile — What We See in the Brain' : 'QEEG სურათი — ტვინში რას ვხედავთ',
+    treatment:   isEn ? 'Treatment at NPMC'                  : 'მკურნალობა NPMC-ში',
+    book:        isEn ? 'Book a Consultation'                : 'დაჯავშნე კონსულტაცია',
+    pricing:     isEn ? 'View Pricing'                       : 'ნახე ფასები',
+  };
 
   const wavesHTML = d.qeeg.map(w => `
     <div class="modal-wave-row">
       <span class="modal-wave-name">${w.name}</span>
       <span class="modal-wave-hz">${w.hz}</span>
-      <span class="modal-wave-status modal-wave-status--${w.status}">${w.status === 'high' ? '↑ მომატებული' : w.status === 'low' ? '↓ შემცირებული' : '✓ ნორმა'}</span>
+      <span class="modal-wave-status modal-wave-status--${w.status}">${w.status === 'high' ? lbl.high : w.status === 'low' ? lbl.low : lbl.normal}</span>
       <span class="modal-wave-desc">${w.desc}</span>
     </div>
   `).join('');
 
   const symptomsHTML = d.symptoms.map(s => `<li>${s}</li>`).join('');
+
+  const BRAIN_MAP_CONFIG_EN = {
+    adhd:       { canvasId: 'conditionBrainMap', legend: [
+      { grad: 'linear-gradient(90deg,#ff2200,#ff8800)', label: 'Theta ↑ Frontal' },
+      { grad: 'linear-gradient(90deg,#ffdd00,#00ee88)', label: 'Normal' },
+      { grad: 'linear-gradient(90deg,#0088ff,#0044cc)', label: 'Beta ↓ Parietal/Occipital' },
+    ]},
+    depression: { canvasId: 'conditionBrainMap', legend: [
+      { grad: 'linear-gradient(90deg,#ff2200,#ff8800)', label: 'Alpha ↑ Right Frontal (asymmetry)' },
+      { grad: 'linear-gradient(90deg,#ffdd00,#44cc88)', label: 'Left Frontal / Central' },
+      { grad: 'linear-gradient(90deg,#0088ff,#0044cc)', label: 'Beta ↓ Parietal/Occipital' },
+    ]},
+    anxiety:    { canvasId: 'conditionBrainMap', legend: [
+      { grad: 'linear-gradient(90deg,#ff2200,#ff6600)', label: 'Beta/High Beta ↑ Frontal/Central' },
+      { grad: 'linear-gradient(90deg,#ffcc00,#ffee44)', label: 'Temporal/Parietal — Elevated' },
+      { grad: 'linear-gradient(90deg,#0066ff,#0044cc)', label: 'Alpha ↓ — Calm Deficit' },
+    ]},
+    panic:      { canvasId: 'conditionBrainMap', legend: [
+      { grad: 'linear-gradient(90deg,#ff0000,#ff4400)', label: 'High Beta ↑ Frontal + Temporal (amygdala)' },
+      { grad: 'linear-gradient(90deg,#ff8800,#ffcc00)', label: 'Beta ↑ Central/Parietal' },
+      { grad: 'linear-gradient(90deg,#0055ff,#0033cc)', label: 'Alpha ↓ Blocked' },
+    ]},
+    ocd:        { canvasId: 'conditionBrainMap', legend: [
+      { grad: 'linear-gradient(90deg,#ff2200,#ff6600)', label: 'Beta+Theta ↑ Med. Frontal/SMA (loop)' },
+      { grad: 'linear-gradient(90deg,#ff9900,#ffcc00)', label: 'Lat. Frontal/Central — Elevated' },
+      { grad: 'linear-gradient(90deg,#0066ff,#0044cc)', label: 'Alpha ↓ — Difficulty Releasing Thoughts' },
+    ]},
+    sleep:      { canvasId: 'conditionBrainMap', legend: [
+      { grad: 'linear-gradient(90deg,#ff3300,#ff7700)', label: 'Beta ↑ Frontal — "Active" Brain' },
+      { grad: 'linear-gradient(90deg,#ffaa00,#ffdd44)', label: 'Central/Temporal — Moderate' },
+      { grad: 'linear-gradient(90deg,#0044ff,#002299)', label: 'Delta+Alpha ↓ Parietal/Occipital' },
+    ]},
+    ptsd:       { canvasId: 'conditionBrainMap', legend: [
+      { grad: 'linear-gradient(90deg,#ff2200,#ff6600)', label: 'High Beta ↑ Bilat. Frontal — Hyperarousal' },
+      { grad: 'linear-gradient(90deg,#ff8800,#ffcc00)', label: 'Theta ↑ Temporal/Central — Trauma Loop' },
+      { grad: 'linear-gradient(90deg,#0055ff,#0033bb)', label: 'Alpha ↓ Right Parietal/Occipital — Asymmetry' },
+    ]},
+    phobia:     { canvasId: 'conditionBrainMap', legend: [
+      { grad: 'linear-gradient(90deg,#ff0000,#ff5500)', label: 'High Beta ↑ Temporal (amygdala) + Frontal' },
+      { grad: 'linear-gradient(90deg,#ff8800,#ffcc00)', label: 'Beta ↑ Central — Conditioned Anxiety' },
+      { grad: 'linear-gradient(90deg,#0066ff,#0033cc)', label: 'Alpha ↓ — Inhibitory Mechanism Blocked' },
+    ]},
+  };
 
   const BRAIN_MAP_CONFIG = {
     adhd: {
@@ -453,7 +674,8 @@ function openConditionModal(key) {
       ],
     },
   };
-  const bmCfg = BRAIN_MAP_CONFIG[key];
+  const bmCfgMap = isEn ? BRAIN_MAP_CONFIG_EN : BRAIN_MAP_CONFIG;
+  const bmCfg = bmCfgMap[key];
   const brainMapHTML = bmCfg ? `
     <div class="modal-brain-wrap">
       <div class="modal-brain-map-box">
@@ -475,25 +697,25 @@ function openConditionModal(key) {
       </div>
     </div>
     <div class="modal-section">
-      <h4>რა არის?</h4>
+      <h4>${lbl.whatIs}</h4>
       <p>${d.description}</p>
     </div>
     <div class="modal-section">
-      <h4>ძირითადი სიმპტომები</h4>
+      <h4>${lbl.symptoms}</h4>
       <ul>${symptomsHTML}</ul>
     </div>
     <div class="modal-qeeg">
-      <h4>QEEG სურათი — ტვინში რას ვხედავთ</h4>
+      <h4>${lbl.qeeg}</h4>
       ${brainMapHTML}
       ${wavesHTML}
     </div>
     <div class="modal-section">
-      <h4>მკურნალობა NPMC-ში</h4>
+      <h4>${lbl.treatment}</h4>
       <p>${d.treatment}</p>
     </div>
     <div class="modal-cta">
-      <a href="#contact" class="btn btn--primary" onclick="closeFs()">დაჯავშნე კონსულტაცია</a>
-      <a href="#pricing" class="btn btn--ghost" onclick="closeFs()">ნახე ფასები</a>
+      <a href="#contact" class="btn btn--primary" onclick="closeFs()">${lbl.book}</a>
+      <a href="#pricing" class="btn btn--ghost" onclick="closeFs()">${lbl.pricing}</a>
     </div>
   `);
 
