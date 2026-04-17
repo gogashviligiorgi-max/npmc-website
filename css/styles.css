@@ -2359,6 +2359,40 @@ h4 { font-size: 1.1rem; }
 }
 
 /* ============================================================
+   TMS NEURAL ANIMATION
+   ============================================================ */
+.tms-anim-wrap {
+  position: relative;
+  width: 510px;
+  max-width: 100%;
+  height: 310px;
+  margin: 28px auto 0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #07070e;
+  border: 1px solid rgba(201,169,110,.12);
+}
+.tms-anim-wrap svg,
+.tms-anim-wrap canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.tms-anim-caption {
+  text-align: center;
+  font-size: 0.72rem;
+  color: rgba(201,169,110,.35);
+  letter-spacing: .05em;
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+@media (max-width: 540px) {
+  .tms-anim-wrap { height: 200px; }
+}
+
+/* ============================================================
    MOBILE FIXES — comprehensive responsive repair
    ============================================================ */
 

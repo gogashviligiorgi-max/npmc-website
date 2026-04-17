@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TMS Neural Animation</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background:#07070e;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    min-height:100vh; gap:18px; font-family:system-ui;
+  }
+  h1  { color:#c9a96e; font-size:.92rem; letter-spacing:.1em; text-transform:uppercase; }
+  .sub{ color:#38384e; font-size:.75rem; letter-spacing:.04em; }
+  .wrap { position:relative; width:510px; height:310px; }
+  #bg  { position:absolute; top:0; left:0; }
+  #nc  { position:absolute; top:0; left:0; pointer-events:none; }
+</style>
+</head>
+<body>
+
+<h1>TMS — Neural Activation</h1>
+
+<!-- ── STATIC BRAIN SVG ───────────────────────────────────────────────── -->
+<div class="wrap">
+<svg id="bg" width="510" height="310" viewBox="0 0 510 310" fill="none">
+  <defs>
+    <radialGradient id="gl" cx="37%" cy="42%" r="64%">
+      <stop offset="0%"  stop-color="#201c35"/>
+      <stop offset="100%" stop-color="#0d0c1d"/>
+    </radialGradient>
+    <radialGradient id="gr" cx="63%" cy="42%" r="64%">
+      <stop offset="0%"  stop-color="#201c35"/>
+      <stop offset="100%" stop-color="#0d0c1d"/>
+    </radialGradient>
+  </defs>
+
+  <!-- LEFT HEMISPHERE -->
+  <path d="M232,46 C220,41 206,38 192,38 C179,38 168,42 158,48
+           C148,54 140,61 132,70 C124,78 117,87 112,97
+           C107,106 103,115 101,125 C99,135 98,145 99,155
+           C99,165 101,175 106,184 C110,193 117,202 126,210
+           C136,219 148,226 162,232 C175,237 189,240 203,240
+           C216,239 226,236 232,232 Z"
+        fill="url(#gl)" stroke="rgba(201,169,110,.68)" stroke-width="1.8"/>
+  <!-- LEFT sulci -->
+  <path d="M164,48 C161,68 160,92 162,116 C163,136 166,158 168,178 C169,196 169,214 168,232"
+        stroke="rgba(201,169,110,.2)" stroke-width="1.1" fill="none"/>
+  <path d="M146,55 C142,76 141,100 142,124 C143,146 146,168 148,190 C149,208 149,224 148,236"
+        stroke="rgba(201,169,110,.17)" stroke-width="1" fill="none"/>
+  <path d="M100,152 C114,149 131,147 150,147 C169,147 189,148 213,149 C223,149 230,149 234,149"
+        stroke="rgba(201,169,110,.2)" stroke-width="1.1" fill="none"/>
+  <path d="M101,172 C115,169 131,167 151,167 C170,167 190,168 214,169 C224,169 231,169 234,169"
+        stroke="rgba(201,169,110,.15)" stroke-width="1" fill="none"/>
+  <path d="M184,166 C185,183 186,201 186,219 C186,229 185,237 184,242"
+        stroke="rgba(201,169,110,.14)" stroke-width="1" fill="none"/>
+
+  <!-- FISSURE -->
+  <rect x="232" y="44" width="6" height="190" fill="#07070e"/>
+  <line x1="235" y1="44" x2="235" y2="234" stroke="rgba(201,169,110,.24)" stroke-width=".9" stroke-dasharray="4,3"/>
+
+  <!-- RIGHT HEMISPHERE -->
+  <path d="M238,46 C250,41 264,38 278,38 C291,38 302,42 312,48
+           C322,54 330,61 338,70 C346,78 353,87 358,97
+           C363,106 367,115 369,125 C371,135 372,145 371,155
+           C371,165 369,175 364,184 C360,193 353,202 344,210
+           C334,219 322,226 308,232 C295,237 281,240 267,240
+           C254,239 244,236 238,232 Z"
+        fill="url(#gr)" stroke="rgba(201,169,110,.68)" stroke-width="1.8"/>
+  <!-- RIGHT sulci -->
+  <path d="M306,48 C309,68 310,92 308,116 C307,136 304,158 302,178 C301,196 301,214 302,232"
+        stroke="rgba(201,169,110,.2)" stroke-width="1.1" fill="none"/>
+  <path d="M324,55 C328,76 329,100 328,124 C327,146 324,168 322,190 C321,208 321,224 322,236"
+        stroke="rgba(201,169,110,.17)" stroke-width="1" fill="none"/>
+  <path d="M370,152 C356,149 339,147 320,147 C301,147 281,148 257,149 C247,149 240,149 236,149"
+        stroke="rgba(201,169,110,.2)" stroke-width="1.1" fill="none"/>
+  <path d="M369,172 C355,169 339,167 319,167 C300,167 280,168 256,169 C246,169 239,169 236,169"
+        stroke="rgba(201,169,110,.15)" stroke-width="1" fill="none"/>
+  <path d="M286,166 C285,183 284,201 284,219 C284,229 285,237 286,242"
+        stroke="rgba(201,169,110,.14)" stroke-width="1" fill="none"/>
+
+  <!-- Labels -->
+  <text x="156" y="276" text-anchor="middle" fill="rgba(201,169,110,.22)" font-size="8" letter-spacing=".08em">LEFT HEMISPHERE</text>
+  <text x="314" y="276" text-anchor="middle" fill="rgba(201,169,110,.22)" font-size="8" letter-spacing=".08em">RIGHT HEMISPHERE</text>
+
+  <!-- TMS COIL -->
+  <rect x="14" y="103" width="52" height="13" rx="6.5" fill="rgba(14,12,28,1)" stroke="rgba(201,169,110,.52)" stroke-width="1.3"/>
+  <line x1="25" y1="109" x2="58" y2="109" stroke="rgba(201,169,110,.18)" stroke-width=".7"/>
+  <ellipse cx="74" cy="98"  rx="15" ry="11" fill="rgba(10,8,24,.96)" stroke="rgba(201,169,110,.88)" stroke-width="1.7"/>
+  <ellipse cx="74" cy="120" rx="15" ry="11" fill="rgba(10,8,24,.96)" stroke="rgba(201,169,110,.88)" stroke-width="1.7"/>
+  <path d="M61,94  Q74,87 87,94"  stroke="rgba(201,169,110,.42)" stroke-width="1" fill="none"/>
+  <path d="M61,98  Q74,91 87,98"  stroke="rgba(201,169,110,.42)" stroke-width="1" fill="none"/>
+  <path d="M61,102 Q74,95 87,102" stroke="rgba(201,169,110,.42)" stroke-width="1" fill="none"/>
+  <path d="M61,116 Q74,109 87,116" stroke="rgba(201,169,110,.42)" stroke-width="1" fill="none"/>
+  <path d="M61,120 Q74,113 87,120" stroke="rgba(201,169,110,.42)" stroke-width="1" fill="none"/>
+  <path d="M61,124 Q74,117 87,124" stroke="rgba(201,169,110,.42)" stroke-width="1" fill="none"/>
+  <circle cx="74" cy="109" r="5.5" fill="rgba(201,169,110,.92)"/>
+  <circle cx="74" cy="109" r="2.2" fill="white" opacity=".65"/>
+  <text x="74" y="152" text-anchor="middle" fill="rgba(201,169,110,.52)" font-size="7.5" font-weight="700" letter-spacing=".07em">TMS COIL</text>
+</svg>
+
+<!-- ── DYNAMIC NEURAL CANVAS ─────────────────────────────────────────── -->
+<canvas id="nc" width="510" height="310"></canvas>
+</div>
+
+<p class="sub">pulse → left hemisphere cascade → corpus callosum → right hemisphere → balanced activity</p>
+
+<script>
+const canvas = document.getElementById('nc');
+const ctx    = canvas.getContext('2d');
+const W = 510, H = 310;
+
+// ═══════════════════════════════════════════════════════
+//  BRAIN CLIP PATH  (matches SVG paths exactly)
+// ═══════════════════════════════════════════════════════
+function brainClipPath() {
+  ctx.beginPath();
+  ctx.moveTo(232,46);
+  ctx.bezierCurveTo(220,41,206,38,192,38);
+  ctx.bezierCurveTo(179,38,168,42,158,48);
+  ctx.bezierCurveTo(148,54,140,61,132,70);
+  ctx.bezierCurveTo(124,78,117,87,112,97);
+  ctx.bezierCurveTo(107,106,103,115,101,125);
+  ctx.bezierCurveTo(99,135,98,145,99,155);
+  ctx.bezierCurveTo(99,165,101,175,106,184);
+  ctx.bezierCurveTo(110,193,117,202,126,210);
+  ctx.bezierCurveTo(136,219,148,226,162,232);
+  ctx.bezierCurveTo(175,237,189,240,203,240);
+  ctx.bezierCurveTo(216,239,226,236,232,232);
+  ctx.closePath();
+  ctx.moveTo(238,46);
+  ctx.bezierCurveTo(250,41,264,38,278,38);
+  ctx.bezierCurveTo(291,38,302,42,312,48);
+  ctx.bezierCurveTo(322,54,330,61,338,70);
+  ctx.bezierCurveTo(346,78,353,87,358,97);
+  ctx.bezierCurveTo(363,106,367,115,369,125);
+  ctx.bezierCurveTo(371,135,372,145,371,155);
+  ctx.bezierCurveTo(371,165,369,175,364,184);
+  ctx.bezierCurveTo(360,193,353,202,344,210);
+  ctx.bezierCurveTo(334,219,322,226,308,232);
+  ctx.bezierCurveTo(295,237,281,240,267,240);
+  ctx.bezierCurveTo(254,239,244,236,238,232);
+  ctx.closePath();
+}
+
+// ═══════════════════════════════════════════════════════
+//  NEURON POSITIONS — denser grid, 70 per hemisphere
+// ═══════════════════════════════════════════════════════
+const LC = [
+  // row 1 — frontal tip
+  [151,64],[163,58],[176,57],[190,57],[204,58],[217,62],[226,68],
+  // row 2
+  [136,80],[149,75],[163,73],[177,73],[191,74],[205,75],[218,77],[226,82],
+  // row 3
+  [120,100],[134,96],[148,93],[162,92],[177,93],[191,94],[205,95],[218,96],[225,101],
+  // row 4
+  [107,120],[121,116],[136,113],[151,112],[165,112],[179,113],[193,114],[207,115],[219,116],[225,120],
+  // row 5
+  [102,141],[116,137],[131,135],[146,134],[161,134],[175,135],[189,136],[203,137],[216,138],[223,141],
+  // row 6
+  [103,162],[117,159],[132,157],[147,156],[162,156],[176,157],[190,158],[204,159],[217,160],[223,162],
+  // row 7
+  [108,183],[122,180],[137,178],[152,177],[167,178],[181,179],[195,180],[208,181],[220,183],
+  // row 8
+  [116,204],[130,201],[145,200],[160,199],[174,200],[188,201],[201,202],[213,204],
+  // row 9 — posterior
+  [125,222],[140,220],[155,219],[169,220],[183,221],[196,222],[208,224],
+];
+
+// Mirror for right: x_r = 470 - x_l
+const RC = LC.map(([x,y])=>[470-x,y]);
+
+// Build neuron objects
+const N = [];
+LC.forEach(([x,y],i) => N.push({x,y,id:i,     side:'L',con:[],t:1e9,phase:Math.random()*Math.PI*2}));
+const NL = N.length;
+RC.forEach(([x,y],i) => N.push({x,y,id:NL+i,  side:'R',con:[],t:1e9,phase:Math.random()*Math.PI*2}));
+
+// ═══════════════════════════════════════════════════════
+//  BUILD EDGES — larger radius for denser mesh
+// ═══════════════════════════════════════════════════════
+const RADIUS = 46;
+const edges = [];
+
+for(let i=0;i<N.length;i++){
+  for(let j=i+1;j<N.length;j++){
+    const ni=N[i], nj=N[j];
+    const d=Math.hypot(ni.x-nj.x,ni.y-nj.y);
+    if(ni.side===nj.side && d<RADIUS){
+      ni.con.push(j); nj.con.push(i);
+      edges.push({a:i,b:j,cal:false,len:d});
+    }
+  }
+}
+
+// Corpus callosum — 8 bridges across fissure
+const LF = N.filter(n=>n.side==='L'&&n.x>218).sort((a,b)=>a.y-b.y);
+const RF = N.filter(n=>n.side==='R'&&n.x<252).sort((a,b)=>a.y-b.y);
+const calSet = new Set();
+for(let i=0;i<Math.min(8,LF.length,RF.length);i++){
+  const li=LF[i].id, ri=RF[i].id;
+  LF[i].con.push(ri); RF[i].con.push(li);
+  const k=Math.min(li,ri)+'_'+Math.max(li,ri);
+  calSet.add(k);
+  edges.push({a:li,b:ri,cal:true,len:Math.hypot(LF[i].x-RF[i].x,LF[i].y-RF[i].y)});
+}
+
+// ═══════════════════════════════════════════════════════
+//  DIJKSTRA — activation times from coil entry
+// ═══════════════════════════════════════════════════════
+const COIL_X=100, COIL_Y=109;
+let entry = N.filter(n=>n.side==='L').reduce((b,n)=>
+  Math.hypot(n.x-COIL_X,n.y-COIL_Y)<Math.hypot(b.x-COIL_X,b.y-COIL_Y)?n:b
+);
+entry.t = 0;
+
+const vis = new Set();
+const pq  = [{id:entry.id,t:0}];
+while(pq.length){
+  pq.sort((a,b)=>a.t-b.t);
+  const {id,t} = pq.shift();
+  if(vis.has(id)) continue;
+  vis.add(id);
+  const n = N[id];
+  n.con.forEach(cid=>{
+    if(vis.has(cid)) return;
+    const cn = N[cid];
+    const d  = Math.hypot(n.x-cn.x,n.y-cn.y);
+    const k  = Math.min(id,cid)+'_'+Math.max(id,cid);
+    const tt = t + (d/16)*85 + (calSet.has(k)?240:0);
+    if(tt<cn.t){ cn.t=tt; pq.push({id:cid,t:tt}); }
+  });
+}
+
+const maxT   = N.reduce((m,n)=>n.t<1e9?Math.max(m,n.t):m, 0);
+const SETTLE = 2200;
+const CYCLE  = maxT + SETTLE + 700;
+
+console.log(`Neurons: ${N.length}  Edges: ${edges.length}  maxT: ${maxT.toFixed(0)}ms  Cycle: ${CYCLE.toFixed(0)}ms`);
+
+// ═══════════════════════════════════════════════════════
+//  HELPERS
+// ═══════════════════════════════════════════════════════
+function easeOut(t){ return 1-Math.pow(1-t,3); }
+function easeIn(t) { return t*t*t; }
+
+// ═══════════════════════════════════════════════════════
+//  DRAW LOOP
+// ═══════════════════════════════════════════════════════
+let t0 = null;
+
+function frame(ts){
+  if(!t0) t0=ts;
+  const el   = (ts-t0) % CYCLE;
+  const fade = el > CYCLE-600 ? 1-(el-(CYCLE-600))/600 : 1;
+
+  ctx.clearRect(0,0,W,H);
+
+  ctx.save();
+  brainClipPath();
+  ctx.clip();
+
+  // ── How "restored" are we? (0→1 over first 400ms after maxT)
+  const restored = el>maxT ? Math.min(1,(el-maxT)/400) : 0;
+
+  // ── BACKGROUND GLOW when fully restored ────────────────────────────────
+  if(restored>0){
+    const bg=ctx.createRadialGradient(235,140,0,235,140,175);
+    const ba=(restored*0.07)*fade;
+    bg.addColorStop(0,  `rgba(201,169,110,${ba})`);
+    bg.addColorStop(0.5,`rgba(90,160,255,${ba*0.3})`);
+    bg.addColorStop(1,  'rgba(0,0,0,0)');
+    ctx.fillStyle=bg;
+    ctx.fillRect(0,0,W,H);
+  }
+
+  // ══════════════════════════════════════════════════════════════════════
+  //  EDGES — draw in two passes: dim base + bright active
+  // ══════════════════════════════════════════════════════════════════════
+
+  // Pass 1: "dormant" edges — faint hints that connections exist
+  edges.forEach(({a,b,cal})=>{
+    const tLate = Math.max(N[a].t,N[b].t);
+    if(el >= tLate) return; // already active, skip dormant pass
+    if(el < Math.min(N[a].t,N[b].t)-50) return; // too early
+    const na=N[a], nb=N[b];
+    ctx.strokeStyle='rgba(201,169,110,0.04)';
+    ctx.lineWidth=0.5;
+    ctx.beginPath(); ctx.moveTo(na.x,na.y); ctx.lineTo(nb.x,nb.y); ctx.stroke();
+  });
+
+  // Pass 2: active / strengthened edges
+  edges.forEach(({a,b,cal})=>{
+    const na=N[a], nb=N[b];
+    const tLate = Math.max(na.t,nb.t);
+    if(el < tLate) return;
+
+    const age = el - tLate;
+    let alpha, lw, r=0, g=0, bv=0;
+
+    if(age < 120){
+      // Bright flash — connection forms
+      const f = easeOut(1-age/120);
+      alpha = 0.12 + f*0.88;
+      lw    = 0.7  + f*3.8;
+      // Color briefly goes white-ish
+      r=Math.round(201+f*54); g=Math.round(169+f*80); bv=Math.round(110+f*140);
+    } else if(age < 600){
+      // Settle into strengthened state
+      const s = easeOut((age-120)/480);
+      alpha = 0.12 + (1-s)*0.55 + s*0.38;
+      lw    = 0.7  + (1-s)*2.2  + s*0.9;
+      r=201; g=169; bv=110;
+    } else {
+      // Permanently strengthened — subtle live pulse
+      const pulse = Math.sin(el*0.0018 + na.phase)*0.5+0.5;
+      alpha = 0.36 + pulse*0.16;
+      lw    = 1.1  + pulse*0.5;
+      r=201; g=169; bv=110;
+      // After full restoration: slight warm shimmer on connections
+      if(restored>0.8){
+        alpha += restored*0.08;
+        lw    += restored*0.3;
+      }
+    }
+
+    alpha *= fade;
+    ctx.strokeStyle = `rgba(${r},${g},${bv},${alpha.toFixed(3)})`;
+    ctx.lineWidth = lw;
+    ctx.beginPath();
+    ctx.moveTo(na.x,na.y);
+    ctx.lineTo(nb.x,nb.y);
+    ctx.stroke();
+  });
+
+  // ══════════════════════════════════════════════════════════════════════
+  //  TRAVELING SPARKS — multiple per wave, with color
+  // ══════════════════════════════════════════════════════════════════════
+  edges.forEach(({a,b})=>{
+    const na=N[a], nb=N[b];
+    const tEarly = Math.min(na.t,nb.t);
+    const tLate  = Math.max(na.t,nb.t);
+    if(tLate <= tEarly) return;
+    if(el < tEarly || el > tLate+80) return;
+
+    const src = na.t<=nb.t ? na : nb;
+    const dst = na.t<=nb.t ? nb : na;
+    const dur  = (tLate-tEarly)+70;
+    const p    = Math.min(1,(el-tEarly)/dur);
+
+    const sx = src.x+(dst.x-src.x)*p;
+    const sy = src.y+(dst.y-src.y)*p;
+    const sa = (p<0.8 ? 1 : 1-(p-0.8)/0.2) * fade;
+
+    // Main spark glow
+    const g1=ctx.createRadialGradient(sx,sy,0,sx,sy,11);
+    g1.addColorStop(0,   `rgba(255,252,230,${sa})`);
+    g1.addColorStop(0.25,`rgba(230,200,120,${sa*0.85})`);
+    g1.addColorStop(0.6, `rgba(201,169,110,${sa*0.4})`);
+    g1.addColorStop(1,   'rgba(201,169,110,0)');
+    ctx.fillStyle=g1;
+    ctx.beginPath(); ctx.arc(sx,sy,11,0,Math.PI*2); ctx.fill();
+
+    // Bright core
+    ctx.fillStyle=`rgba(255,255,250,${sa*0.95})`;
+    ctx.beginPath(); ctx.arc(sx,sy,2.5,0,Math.PI*2); ctx.fill();
+
+    // Trail — several fading dots behind
+    for(let t=1;t<=3;t++){
+      const tp = Math.max(0, p - t*0.07);
+      const tx = src.x+(dst.x-src.x)*tp;
+      const ty = src.y+(dst.y-src.y)*tp;
+      const ta = sa*(1-t*0.28);
+      if(ta<0.02) break;
+      ctx.fillStyle=`rgba(201,169,110,${ta.toFixed(3)})`;
+      ctx.beginPath(); ctx.arc(tx,ty,2.5-t*0.5,0,Math.PI*2); ctx.fill();
+    }
+  });
+
+  // ══════════════════════════════════════════════════════════════════════
+  //  NEURONS
+  // ══════════════════════════════════════════════════════════════════════
+  N.forEach(n=>{
+    if(n.t>1e8) return;
+    const age = el - n.t;
+    let r=2.8, alpha=0.10, gr=0, ga=0;
+
+    if(age < 0){
+      // Not yet fired: very faint dormant glow
+      alpha = 0.06 + 0.03*Math.sin(el*0.002+n.phase);
+      r=2.4; gr=0; ga=0;
+    } else if(age < 80){
+      // FIRE flash
+      const f=easeOut(1-age/80);
+      r=2.8+f*7; alpha=1; gr=6+f*24; ga=f*0.9;
+    } else if(age < 500){
+      // Settle
+      const s=easeOut((age-80)/420);
+      r=2.8+(1-s)*3.5; alpha=0.4+(1-s)*0.5; gr=(1-s)*15; ga=(1-s)*0.5;
+    } else {
+      // Stable — synchronized heartbeat
+      const beat = Math.sin(el*0.0042)*0.5+0.5; // shared beat freq
+      const indiv= Math.sin(el*0.0042+n.phase*0.15)*0.3; // slight individual variation
+      const p = Math.max(0,Math.min(1,beat+indiv));
+      r     = 2.8 + p*1.8 + restored*0.8;
+      alpha = 0.35 + p*0.28 + restored*0.12;
+      gr    = p*10 + restored*6;
+      ga    = p*0.3 + restored*0.15;
+    }
+
+    alpha *= fade; ga *= fade;
+
+    // Dormant neurons: just a faint dot
+    if(age<0){
+      ctx.fillStyle=`rgba(201,169,110,${alpha})`;
+      ctx.beginPath(); ctx.arc(n.x,n.y,r,0,Math.PI*2); ctx.fill();
+      return;
+    }
+
+    // Outer glow halo
+    if(gr>0.5 && ga>0.01){
+      const g=ctx.createRadialGradient(n.x,n.y,r*0.2,n.x,n.y,gr+r);
+      g.addColorStop(0,`rgba(201,169,110,${(ga*0.9).toFixed(3)})`);
+      g.addColorStop(0.5,`rgba(201,169,110,${(ga*0.35).toFixed(3)})`);
+      g.addColorStop(1,'rgba(201,169,110,0)');
+      ctx.fillStyle=g;
+      ctx.beginPath(); ctx.arc(n.x,n.y,gr+r,0,Math.PI*2); ctx.fill();
+    }
+
+    // Neuron body — inner bright core + colored fill
+    ctx.fillStyle=`rgba(201,169,110,${alpha.toFixed(3)})`;
+    ctx.beginPath(); ctx.arc(n.x,n.y,r,0,Math.PI*2); ctx.fill();
+
+    // Bright center highlight
+    if(alpha>0.25){
+      ctx.fillStyle=`rgba(255,248,220,${(alpha*0.55).toFixed(3)})`;
+      ctx.beginPath(); ctx.arc(n.x,n.y,r*0.45,0,Math.PI*2); ctx.fill();
+    }
+
+    // Ring stroke
+    ctx.strokeStyle=`rgba(255,242,200,${Math.min(1,alpha+0.15).toFixed(3)})`;
+    ctx.lineWidth=0.7;
+    ctx.beginPath(); ctx.arc(n.x,n.y,r,0,Math.PI*2); ctx.stroke();
+  });
+
+  // ══════════════════════════════════════════════════════════════════════
+  //  RESTORATION WAVE — visible ring expanding when balance achieved
+  // ══════════════════════════════════════════════════════════════════════
+  const waveStart = maxT+50;
+  if(el>waveStart && el<waveStart+900){
+    const wp=(el-waveStart)/900;
+    const wr=wp*220;
+    const wa=(1-wp)*0.45*fade;
+    ctx.strokeStyle=`rgba(65,210,160,${wa.toFixed(3)})`;
+    ctx.lineWidth=1.5+wp*2;
+    ctx.beginPath(); ctx.arc(235,140,wr,0,Math.PI*2); ctx.stroke();
+  }
+  // Second wave
+  const w2Start = maxT+300;
+  if(el>w2Start && el<w2Start+900){
+    const wp=(el-w2Start)/900;
+    const wr=wp*220;
+    const wa=(1-wp)*0.28*fade;
+    ctx.strokeStyle=`rgba(65,210,160,${wa.toFixed(3)})`;
+    ctx.lineWidth=1+wp*1.5;
+    ctx.beginPath(); ctx.arc(235,140,wr,0,Math.PI*2); ctx.stroke();
+  }
+
+  // ══════════════════════════════════════════════════════════════════════
+  //  BALANCE HALO — sustained teal pulsing after restoration
+  // ══════════════════════════════════════════════════════════════════════
+  const haloStart = maxT+400;
+  if(el>haloStart && el<CYCLE-400){
+    const t2=(el-haloStart)/1000;
+    const pulse=Math.sin(t2*2.2)*0.5+0.5;
+    const hr=105+pulse*18;
+    const ha=(0.06+pulse*0.13)*fade;
+    const g=ctx.createRadialGradient(235,140,hr*0.35,235,140,hr);
+    g.addColorStop(0,'rgba(65,210,160,0)');
+    g.addColorStop(0.55,`rgba(65,210,160,${(ha*0.4).toFixed(3)})`);
+    g.addColorStop(1,   `rgba(65,210,160,${ha.toFixed(3)})`);
+    ctx.fillStyle=g;
+    ctx.beginPath(); ctx.arc(235,140,hr,0,Math.PI*2); ctx.fill();
+
+    // Inner warm glow center — "heart" of brain activity
+    const ig=ctx.createRadialGradient(235,140,0,235,140,55);
+    ig.addColorStop(0,  `rgba(201,169,110,${(ha*0.3).toFixed(3)})`);
+    ig.addColorStop(0.6,`rgba(201,169,110,${(ha*0.1).toFixed(3)})`);
+    ig.addColorStop(1,  'rgba(201,169,110,0)');
+    ctx.fillStyle=ig;
+    ctx.beginPath(); ctx.arc(235,140,55,0,Math.PI*2); ctx.fill();
+  }
+
+  ctx.restore(); // end brain clip
+
+  // ══════════════════════════════════════════════════════════════════════
+  //  COIL RINGS (outside clip — magnetic pulse effect)
+  // ══════════════════════════════════════════════════════════════════════
+  const RC2=1800;
+  for(let ri=0;ri<4;ri++){
+    const rp=((el%RC2) + ri*(RC2/4)) % RC2 / RC2;
+    const ra=(1-rp)*0.9;
+    ctx.strokeStyle=`rgba(201,169,110,${ra.toFixed(3)})`;
+    ctx.lineWidth=2.4-rp*2;
+    ctx.beginPath();
+    ctx.arc(92,109, 7+rp*56, 0, Math.PI*2);
+    ctx.stroke();
+  }
+
+  // Coil center warmth
+  const cp=Math.sin(el*.0038)*.35+.65;
+  const cg=ctx.createRadialGradient(74,109,0,74,109,25);
+  cg.addColorStop(0,`rgba(201,169,110,${(cp*.42).toFixed(3)})`);
+  cg.addColorStop(0.5,`rgba(201,169,110,${(cp*.15).toFixed(3)})`);
+  cg.addColorStop(1,'rgba(201,169,110,0)');
+  ctx.fillStyle=cg;
+  ctx.beginPath(); ctx.arc(74,109,25,0,Math.PI*2); ctx.fill();
+
+  requestAnimationFrame(frame);
+}
+
+requestAnimationFrame(frame);
+</script>
+
+</body>
+</html>
