@@ -1,17 +1,121 @@
 /**
- * NPMC — Screening Tests
+ * NPMC — Screening Tests (bilingual: ka / en)
  * PHQ-9 (Depression) · GAD-7 (Anxiety) · ASRS-v1.1 (ADHD) · CBI (Burnout)
- *
- * To enable form submission, replace FORMSPREE_ID with your
- * Formspree form ID from https://formspree.io
  */
 (function () {
   'use strict';
 
   const FORMSPREE_ID = 'xjgpadwp';
 
-  /* ── Test Definitions ─────────────────────────────────────── */
-  const TESTS = {
+  /* ── Georgian Test Definitions ─────────────────────────────── */
+  const TESTS_KA = {
+    phq9: {
+      name: 'PHQ-9',
+      title: 'PHQ-9 — დეპრესიის სკრინინგი',
+      source: 'Patient Health Questionnaire-9 (Kroenke et al., 2001)',
+      preamble: 'ბოლო 2 კვირის განმავლობაში, რამდენად ხშირად შეგაწუხათ შემდეგი პრობლემები?',
+      options: ['საერთოდ არა', 'რამდენიმე დღე', 'ნახევარ\nდღეებზე მეტი', 'თითქმის\nყოველდღე'],
+      values: [0, 1, 2, 3],
+      questions: [
+        'ინტერესისა და სიამოვნების შემცირება ყველაფრის მიმართ.',
+        'სულგამოვარდნილობა, დეპრესია ან უიმედობის განცდა.',
+        'ძილის პრობლემები — ძნელია ჩაძინება, ხშირად იღვიძებთ, ან ზედმეტად ბევრს სძინავთ.',
+        'დაღლილობა ან ენერგიის ნაკლებობა.',
+        'მადის დაქვეითება ან გადაჭარბებული ჭამა.',
+        'ცუდი თვითშეფასება — გეჩვენებათ, რომ უუნაროდ, ჩავარდნილად ან ოჯახისთვის მოუცდენელ ადამიანად.',
+        'კონცენტრაციის სიძნელე — კითხვა, ტელევიზიის ყურება ან გადაწყვეტილებების მიღება.',
+        'ისეთი ნელა ლაპარაკობთ ან მოძრაობთ, რომ სხვებმა შეამჩნიეს — ან პირიქით: ისეთი ნერვიული ხართ, რომ ბევრად მეტი ხართ მოძრაობაში.',
+        'ფიქრები, რომ უმჯობესი იქნებოდა მკვდარი ყოფილიყავით, ან ფიქრები საკუთარ თავს ვნებობაზე.',
+      ],
+      score(total) {
+        if (total <= 4)  return { level: 'მინიმალური ან არ ფიქსირდება',      band: 'green',  desc: 'დეპრესიის სიმპტომები პრაქტიკულად არ ფიქსირდება. კარგი ნიშანია — გააგრძელეთ ჯანსაღი ცხოვრების წესი.', cta: 'გირჩევთ პრევენციულ QEEG Brain Check-ს თქვენი ტვინის ფუნქციური პოტენციალის შესაფასებლად.' };
+        if (total <= 9)  return { level: 'მსუბუქი დეპრესია',                 band: 'yellow', desc: 'მსუბუქი სიმპტომები გამოვლინდა. მდგომარეობა სამართავია, თუმცა გარკვეული ყურადღება სასარგებლო იქნება.', cta: 'გირჩევთ სპეციალისტთან კონსულტაციას. NPMC-ში QEEG დიაგნოსტიკა მოგაწვდის მკაფიო სურათს.' };
+        if (total <= 14) return { level: 'ზომიერი დეპრესია',                 band: 'orange', desc: 'სიმპტომები შესამჩნევია და შეიძლება გავლენა ჰქონდეს ყოველდღიურ ფუნქციონირებაზე.', cta: 'სპეციალისტის კონსულტაცია მნიშვნელოვანია. NPMC გთავაზობთ QEEG + ნეიროფსიქომოდულაციის პროტოკოლს.' };
+        if (total <= 19) return { level: 'საშუალო-მძიმე დეპრესია',           band: 'red',    desc: 'სიმპტომები მნიშვნელოვანია. ეს შეფასება კლინიკური გამოკვლევის საჭიროებაზე მიუთითებს.', cta: 'გთხოვთ, რაც შეიძლება სწრაფად მიმართოთ სპეციალისტს. NPMC მზადაა დაგეხმაროთ.' };
+        return             { level: 'მძიმე დეპრესია',                        band: 'red',    desc: 'სიმპტომები სერიოზულია. გთხოვთ, სასწრაფოდ მიმართოთ სპეციალისტს.', cta: 'გთხოვთ, დაგვიკავშირდეთ დღესვე. NPMC ხელმისაწვდომია სასწრაფო კონსულტაციისთვის.' };
+      },
+    },
+
+    gad7: {
+      name: 'GAD-7',
+      title: 'GAD-7 — შფოთვის სკრინინგი',
+      source: 'Generalized Anxiety Disorder-7 (Spitzer et al., 2006)',
+      preamble: 'ბოლო 2 კვირის განმავლობაში, რამდენად ხშირად შეგაწუხათ შემდეგი პრობლემები?',
+      options: ['საერთოდ არა', 'რამდენიმე დღე', 'ნახევარ\nდღეებზე მეტი', 'თითქმის\nყოველდღე'],
+      values: [0, 1, 2, 3],
+      questions: [
+        'ნერვიულობის, შფოთვის ან სიბლუნთის განცდა.',
+        'ვერ ახერხებთ ფიქრების შეჩერებას ან კონტროლს.',
+        'ზედმეტი შფოთვა სხვადასხვა საკითხებზე.',
+        'სიძნელე დასვენებაში.',
+        'ისეთი მოუსვენრობა, რომ ძნელია ადგილზე ჯდომა.',
+        'ადვილად გაბრაზება ან გაღიზიანება.',
+        'შიშის განცდა, თითქოს რაღაც ცუდი უნდა მოხდეს.',
+      ],
+      score(total) {
+        if (total <= 4)  return { level: 'მინიმალური შფოთვა',  band: 'green',  desc: 'შფოთვის სიმპტომები მინიმალურია. კარგი შეფასებაა.', cta: 'გირჩევთ Brain Check-ს პრევენციული მიზნებისთვის.' };
+        if (total <= 9)  return { level: 'მსუბუქი შფოთვა',     band: 'yellow', desc: 'მსუბუქი შფოთვის სიმპტომები გამოვლინდა. შეიძლება გარკვეული გავლენა ჰქონდეს ყოველდღიურ ცხოვრებაზე.', cta: 'გირჩევთ კონსულტაციას. NPMC-ში ნეიროფიდბექი შფოთვის წინააღმდეგ ეფექტური ინსტრუმენტია.' };
+        if (total <= 14) return { level: 'ზომიერი შფოთვა',     band: 'orange', desc: 'შფოთვის სიმპტომები შესამჩნევია. კლინიკური შეფასება რეკომენდებულია.', cta: 'სპეციალისტის ვიზიტი მნიშვნელოვანია. NPMC გთავაზობთ QEEG + TMS + ნეიროფიდბექის პროტოკოლს.' };
+        return             { level: 'მძიმე შფოთვა',            band: 'red',    desc: 'შფოთვის სიმპტომები სერიოზულია. გთხოვთ, მიმართოთ სპეციალისტს.', cta: 'გთხოვთ, დაგვიკავშირდეთ — NPMC მზადაა დაგეხმაროთ.' };
+      },
+    },
+
+    asrs: {
+      name: 'ASRS-v1.1',
+      title: 'ASRS-v1.1 — ADHD სკრინინგი',
+      source: 'Adult ADHD Self-Report Scale v1.1, Part A (WHO/Kessler et al., 2005)',
+      preamble: 'ბოლო 6 თვის განმავლობაში, რამდენად ხშირად...',
+      options: ['არასოდეს', 'იშვიათად', 'ზოგჯერ', 'ხშირად', 'ძალიან ხშირად'],
+      values: [0, 1, 2, 3, 4],
+      thresholds: [2, 2, 2, 3, 3, 3],
+      questions: [
+        'გიჭირდათ პროექტის საბოლოო დეტალების დასრულება, როდესაც მთავარი სამუშაო უკვე შესრულებულია?',
+        'გიჭირდათ საქმეების მოწესრიგება, როდესაც ორგანიზებულობა საჭიროა?',
+        'გავიწყდებოდათ შეხვედრები ან ვალდებულებები?',
+        'დიდ გონებრივ ძალისხმევასთან დაკავშირებული ამოცანები მიგდებოდათ ან გადადებდოდათ?',
+        'ფხჭინობდოდათ ხელ-ფეხს, როდესაც გრძელი ხნის ჯდომა გიწევდათ?',
+        'ზედმეტ აქტივობასა და მოძრაობას გრძნობდოდათ, თითქოს მექანიზმი გამოგაქვთ და ვერ ჩერდებით?',
+      ],
+      score(_total, raw) {
+        const thresholds = [2, 2, 2, 3, 3, 3];
+        const positives = raw.filter((v, i) => v >= thresholds[i]).length;
+        if (positives >= 4) {
+          return { level: 'ADHD სიმპტომებთან თავსებადია', band: 'orange', desc: `${positives} კითხვიდან 6-ზე დადებითი პასუხი. ეს შედეგი მაღალ თავსებადობაზე მიუთითებს ზრდასრულთა ADHD-თან.`, cta: 'QEEG დიაგნოსტიკა + ნეიროფიდბექი ADHD-ის ერთ-ერთი ყველაზე კვლევით დასაბუთებული მეთოდია. NPMC მოამზადებს ინდივიდუალურ გეგმას.' };
+        }
+        return { level: 'ADHD სიმპტომები ნაკლებად გამოხატულია', band: 'green', desc: `${positives} კითხვიდან 6-ზე დადებითი პასუხი. სიმპტომები ADHD-სთვის დამახასიათებელ ზღვარს არ აღწევს.`, cta: 'თუ მაინც გაქვთ კითხვები ყურადღებასა და კონცენტრაციაზე, NPMC-ის Brain Check-ი გიპოვებს პასუხებს.' };
+      },
+    },
+
+    cbi: {
+      name: 'CBI',
+      title: 'CBI — გადაწვის სკრინინგი',
+      source: 'Copenhagen Burnout Inventory — Personal & Work Burnout (Kristensen et al., 2005)',
+      preamble: 'ბოლო 4 კვირის განმავლობაში, რამდენად ხშირად გამოცდილებიხართ შემდეგი?',
+      options: ['ყოველთვის', 'ხშირად', 'ზოგჯერ', 'იშვიათად', 'არასოდეს'],
+      values: [4, 3, 2, 1, 0],
+      questions: [
+        'გეუფლებათ ფიზიკური დაღლილობა?',
+        'გეუფლებათ ემოციური გამოფიტვა?',
+        'გრძნობთ სისუსტეს და სიმძიმეს მთელ სხეულში?',
+        'გიძნელდებათ ყოველდღიური საქმეების შესრულება?',
+        'გიჩნდება ფიქრი: „ვეღარ გავუძლებ" ან „ვეღარ ვუმკლავდები"?',
+        'სამსახური ან ყოველდღიური ვალდებულებები დაქანცულობის გრძნობას გიჩენთ?',
+        'სამუშაო დღის შემდეგ გიძნელდებათ დასვენება და სხვა საქმიანობაზე გადართვა?',
+        'სამსახური ან სფერო სულ უფრო მოსაბეზრებელი და გამქანცველი გეჩვენებათ?',
+        'ის ენთუზიაზმი, რაც ადრე გქონდათ, შემცირდა?',
+        'გრძნობთ, რომ ენერგია სრულად ამოგეწურათ?',
+      ],
+      score(total) {
+        if (total <= 10) return { level: 'გადაწვა არ ფიქსირდება',  band: 'green',  desc: 'გადაწვის სიმპტომები მინიმალურია. ენერგეტიკული ბალანსი კარგ მდგომარეობაშია.', cta: 'გირჩევთ Brain Check-ს თქვენი ტვინის ფუნქციური პოტენციალის შესაფასებლად.' };
+        if (total <= 20) return { level: 'მსუბუქი გადაწვა',        band: 'yellow', desc: 'ფიზიკური ან ემოციური დაღლილობის სიმპტომები გამოვლინდა. გარკვეული ყურადღება სასარგებლო იქნება.', cta: 'ნეიროფიდბექი სტრეს-რეგულაციის ეფექტური ინსტრუმენტია. NPMC მოამზადებს ინდივიდუალურ გეგმას.' };
+        if (total <= 30) return { level: 'ზომიერი გადაწვა',        band: 'orange', desc: 'გადაწვის სიმპტომები მნიშვნელოვანია. ყოველდღიური ფუნქციონირება შეიძლება დაზარალდეს.', cta: 'კლინიკური შეფასება რეკომენდებულია. NPMC გთავაზობთ QEEG + TMS + ნეიროფიდბექის პროტოკოლს.' };
+        return             { level: 'მძიმე გადაწვა',              band: 'red',    desc: 'გადაწვის სიმპტომები სერიოზულია. გთხოვთ, არ გადადოთ სპეციალისტის მონახულება.', cta: 'გთხოვთ, დაგვიკავშირდეთ. NPMC მზადაა დაგეხმაროთ.' };
+      },
+    },
+  };
+
+  /* ── English Test Definitions ──────────────────────────────── */
+  const TESTS_EN = {
     phq9: {
       name: 'PHQ-9',
       title: 'PHQ-9 — Depression Screening',
@@ -31,11 +135,11 @@
         'Thoughts that you would be better off dead, or thoughts of hurting yourself in some way.',
       ],
       score(total) {
-        if (total <= 4)  return { level: 'Minimal or none',          band: 'green',  desc: 'Depression symptoms are practically absent. This is a good sign — continue with a healthy lifestyle.', cta: 'We recommend a preventive QEEG Brain Check to assess your brain\'s functional potential.' };
-        if (total <= 9)  return { level: 'Mild depression',          band: 'yellow', desc: 'Mild symptoms were detected. The condition is manageable, but some attention would be beneficial.', cta: 'A consultation with a specialist is recommended. At NPMC, QEEG diagnostics will help you get a clear picture.' };
-        if (total <= 14) return { level: 'Moderate depression',      band: 'orange', desc: 'Symptoms are noticeable and may be affecting daily functioning.', cta: 'A specialist consultation is important. NPMC offers a QEEG + Neuropsychomodulation protocol.' };
-        if (total <= 19) return { level: 'Moderately severe depression', band: 'red', desc: 'Symptoms are significant. This score indicates the need for clinical evaluation.', cta: 'Please consult a specialist as soon as possible. At NPMC, we are ready to help you.' };
-        return             { level: 'Severe depression',             band: 'red',    desc: 'Symptoms are serious. Please seek specialist help immediately.', cta: 'Please contact us today. NPMC is available for an urgent consultation.' };
+        if (total <= 4)  return { level: 'Minimal or none',              band: 'green',  desc: 'Depression symptoms are practically absent. This is a good sign — continue with a healthy lifestyle.', cta: 'We recommend a preventive QEEG Brain Check to assess your brain\'s functional potential.' };
+        if (total <= 9)  return { level: 'Mild depression',              band: 'yellow', desc: 'Mild symptoms were detected. The condition is manageable, but some attention would be beneficial.', cta: 'A consultation with a specialist is recommended. At NPMC, QEEG diagnostics will help you get a clear picture.' };
+        if (total <= 14) return { level: 'Moderate depression',          band: 'orange', desc: 'Symptoms are noticeable and may be affecting daily functioning.', cta: 'A specialist consultation is important. NPMC offers a QEEG + Neuropsychomodulation protocol.' };
+        if (total <= 19) return { level: 'Moderately severe depression', band: 'red',    desc: 'Symptoms are significant. This score indicates the need for clinical evaluation.', cta: 'Please consult a specialist as soon as possible. At NPMC, we are ready to help you.' };
+        return             { level: 'Severe depression',                 band: 'red',    desc: 'Symptoms are serious. Please seek specialist help immediately.', cta: 'Please contact us today. NPMC is available for an urgent consultation.' };
       },
     },
 
@@ -70,7 +174,6 @@
       preamble: 'Over the past 6 months, how often have you...',
       options: ['Never', 'Rarely', 'Sometimes', 'Often', 'Very often'],
       values: [0, 1, 2, 3, 4],
-      // Part A scoring: Q1-3 positive if ≥2 (Sometimes+); Q4-6 positive if ≥3 (Often+)
       thresholds: [2, 2, 2, 3, 3, 3],
       questions: [
         'Had trouble wrapping up the final details of a project, once the challenging parts have been done?',
@@ -81,7 +184,6 @@
         'Felt overly active and compelled to do things, as if you were driven by a motor and couldn\'t stop?',
       ],
       score(_total, raw) {
-        // raw = array of answer values per question
         const thresholds = [2, 2, 2, 3, 3, 3];
         const positives = raw.filter((v, i) => v >= thresholds[i]).length;
         if (positives >= 4) {
@@ -90,6 +192,7 @@
         return { level: 'ADHD symptoms less pronounced', band: 'green', desc: `${positives} out of 6 questions answered positively. Symptoms are below the threshold characteristic of ADHD.`, cta: 'If you still have questions about attention and focus, a Brain Check at NPMC will help you find answers.' };
       },
     },
+
     cbi: {
       name: 'CBI',
       title: 'CBI — Burnout Screening',
@@ -118,35 +221,62 @@
     },
   };
 
+  /* ── Error messages by language ────────────────────────────── */
+  const MSG = {
+    ka: {
+      fillInfo:  'გთხოვთ, შეავსოთ სახელი, გვარი, ელ-ფოსტა და ტელეფონი.',
+      answerAll: 'გთხოვთ, უპასუხოთ ყველა კითხვას.',
+      sent:      '✓ შედეგები წარმატებით გაიგზავნა. მოგვმართეთ.',
+      sendFail:  'გაგზავნა ვერ მოხერხდა. გთხოვთ, პირდაპირ დაგვიკავშირდეთ.',
+    },
+    en: {
+      fillInfo:  'Please fill in your first name, last name, email, and phone number.',
+      answerAll: 'Please answer all questions.',
+      sent:      '✓ Results sent successfully. We will contact you.',
+      sendFail:  'Sending failed. Please contact us directly.',
+    },
+  };
+
+  /* ── Helpers ────────────────────────────────────────────────── */
+  function getLang() {
+    try { return localStorage.getItem('npmc-lang') || 'ka'; } catch (e) { return 'ka'; }
+  }
+
+  function getTests() {
+    return getLang() === 'en' ? TESTS_EN : TESTS_KA;
+  }
+
+  function getMsg() {
+    return MSG[getLang()] || MSG.ka;
+  }
+
   /* ── DOM Refs ────────────────────────────────────────────── */
-  const section    = document.getElementById('screening');
+  const section     = document.getElementById('screening');
   if (!section) return;
 
-  const tabsEl     = section.querySelector('.scr-tabs');
-  const questionsEl= section.querySelector('#scrQuestions');
-  const resultEl   = section.querySelector('#scrResult');
-  const submitBtn  = section.querySelector('#scrSubmit');
-  const errorMsg   = section.querySelector('#scrErrorMsg');
+  const tabsEl      = section.querySelector('.scr-tabs');
+  const questionsEl = section.querySelector('#scrQuestions');
+  const resultEl    = section.querySelector('#scrResult');
+  const submitBtn   = section.querySelector('#scrSubmit');
+  const errorMsg    = section.querySelector('#scrErrorMsg');
 
   let activeTest = 'phq9';
 
   /* ── Render Questions ───────────────────────────────────── */
   function renderQuestions(testKey) {
-    const t = TESTS[testKey];
+    const t = getTests()[testKey];
     const cols = t.options.length;
 
-    // Legend
     const legend = document.createElement('div');
     legend.className = 'scr-options-legend';
     legend.style.setProperty('--cols', cols);
     legend.innerHTML = `<div class="scr-opt-label"></div>` +
-      t.options.map(o => `<div class="scr-opt-label">${o.replace('\n','<br>')}</div>`).join('');
+      t.options.map(o => `<div class="scr-opt-label">${o.replace('\n', '<br>')}</div>`).join('');
 
-    // Questions
     const rows = t.questions.map((q, qi) => {
       const cells = t.values.map((v, vi) =>
-        `<div class="scr-radio-cell" data-label="${t.options[vi].replace('\n',' ')}">
-          <input type="radio" class="scr-radio" name="q${qi}" value="${v}" required aria-label="${t.options[vi].replace('\n',' ')}">
+        `<div class="scr-radio-cell" data-label="${t.options[vi].replace('\n', ' ')}">
+          <input type="radio" class="scr-radio" name="q${qi}" value="${v}" required aria-label="${t.options[vi].replace('\n', ' ')}">
         </div>`
       ).join('');
       return `<div class="scr-question" style="--cols:${cols}">
@@ -155,7 +285,6 @@
       </div>`;
     }).join('');
 
-    // Description
     const descHtml = `
       <p class="scr-test-desc">${t.source}</p>
       <p class="scr-preamble">${t.preamble}</p>
@@ -175,6 +304,19 @@
     resultEl.hidden = true;
     resultEl.innerHTML = '';
     errorMsg.classList.remove('visible');
+  });
+
+  /* ── Re-render on language switch ──────────────────────── */
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('.lang-btn');
+    if (!btn) return;
+    // Wait a tick so localStorage is updated by i18n.js first
+    setTimeout(() => {
+      renderQuestions(activeTest);
+      resultEl.hidden = true;
+      resultEl.innerHTML = '';
+      errorMsg.classList.remove('visible');
+    }, 50);
   });
 
   /* ── Validate Info ──────────────────────────────────────── */
@@ -201,7 +343,7 @@
 
   /* ── Get Answers ────────────────────────────────────────── */
   function getAnswers(testKey) {
-    const t = TESTS[testKey];
+    const t = getTests()[testKey];
     const raw = [];
     let complete = true;
     for (let i = 0; i < t.questions.length; i++) {
@@ -215,7 +357,7 @@
 
   /* ── Show Result ────────────────────────────────────────── */
   function showResult(testKey, raw) {
-    const t = TESTS[testKey];
+    const t = getTests()[testKey];
     const total = raw.reduce((s, v) => s + v, 0);
     const res = t.score(total, raw);
     const maxScore = t.values[t.values.length - 1] * t.questions.length;
@@ -235,25 +377,25 @@
   /* ── Submit ─────────────────────────────────────────────── */
   submitBtn.addEventListener('click', async () => {
     errorMsg.classList.remove('visible');
+    const msg = getMsg();
 
     const info = getInfo();
     if (!info) {
-      errorMsg.textContent = 'Please fill in your first name, last name, email, and phone number.';
+      errorMsg.textContent = msg.fillInfo;
       errorMsg.classList.add('visible');
       return;
     }
 
     const raw = getAnswers(activeTest);
     if (!raw) {
-      errorMsg.textContent = 'Please answer all questions.';
+      errorMsg.textContent = msg.answerAll;
       errorMsg.classList.add('visible');
       return;
     }
 
     showResult(activeTest, raw);
 
-    // Send data
-    const t = TESTS[activeTest];
+    const t = getTests()[activeTest];
     const total = raw.reduce((s, v) => s + v, 0);
     const res = t.score(total, raw);
     const payload = {
@@ -266,7 +408,7 @@
       answers: raw.map((v, i) => `${i + 1}. ${t.questions[i]}: ${t.options[v] || v}`).join('\n'),
     };
 
-    if (FORMSPREE_ID === 'YOUR_FORM_ID') return; // not configured yet
+    if (FORMSPREE_ID === 'YOUR_FORM_ID') return;
 
     submitBtn.disabled = true;
     try {
@@ -277,9 +419,7 @@
       });
       const notice = document.createElement('p');
       notice.className = 'scr-sent-notice ' + (r.ok ? 'ok' : 'err');
-      notice.textContent = r.ok
-        ? '✓ Results sent successfully. We will contact you.'
-        : 'Sending failed. Please contact us directly.';
+      notice.textContent = r.ok ? msg.sent : msg.sendFail;
       resultEl.appendChild(notice);
     } catch {
       /* silent — result is already shown */
