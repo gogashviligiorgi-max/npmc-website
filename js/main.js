@@ -68,6 +68,7 @@ tabs.forEach(tab => {
     const panel = document.getElementById('tab-' + target);
     if (panel) {
       panel.classList.add('active');
+      window.dispatchEvent(new CustomEvent('npmc-tab-open', { detail: target }));
       // Animate cards inside
       panel.querySelectorAll('.methods__detail-card, .methods__panel-intro').forEach((el, i) => {
         el.style.opacity = '0';
@@ -866,7 +867,7 @@ if (statsSection) statsObserver.observe(statsSection);
         running = true;
         drawAll();
       }
-    }, { threshold: 0.1 });
+    }, { threshold: 0.1, rootMargin: '400px 0px' });
     observer.observe(qeegPanel);
   } else {
     drawAll();
@@ -1085,7 +1086,7 @@ if (statsSection) statsObserver.observe(statsSection);
       running = true;
       requestAnimationFrame(loop);
     }
-  }, { threshold: 0.1 });
+  }, { threshold: 0.1, rootMargin: '400px 0px' });
   obs.observe(cv);
 })();
 

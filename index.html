@@ -2068,7 +2068,14 @@
 
       requestAnimationFrame(frame);
     }
-    requestAnimationFrame(frame);
+    var tmsPanel = document.getElementById('tab-tms');
+    if (tmsPanel && tmsPanel.classList.contains('active')) {
+      requestAnimationFrame(frame);
+    } else {
+      window.addEventListener('npmc-tab-open', function(e) {
+        if (e.detail === 'tms') requestAnimationFrame(frame);
+      }, { once: true });
+    }
   })();
   </script>
 
@@ -2242,7 +2249,14 @@
 
       requestAnimationFrame(frame);
     }
-    requestAnimationFrame(frame);
+    var nfbPanel = document.getElementById('tab-nfb');
+    if (nfbPanel && nfbPanel.classList.contains('active')) {
+      requestAnimationFrame(frame);
+    } else {
+      window.addEventListener('npmc-tab-open', function(e) {
+        if (e.detail === 'nfb') requestAnimationFrame(frame);
+      }, { once: true });
+    }
   })();
   </script>
 </body>
