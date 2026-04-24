@@ -2475,8 +2475,6 @@ h4 { font-size: 1.1rem; }
   margin: 28px auto 0;
   border-radius: 12px;
   overflow: hidden;
-  background: #07070e;
-  border: 1px solid rgba(201,169,110,.12);
 }
 .nfb-anim-wrap canvas {
   position: absolute;
@@ -2493,6 +2491,33 @@ h4 { font-size: 1.1rem; }
 }
 @media (max-width: 540px) {
   .nfb-anim-wrap { height: 220px; }
+}
+
+/* ── Psychotherapy Brain Animation ───────────────────────────── */
+.psycho-anim-wrap {
+  position: relative;
+  width: 510px;
+  max-width: 100%;
+  height: 380px;
+  margin: 28px auto 0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.psycho-anim-wrap canvas {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+}
+.psycho-anim-caption {
+  text-align: center;
+  font-size: 0.72rem;
+  color: rgba(201,169,110,.35);
+  letter-spacing: .05em;
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+@media (max-width: 540px) {
+  .psycho-anim-wrap { height: 220px; }
 }
 
 /* ============================================================

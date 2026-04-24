@@ -758,6 +758,11 @@
               EMDR + QEEG — ტრავმის მკურნალობა
             </div>
           </div>
+
+          <div class="psycho-anim-wrap">
+            <canvas id="psycho-brain-c" width="510" height="380" aria-hidden="true"></canvas>
+          </div>
+          <p id="psycho-phase" class="psycho-anim-caption">CBT — PFC კორექცია</p>
         </div>
 
         <div class="methods__detail-cards">
@@ -2249,14 +2254,181 @@
 
       requestAnimationFrame(frame);
     }
-    var nfbPanel = document.getElementById('tab-nfb');
-    if (nfbPanel && nfbPanel.classList.contains('active')) {
-      requestAnimationFrame(frame);
-    } else {
-      window.addEventListener('npmc-tab-open', function(e) {
-        if (e.detail === 'nfb') requestAnimationFrame(frame);
-      }, { once: true });
+    requestAnimationFrame(frame);
+  })();
+
+  /* ── QEEG Psychotherapy Brain Animation ─────────────────────── */
+  (function(){
+    var cv = document.getElementById('psycho-brain-c');
+    if (!cv) return;
+    var ctx = cv.getContext('2d');
+    var W=510, H=380, CX=255, CY=185, GOLD='#C9A84C', DT=1/60;
+    var elapsed=0, lastIdx=-1;
+    var phaseEl = document.getElementById('psycho-phase');
+
+    var REGIONS = [
+      { id:'pfc', label:'PFC', sub:'Prefrontal Cortex', x:CX,       y:CY-82,  r:34, color:'#4a9eff', therapy:'CBT',  phaseLabel:'CBT — PFC კორექცია' },
+      { id:'amy', label:'AMY', sub:'Amygdala',          x:CX-90,    y:CY+42,  r:29, color:'#e07070', therapy:'EMDR', phaseLabel:'EMDR — Amygdala რეგულაცია' },
+      { id:'acc', label:'ACC', sub:'Ant. Cingulate',    x:CX+82,    y:CY+28,  r:29, color:'#3fcca0', therapy:'ACT',  phaseLabel:'ACT — ACC სტაბილიზაცია' },
+    ];
+    var st = REGIONS.map(function(){ return { chaos:0.8, glow:0, wOff:Math.random()*10 }; });
+    var PHASE_DUR = 4.5;
+
+    function hexRgb(h){ return parseInt(h.slice(1,3),16)+','+parseInt(h.slice(3,5),16)+','+parseInt(h.slice(5,7),16); }
+
+    function getPhase(){
+      var total = PHASE_DUR*REGIONS.length;
+      var tMod  = elapsed % total;
+      var idx   = Math.floor(tMod/PHASE_DUR);
+      var phaseT= (tMod%PHASE_DUR)/PHASE_DUR;
+      return {idx:idx, phaseT:phaseT};
     }
+
+    function roundRect(x,y,w,h,r){
+      ctx.beginPath();
+      ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y); ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+      ctx.lineTo(x+w,y+h-r); ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+      ctx.lineTo(x+r,y+h); ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+      ctx.lineTo(x,y+r); ctx.quadraticCurveTo(x,y,x+r,y);
+      ctx.closePath();
+    }
+
+    function drawBrain(){
+      ctx.beginPath();
+      ctx.ellipse(CX,CY,148,130,0,0,Math.PI*2);
+      var bg=ctx.createRadialGradient(CX,CY-20,20,CX,CY,155);
+      bg.addColorStop(0,'rgba(22,18,50,.95)'); bg.addColorStop(1,'rgba(8,8,20,.98)');
+      ctx.fillStyle=bg; ctx.fill();
+      ctx.strokeStyle='rgba(201,169,110,.38)'; ctx.lineWidth=1.6; ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(CX-2,CY-122); ctx.bezierCurveTo(CX+8,CY-55,CX-8,CY+55,CX-2,CY+122);
+      ctx.strokeStyle='rgba(201,169,110,.18)'; ctx.lineWidth=1; ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(CX-148,CY+5); ctx.bezierCurveTo(CX-80,CY-20,CX-30,CY-40,CX,CY-50);
+      ctx.strokeStyle='rgba(201,169,110,.08)'; ctx.lineWidth=1; ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(CX+148,CY+5); ctx.bezierCurveTo(CX+80,CY-20,CX+30,CY-40,CX,CY-50);
+      ctx.strokeStyle='rgba(201,169,110,.08)'; ctx.lineWidth=1; ctx.stroke();
+    }
+
+    function drawWaveStrip(reg,s,isActive){
+      var dx=reg.x-CX, dy=reg.y-CY;
+      var len=Math.sqrt(dx*dx+dy*dy)||1;
+      var nx=dx/len, ny=dy/len;
+      var px=-ny, py=nx;
+      var sx=reg.x+nx*(reg.r+5), sy=reg.y+ny*(reg.r+5);
+      var wLen=48, amp=isActive?(8+s.chaos*10):4, steps=38;
+      ctx.save();
+      ctx.globalAlpha=isActive?0.88:0.28;
+      ctx.strokeStyle=reg.color; ctx.lineWidth=1.6;
+      ctx.beginPath();
+      for(var i=0;i<=steps;i++){
+        var frac=i/steps;
+        var wx=sx+nx*wLen*frac, wy=sy+ny*wLen*frac;
+        var angle=frac*Math.PI*5+s.wOff;
+        var chaos=Math.sin(angle*2.1+1.2)*s.chaos*amp*0.6;
+        var smooth=Math.sin(angle)*amp*0.5;
+        var yOff=smooth+(isActive?chaos:0);
+        var fx=wx+px*yOff, fy=wy+py*yOff;
+        if(i===0) ctx.moveTo(fx,fy); else ctx.lineTo(fx,fy);
+      }
+      ctx.stroke(); ctx.restore();
+    }
+
+    function drawRegion(reg,s,isActive){
+      var x=reg.x, y=reg.y, r=reg.r, color=reg.color;
+      if(s.glow>0.02){
+        var gr=ctx.createRadialGradient(x,y,r*0.4,x,y,r*2.6);
+        gr.addColorStop(0,color+Math.round(s.glow*100).toString(16).padStart(2,'0'));
+        gr.addColorStop(1,'transparent');
+        ctx.fillStyle=gr; ctx.beginPath(); ctx.arc(x,y,r*2.6,0,Math.PI*2); ctx.fill();
+      }
+      if(isActive&&s.chaos>0.25){
+        var pulsR=r+7+Math.sin(elapsed*9)*3.5*s.chaos;
+        ctx.beginPath(); ctx.arc(x,y,pulsR,0,Math.PI*2);
+        ctx.strokeStyle=color+'55'; ctx.lineWidth=1.5; ctx.stroke();
+      }
+      ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2);
+      ctx.fillStyle=isActive?'rgba('+hexRgb(color)+','+(0.07+s.glow*0.15).toFixed(2)+')':'rgba(255,255,255,0.025)';
+      ctx.fill();
+      ctx.strokeStyle=isActive?color:'rgba(255,255,255,0.20)';
+      ctx.lineWidth=isActive?2.2:1.3; ctx.stroke();
+      ctx.textAlign='center';
+      ctx.fillStyle=isActive?color:'rgba(255,255,255,0.5)';
+      ctx.font='700 12px Segoe UI'; ctx.fillText(reg.label,x,y+4);
+      ctx.fillStyle=isActive?'rgba(255,255,255,.65)':'rgba(255,255,255,.25)';
+      ctx.font='9.5px Segoe UI'; ctx.fillText(reg.sub,x,y+r+15);
+    }
+
+    function drawConnections(activeIdx){
+      for(var i=0;i<REGIONS.length;i++){
+        for(var j=i+1;j<REGIONS.length;j++){
+          var a=REGIONS[i], b=REGIONS[j];
+          ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y);
+          var isInv=i===activeIdx||j===activeIdx;
+          ctx.strokeStyle=isInv?'rgba(255,255,255,0.10)':'rgba(255,255,255,0.04)';
+          ctx.lineWidth=1; ctx.stroke();
+        }
+      }
+    }
+
+    function drawTherapyPulse(reg,phaseT){
+      if(phaseT<0.22||phaseT>0.78) return;
+      var prog=(phaseT-0.22)/0.56;
+      var srcX=CX, srcY=28;
+      var bx=srcX+(reg.x-srcX)*prog, by=srcY+(reg.y-srcY)*prog;
+      var gr=ctx.createRadialGradient(bx,by,0,bx,by,15);
+      gr.addColorStop(0,reg.color); gr.addColorStop(1,'transparent');
+      ctx.fillStyle=gr; ctx.globalAlpha=0.55*Math.sin(prog*Math.PI);
+      ctx.beginPath(); ctx.arc(bx,by,15,0,Math.PI*2); ctx.fill();
+      ctx.globalAlpha=1; ctx.fillStyle='#fff';
+      ctx.beginPath(); ctx.arc(bx,by,3.8,0,Math.PI*2); ctx.fill();
+    }
+
+    function drawHeader(reg,phaseT){
+      var alpha=Math.min(1,phaseT*5);
+      ctx.save(); ctx.globalAlpha=alpha;
+      roundRect(CX-44,8,88,24,12);
+      ctx.fillStyle='rgba('+hexRgb(reg.color)+',0.12)'; ctx.fill();
+      ctx.strokeStyle='rgba('+hexRgb(reg.color)+',0.35)'; ctx.lineWidth=1; ctx.stroke();
+      ctx.textAlign='center'; ctx.fillStyle=reg.color;
+      ctx.font='700 13px Segoe UI'; ctx.fillText(reg.therapy,CX,25);
+      ctx.restore();
+    }
+
+    function drawCenter(){
+      ctx.textAlign='center'; ctx.fillStyle='rgba(255,255,255,.07)';
+      ctx.font='600 10px Segoe UI';
+      ctx.fillText('QEEG-Based',CX,CY+6); ctx.fillText('Psychotherapy',CX,CY+20);
+    }
+
+    function frame(){
+      ctx.clearRect(0,0,W,H);
+      elapsed+=DT;
+      var p=getPhase(), idx=p.idx, phaseT=p.phaseT;
+      if(idx!==lastIdx){ lastIdx=idx; if(phaseEl) phaseEl.textContent=REGIONS[idx].phaseLabel; }
+      REGIONS.forEach(function(reg,i){
+        var s=st[i], isActive=i===idx;
+        s.wOff+=isActive?0.09:0.03;
+        if(isActive){
+          var target=phaseT<0.28?1.0:phaseT>0.80?0.05:1-(phaseT-0.28)/0.52;
+          s.chaos+=(target-s.chaos)*0.06;
+          s.glow+=(0.92-s.glow)*0.05;
+        } else {
+          s.chaos+=(0.55-s.chaos)*0.02;
+          s.glow+=(0-s.glow)*0.05;
+        }
+      });
+      drawBrain();
+      drawConnections(idx);
+      REGIONS.forEach(function(reg,i){ drawWaveStrip(reg,st[i],i===idx); });
+      drawTherapyPulse(REGIONS[idx],phaseT);
+      drawCenter();
+      drawHeader(REGIONS[idx],phaseT);
+      REGIONS.forEach(function(reg,i){ drawRegion(reg,st[i],i===idx); });
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
   })();
   </script>
 </body>
