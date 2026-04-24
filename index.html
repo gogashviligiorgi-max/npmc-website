@@ -707,6 +707,12 @@
               BCIA სტანდარტი
             </div>
           </div>
+
+          <!-- NFB Feedback Loop Animation -->
+          <div class="nfb-anim-wrap">
+            <canvas id="nfb-loop-c" width="510" height="380" aria-hidden="true"></canvas>
+          </div>
+          <p id="nfb-phase" class="nfb-anim-caption">ტვინი გამოსცემს EEG ტალღებს</p>
         </div>
 
         <div class="methods__detail-cards">
@@ -2063,6 +2069,180 @@
       var cg2=ctx.createRadialGradient(74,109,0,74,109,25);
       cg2.addColorStop(0,'rgba(201,169,110,'+(cp*0.42).toFixed(3)+')');cg2.addColorStop(1,'rgba(201,169,110,0)');
       ctx.fillStyle=cg2;ctx.beginPath();ctx.arc(74,109,25,0,Math.PI*2);ctx.fill();
+
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  })();
+  </script>
+
+  <!-- NFB Feedback Loop Animation -->
+  <script>
+  (function(){
+    var canvas = document.getElementById('nfb-loop-c');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var W = 510, H = 380, cx = 255, cy = 180;
+    var GOLD = '#C9A84C', LIGHT = '#e8d8a0';
+    var R = 118;      // loop radius
+    var NR = 40;      // node circle radius
+    var LOFF = 55;    // label offset from node center
+
+    var NODES = [
+      { a: -Math.PI/2, label: 'ტვინი',   sub: 'EEG ტალღები',     phase: 'ტვინი გამოსცემს EEG ტალღებს',           color: '#4a9eff', draw: drawBrain  },
+      { a: 0,          label: 'ანალიზი', sub: 'კომპიუტერი',       phase: 'კომპიუტერი ანალიზს ატარებს',            color: '#7c5cbf', draw: drawChip   },
+      { a: Math.PI/2,  label: 'ჯილდო',  sub: 'ეკრანი ეხმიანება', phase: 'ეკრანი ჩნდება — ტვინი იღებს ჯილდოს', color: '#3dbb6e', draw: drawScreen },
+      { a: Math.PI,    label: 'სწავლა',  sub: 'ნეიროპლასტიკა',   phase: 'ტვინი ახალ ნიმუშს იმახსოვრებს',        color: GOLD,      draw: drawNeural },
+    ];
+    NODES.forEach(function(n){ n.x = cx + R*Math.cos(n.a); n.y = cy + R*Math.sin(n.a); });
+
+    var t = 0, SPEED = 0.0028, lastSeg = -1;
+    var glow = [0,0,0,0];
+    var phaseEl = document.getElementById('nfb-phase');
+
+    function hexRgb(h){ return parseInt(h.slice(1,3),16)+','+parseInt(h.slice(3,5),16)+','+parseInt(h.slice(5,7),16); }
+
+    function drawBrain(x,y,r,bright){
+      ctx.save(); ctx.translate(x,y);
+      ctx.strokeStyle = bright ? '#80c4ff' : 'rgba(74,158,255,.55)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(-r*.55,r*.1);
+      ctx.bezierCurveTo(-r*.9,-r*.5,-r*.1,-r*.9,r*.15,-r*.75);
+      ctx.bezierCurveTo(r*.5,-r*.9,r*.9,-r*.4,r*.7,r*.05);
+      ctx.bezierCurveTo(r*.9,r*.5,r*.4,r*.8,r*.1,r*.6);
+      ctx.bezierCurveTo(-r*.1,r*.8,-r*.7,r*.7,-r*.55,r*.1);
+      ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(0,-r*.6); ctx.bezierCurveTo(r*.05,-r*.2,-r*.05,r*.2,0,r*.55); ctx.stroke();
+      ctx.restore();
+    }
+
+    function drawChip(x,y,r,bright){
+      ctx.save(); ctx.translate(x,y);
+      ctx.strokeStyle = bright ? '#b89de8' : 'rgba(124,92,191,.6)';
+      ctx.lineWidth = 1.8;
+      var s=r*.65, pin=r*.22;
+      ctx.strokeRect(-s,-s,s*2,s*2);
+      [-s*.5,0,s*.5].forEach(function(p){
+        ctx.beginPath(); ctx.moveTo(-s,p); ctx.lineTo(-s-pin,p); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(s,p);  ctx.lineTo(s+pin,p);  ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(p,-s); ctx.lineTo(p,-s-pin); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(p,s);  ctx.lineTo(p,s+pin);  ctx.stroke();
+      });
+      if(bright){ ctx.strokeStyle='rgba(180,150,255,.8)'; ctx.beginPath(); ctx.moveTo(-s*.4,0); ctx.lineTo(s*.4,0); ctx.stroke(); ctx.beginPath(); ctx.moveTo(0,-s*.4); ctx.lineTo(0,s*.4); ctx.stroke(); }
+      ctx.restore();
+    }
+
+    function drawScreen(x,y,r,bright){
+      ctx.save(); ctx.translate(x,y);
+      ctx.strokeStyle = bright ? '#7be8a0' : 'rgba(61,187,110,.55)';
+      ctx.lineWidth = 1.8;
+      var w=r*.85,h=r*.62;
+      ctx.strokeRect(-w,-h,w*2,h*2);
+      ctx.beginPath(); ctx.moveTo(0,h); ctx.lineTo(0,h+r*.28); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(-r*.32,h+r*.28); ctx.lineTo(r*.32,h+r*.28); ctx.stroke();
+      if(bright){ ctx.fillStyle='rgba(120,235,155,.85)'; ctx.beginPath(); ctx.moveTo(-r*.18,-r*.32); ctx.lineTo(-r*.18,r*.22); ctx.lineTo(r*.32,-r*.05); ctx.closePath(); ctx.fill(); }
+      ctx.restore();
+    }
+
+    function drawNeural(x,y,r,bright){
+      ctx.save(); ctx.translate(x,y);
+      ctx.strokeStyle = bright ? LIGHT : 'rgba(201,168,76,.5)';
+      ctx.lineWidth = 1.6;
+      var pts=[[-r*.5,-r*.3],[r*.4,-r*.5],[r*.6,r*.1],[-r*.1,r*.6],[-r*.6,r*.2]];
+      pts.forEach(function(p,i){
+        [1,2].forEach(function(d){
+          var q=pts[(i+d)%pts.length];
+          ctx.globalAlpha=bright?.7:.3;
+          ctx.beginPath(); ctx.moveTo(p[0],p[1]); ctx.lineTo(q[0],q[1]); ctx.stroke();
+        });
+      });
+      ctx.globalAlpha=1;
+      pts.forEach(function(p){ ctx.fillStyle=bright?GOLD:'rgba(201,168,76,.45)'; ctx.beginPath(); ctx.arc(p[0],p[1],bright?3.5:2.2,0,Math.PI*2); ctx.fill(); });
+      ctx.restore();
+    }
+
+    function drawNodeCircle(n,g){
+      if(g>0.01){
+        var grd=ctx.createRadialGradient(n.x,n.y,NR*.5,n.x,n.y,NR*2);
+        grd.addColorStop(0,n.color+Math.round(g*120).toString(16).padStart(2,'0'));
+        grd.addColorStop(1,'transparent');
+        ctx.fillStyle=grd; ctx.beginPath(); ctx.arc(n.x,n.y,NR*2,0,Math.PI*2); ctx.fill();
+      }
+      ctx.beginPath(); ctx.arc(n.x,n.y,NR,0,Math.PI*2);
+      ctx.strokeStyle=g>.4?n.color:'rgba(255,255,255,.15)';
+      ctx.lineWidth=g>.4?2.2:1.5;
+      ctx.fillStyle=g>.4?'rgba('+hexRgb(n.color)+','+(g*.18).toFixed(2)+')':'rgba(255,255,255,.04)';
+      ctx.fill(); ctx.stroke();
+    }
+
+    function drawLabel(n,g){
+      var dx=n.x-cx, dy=n.y-cy, len=Math.sqrt(dx*dx+dy*dy);
+      var lx=n.x+(dx/len)*LOFF, ly=n.y+(dy/len)*LOFF;
+      ctx.textAlign='center';
+      ctx.fillStyle=g>.4?n.color:'rgba(255,255,255,.55)';
+      ctx.font="600 12px 'Segoe UI',sans-serif"; ctx.fillText(n.label,lx,ly);
+      ctx.fillStyle='rgba(255,255,255,.35)';
+      ctx.font="10px 'Segoe UI',sans-serif"; ctx.fillText(n.sub,lx,ly+15);
+    }
+
+    function drawArrow(angle,color,alpha){
+      var ax=cx+R*Math.cos(angle), ay=cy+R*Math.sin(angle);
+      var tx=-Math.sin(angle), ty=Math.cos(angle), s=7;
+      ctx.save(); ctx.globalAlpha=alpha; ctx.fillStyle=color;
+      ctx.beginPath();
+      ctx.moveTo(ax+tx*s,ay+ty*s);
+      ctx.lineTo(ax-tx*s*.5-ty*s*.6,ay-ty*s*.5+tx*s*.6);
+      ctx.lineTo(ax-tx*s*.5+ty*s*.6,ay-ty*s*.5-tx*s*.6);
+      ctx.closePath(); ctx.fill(); ctx.restore();
+    }
+
+    function frame(){
+      ctx.clearRect(0,0,W,H);
+      t=(t+SPEED)%1;
+      var seg=Math.floor(t*4)%4;
+      var ballAngle=-Math.PI/2+t*Math.PI*2;
+
+      NODES.forEach(function(n,i){ glow[i]=i===seg?Math.min(1,glow[i]+.06):Math.max(0,glow[i]-.025); });
+
+      if(seg!==lastSeg){ lastSeg=seg; if(phaseEl) phaseEl.textContent=NODES[seg].phase; }
+
+      // base ring
+      ctx.beginPath(); ctx.arc(cx,cy,R,0,Math.PI*2);
+      ctx.strokeStyle='rgba(255,255,255,.07)'; ctx.lineWidth=1; ctx.stroke();
+
+      // faded completed arcs
+      for(var i=0;i<4;i++){
+        if(i===seg) continue;
+        var a1=NODES[i].a, a2=NODES[(i+1)%4].a;
+        ctx.beginPath(); ctx.arc(cx,cy,R,a1,a2);
+        ctx.strokeStyle=NODES[i].color; ctx.lineWidth=1.5; ctx.globalAlpha=.18; ctx.stroke(); ctx.globalAlpha=1;
+      }
+
+      // active trail arc
+      ctx.beginPath(); ctx.arc(cx,cy,R,NODES[seg].a,ballAngle);
+      ctx.strokeStyle=NODES[seg].color; ctx.lineWidth=2.5; ctx.globalAlpha=.65; ctx.stroke(); ctx.globalAlpha=1;
+
+      // arrow indicators
+      NODES.forEach(function(n,i){
+        var a1=n.a, a2=NODES[(i+1)%4].a;
+        drawArrow(a1+(a2-a1)*.5,n.color,i===seg?.8:.2);
+      });
+
+      // center text
+      ctx.textAlign='center'; ctx.fillStyle='rgba(255,255,255,.12)';
+      ctx.font="600 10px 'Segoe UI',sans-serif";
+      ctx.fillText('ოპერანტული',cx,cy-9); ctx.fillText('კონდიციონირება',cx,cy+7);
+
+      // nodes
+      NODES.forEach(function(n,i){ drawNodeCircle(n,glow[i]); n.draw(n.x,n.y,20,glow[i]>.5); drawLabel(n,glow[i]); });
+
+      // signal ball
+      var bx=cx+R*Math.cos(ballAngle), by=cy+R*Math.sin(ballAngle);
+      var grd=ctx.createRadialGradient(bx,by,0,bx,by,16);
+      grd.addColorStop(0,NODES[seg].color); grd.addColorStop(1,'transparent');
+      ctx.fillStyle=grd; ctx.globalAlpha=.45; ctx.beginPath(); ctx.arc(bx,by,16,0,Math.PI*2); ctx.fill();
+      ctx.globalAlpha=1; ctx.fillStyle='#fff'; ctx.beginPath(); ctx.arc(bx,by,4,0,Math.PI*2); ctx.fill();
 
       requestAnimationFrame(frame);
     }
