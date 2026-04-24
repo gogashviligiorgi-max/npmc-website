@@ -2254,7 +2254,21 @@
 
       requestAnimationFrame(frame);
     }
-    requestAnimationFrame(frame);
+    var nfbStarted = false;
+    var nfbPanel = document.getElementById('tab-nfb');
+    function tryStartNfb() {
+      if (!nfbStarted && nfbPanel && nfbPanel.classList.contains('active')) {
+        nfbStarted = true;
+        requestAnimationFrame(frame);
+      }
+    }
+    if (nfbPanel) {
+      new MutationObserver(tryStartNfb).observe(nfbPanel, { attributes: true, attributeFilter: ['class'] });
+    }
+    window.addEventListener('npmc-tab-open', function(e) {
+      if (e.detail === 'nfb') tryStartNfb();
+    });
+    tryStartNfb();
   })();
 
   /* ── QEEG Psychotherapy Brain Animation ─────────────────────── */
@@ -2428,7 +2442,21 @@
       REGIONS.forEach(function(reg,i){ drawRegion(reg,st[i],i===idx); });
       requestAnimationFrame(frame);
     }
-    requestAnimationFrame(frame);
+    var psychoStarted = false;
+    var psychoPanel = document.getElementById('tab-psycho');
+    function tryStartPsycho() {
+      if (!psychoStarted && psychoPanel && psychoPanel.classList.contains('active')) {
+        psychoStarted = true;
+        requestAnimationFrame(frame);
+      }
+    }
+    if (psychoPanel) {
+      new MutationObserver(tryStartPsycho).observe(psychoPanel, { attributes: true, attributeFilter: ['class'] });
+    }
+    window.addEventListener('npmc-tab-open', function(e) {
+      if (e.detail === 'psycho') tryStartPsycho();
+    });
+    tryStartPsycho();
   })();
   </script>
 </body>

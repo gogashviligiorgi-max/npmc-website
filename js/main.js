@@ -27,8 +27,12 @@ navMenu.querySelectorAll('a').forEach(link => {
       burger.setAttribute('aria-expanded', 'false');
       setTimeout(() => {
         const target = document.querySelector(href);
-        if (target) target.scrollIntoView({ behavior: 'smooth' });
-      }, 50);
+        if (target) {
+          const navH = (document.getElementById('nav') || {offsetHeight: 70}).offsetHeight;
+          const y = target.getBoundingClientRect().top + window.pageYOffset - navH;
+          window.scrollTo(0, y);
+        }
+      }, 80);
     } else {
       navMenu.classList.remove('open');
       burger.setAttribute('aria-expanded', 'false');
