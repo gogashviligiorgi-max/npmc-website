@@ -47,8 +47,11 @@
         subtitle: 'ყველა სერვისი ინდივიდუალურად — QEEG მონაცემებზე დაყრდნობით',
         qeeg: {
           tag:      'სავალდებულო პირველი ნაბიჯი',
-          title:    'QEEG — ტვინის რუკა',
-          text:     'რაოდენობრივი ელექტროენცეფალოგრაფია — ტვინის ელექტრული აქტივობის ზუსტი ციფრული ანალიზი. 19 ელექტროდი. ვხედავთ რაც სხვა ვერ ხედავს: ჰიპო- ან ჰიპერაქტივაცია, კოჰერენციის დარღვევები, ასიმეტრია — ტვინის ნებისმიერ წერტილში.',
+          title:    'QEEG — ტვინის ციფრული რუკა',
+          text:     'რაოდენობრივი ელექტროენცეფალოგრაფია — ტვინის ელექტრული აქტივობის ზუსტი ციფრული ანალიზი. 19 ელექტროდი.',
+          text2:    'ჩვენ ვხედავთ იმას, რაც სხვა მეთოდებისთვის უხილავია: ჰიპო- ან ჰიპერაქტივაცია, კოჰერენციის დარღვევები და ასიმეტრია ტვინის ნებისმიერ წერტილში.',
+          text3:    'ეს მონაცემები საშუალებას გვაძლევს, ნეირონულ დონეზე დავადგინოთ მიზეზი: დეპრესია და შფოთვითი აშლილობა, პანიკური შეტევები, ADHD.',
+          text4:    'შედეგი: ინდივიდუალური, მეცნიერულად დასაბუთებული მკურნალობის გეგმა და მაქსიმალური კლინიკური სიზუსტე. ✅',
           f1:       'ობიექტური, ციფრული შეფასება',
           f2:       '19-არხიანი ჩაწერა, სტანდარტული 10-20 სისტემა',
           f3:       'ტვინის ვიზუალური ანგარიში ნორმებთან შედარებით',
@@ -352,7 +355,10 @@
         qeeg: {
           tag:   'Mandatory First Step',
           title: 'QEEG — Brain Map',
-          text:  'Quantitative electroencephalography — precise digital analysis of the brain\'s electrical activity. 19 electrodes. We see what others cannot: hypo- or hyperactivation, coherence disruptions, asymmetry — at any point in the brain.',
+          text:  'Quantitative electroencephalography — precise digital analysis of the brain\'s electrical activity. 19 electrodes.',
+          text2: 'We see what is invisible to other methods: hypo- or hyperactivation, coherence disruptions and asymmetry at any point in the brain.',
+          text3: 'This data allows us to identify the root cause at the neuronal level: depression and anxiety disorders, panic attacks, ADHD.',
+          text4: 'Result: an individual, evidence-based treatment plan and maximum clinical precision. ✅',
           f1:    'Objective, digital assessment',
           f2:    '19-channel recording, standard 10-20 system',
           f3:    'Visual brain report with normative comparison',
@@ -931,7 +937,11 @@
       if (cards[0]) {
         txt(cards[0].querySelector('.service-card__tag'),   t.services.qeeg.tag);
         txt(cards[0].querySelector('.service-card__title'), t.services.qeeg.title);
-        txt(cards[0].querySelector('.service-card__text'),  t.services.qeeg.text);
+        const qeegParas = cards[0].querySelectorAll('.service-card__text');
+        txt(qeegParas[0], t.services.qeeg.text);
+        txt(qeegParas[1], t.services.qeeg.text2);
+        txt(qeegParas[2], t.services.qeeg.text3);
+        txt(qeegParas[3], t.services.qeeg.text4);
         const li = cards[0].querySelectorAll('.service-card__features li');
         txt(li[0], t.services.qeeg.f1);
         txt(li[1], t.services.qeeg.f2);
