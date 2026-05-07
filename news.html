@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>სიახლეები | NPMC — ნეიროფსიქომოდულაციის ცენტრი თბილისი</title>
+  <meta name="description" content="NPMC-ის სიახლეები — კლინიკის განახლებები, სამეცნიერო კვლევები QEEG, TMS, ნეიროფიდბექის შესახებ, ღონისძიებები და მნიშვნელოვანი ინფორმაცია.">
+  <meta name="keywords" content="NPMC სიახლეები, ნეიროფსიქომოდულაცია, QEEG, TMS, ნეიროფიდბექი, კლინიკა თბილისი">
+  <link rel="canonical" href="https://npmc.ge/news.html">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://npmc.ge/news.html">
+  <meta property="og:title" content="სიახლეები | NPMC — ნეიროფსიქომოდულაციის ცენტრი">
+  <meta property="og:description" content="NPMC-ის კლინიკური სიახლეები, სამეცნიერო განახლებები და მნიშვნელოვანი ინფორმაცია.">
+  <meta property="og:locale" content="ka_GE">
+  <meta property="og:site_name" content="NPMC — ნეიროფსიქომოდულაციის ცენტრი">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .news-featured {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      background: var(--surface-2);
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 60px;
+      border: 1px solid var(--border-2);
+      text-decoration: none;
+      color: inherit;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .news-featured:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-gold);
+    }
+    .news-featured__visual {
+      background: linear-gradient(135deg, #0f0f1a 0%, #1a1a28 50%, #13131e 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 280px;
+      position: relative;
+      overflow: hidden;
+    }
+    .news-featured__visual::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(201,169,110,0.12) 0%, transparent 70%);
+    }
+    .news-featured__icon {
+      font-size: 4rem;
+      position: relative;
+      z-index: 1;
+    }
+    .news-featured__body {
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .news-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .news-date {
+      font-size: 0.8rem;
+      color: var(--text-3);
+      margin-bottom: 16px;
+    }
+    .news-featured__title {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 600;
+      line-height: 1.3;
+      margin-bottom: 16px;
+    }
+    .news-featured__text {
+      color: var(--text-2);
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .news-read-link {
+      font-size: 0.95rem;
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+      margin-bottom: 60px;
+    }
+    .news-card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      padding: 28px;
+      background: var(--surface-2);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      transition: transform var(--transition), border-color var(--transition);
+    }
+    .news-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-2);
+    }
+    .news-card__tag-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .news-card__title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+    .news-card__text {
+      color: var(--text-2);
+      font-size: 0.9rem;
+      line-height: 1.65;
+      margin-bottom: 20px;
+    }
+    .section-divider {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-2);
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--surface-3);
+    }
+    @media (max-width: 768px) {
+      .news-featured {
+        grid-template-columns: 1fr;
+      }
+      .news-featured__visual {
+        min-height: 160px;
+      }
+      .news-featured__body {
+        padding: 28px 24px;
+      }
+      .news-featured__title {
+        font-size: 1.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav" id="nav">
+    <div class="nav__container">
+      <a href="/" class="nav__logo">
+        <span class="nav__logo-text">NPMC</span>
+        <span class="nav__logo-sub">ნეიროფსიქომოდულაციის ცენტრი</span>
+      </a>
+      <ul class="nav__menu" id="navMenu">
+        <li><a href="/#services" class="nav__link">სერვისები</a></li>
+        <li><a href="/#conditions" class="nav__link">დიაგნოზები</a></li>
+        <li><a href="/#pricing" class="nav__link">ფასები</a></li>
+        <li><a href="blog.html" class="nav__link">ბლოგი</a></li>
+        <li><a href="news.html" class="nav__link" style="color:var(--accent);">სიახლეები</a></li>
+        <li><a href="/#contact" class="nav__cta">დაჯავშნე</a></li>
+      </ul>
+      <button type="button" class="nav__burger" id="navBurger" aria-label="მენიუ" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- პურის ფხვნილი -->
+  <div style="padding:80px 0 0; max-width:1200px; margin:0 auto; padding-left:24px; font-size:0.85rem; color:var(--text-3);">
+    <a href="/" style="color:var(--text-3);">მთავარი</a> / <span>სიახლეები</span>
+  </div>
+
+  <!-- სათაური -->
+  <section style="padding:48px 0 40px; text-align:center; max-width:680px; margin:0 auto; padding-left:24px; padding-right:24px;">
+    <div style="display:inline-block; font-size:0.8rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--accent); background:rgba(201,169,110,0.08); padding:6px 16px; border-radius:20px; margin-bottom:20px;">NPMC · სიახლეები</div>
+    <h1 style="font-family:var(--font-display); font-size:2.8rem; font-weight:700; line-height:1.2; margin-bottom:16px;">კლინიკის სიახლეები</h1>
+    <p style="font-size:1.05rem; color:var(--text-2); line-height:1.7;">განახლებები NPMC-დან — ახალი სერვისები, სამეცნიერო კვლევები, ღონისძიებები და მნიშვნელოვანი ინფორმაცია.</p>
+  </section>
+
+  <main style="max-width:1200px; margin:0 auto; padding:0 24px 100px;">
+
+    <!-- ======================================================
+         ახალი სიახლის დასამატებლად:
+         დააკოპირეთ ერთ-ერთი <a class="news-card"> ბლოკი
+         და ჩასვით ამ ზონაში, ყველაზე ზემოთ.
+         ====================================================== -->
+
+    <!-- მთავარი სიახლე (Featured) -->
+    <!-- ახალი featured სიახლის შესაცვლელად — შეცვალეთ ეს ბლოკი -->
+    <a href="news-clinic-launch.html" class="news-featured">
+      <div class="news-featured__visual">
+        <div class="news-featured__icon">🧠</div>
+      </div>
+      <div class="news-featured__body">
+        <span class="news-tag">კლინიკის სიახლე</span>
+        <div class="news-date">2026 წლის იანვარი</div>
+        <h2 class="news-featured__title">NPMC გაიხსნა — საქართველოში პირველი ნეიროფსიქომოდულაციის ცენტრი</h2>
+        <p class="news-featured__text">ნ. ყიფშიძის 7ბ-ზე, თბილისში, ახლა ხელმისაწვდომია ის, რაც ადრე მხოლოდ ევროპაში ან ამერიკაში იყო შესაძლებელი — QEEG ტვინის ციფრული დიაგნოსტიკა, TMS მაგნიტური სტიმულაცია და ნეიროფიდბექი ერთ სივრცეში.</p>
+        <span class="news-read-link">სრულად წაიკითხე →</span>
+      </div>
+    </a>
+
+    <!-- სიახლეების ბოლო სია -->
+    <div class="section-divider">ყველა სიახლე</div>
+    <div class="news-grid">
+
+      <!-- სიახლე 1 -->
+      <a href="news-clinic-launch.html" class="news-card">
+        <div class="news-card__tag-row">
+          <span class="news-tag">კლინიკის სიახლე</span>
+          <span class="news-date">2026 · იანვარი</span>
+        </div>
+        <h3 class="news-card__title">NPMC გაიხსნა — საქართველოში პირველი ნეიროფსიქომოდულაციის ცენტრი</h3>
+        <p class="news-card__text">QEEG + TMS + ნეიროფიდბექი ერთ სივრცეში. ის, რაც ადრე ევროპაში ღირდა €5,000–€15,000 — ახლა ხელმისაწვდომია თბილისში.</p>
+        <span class="news-read-link">წაიკითხე →</span>
+      </a>
+
+      <!-- სიახლე 2 -->
+      <a href="news-tms-ocd-research.html" class="news-card">
+        <div class="news-card__tag-row">
+          <span class="news-tag">სამეცნიერო</span>
+          <span class="news-date">2026 · მარტი</span>
+        </div>
+        <h3 class="news-card__title">ახალი კვლევა: TMS OCD-ის მკურნალობაში — 45%-იანი გაუმჯობესება</h3>
+        <p class="news-card__text">Journal of Psychiatric Research-ის კვლევამ დაადასტურა — TMS-ის 20-სესიანი კურსი OCD-ის სიმპტომებს 45%-ით ამცირებს. NPMC ამ პროტოკოლს ახლა სთავაზობს პაციენტებს.</p>
+        <span class="news-read-link">წაიკითხე →</span>
+      </a>
+
+      <!-- ======================================================
+           აქ დაამატეთ ახალი სიახლეები — კოპირება + ჩასმა.
+           შაბლონი:
+
+      <a href="news-FILENAME.html" class="news-card">
+        <div class="news-card__tag-row">
+          <span class="news-tag">კატეგორია</span>
+          <span class="news-date">2026 · თვე</span>
+        </div>
+        <h3 class="news-card__title">სათაური</h3>
+        <p class="news-card__text">მოკლე აღწერა — 2-3 წინადადება.</p>
+        <span class="news-read-link">წაიკითხე →</span>
+      </a>
+
+           კატეგორიები: კლინიკის სიახლე / სამეცნიერო / ღონისძიება / მედია
+           ====================================================== -->
+
+    </div>
+
+    <!-- CTA -->
+    <section style="text-align:center; padding:60px 40px; background:var(--surface-2); border-radius:20px; border:1px solid var(--border-2);">
+      <h2 style="font-family:var(--font-display); font-size:1.9rem; margin-bottom:16px;">კითხვები გაქვთ?</h2>
+      <p style="color:var(--text-2); margin-bottom:32px; font-size:1.05rem;">ნ. ყიფშიძის 7ბ, თბილისი · <strong style="color:var(--text);">+995 511 44 00 99</strong></p>
+      <a href="/#contact" class="btn btn--primary btn--large">დაჯავშნე კონსულტაცია</a>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer__container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <div class="footer__logo">NPMC</div>
+          <p>ნეიროფსიქომოდულაციის ცენტრი<br>ნ. ყიფშიძის 7ბ, თბილისი<br>+995 511 44 00 99</p>
+        </div>
+        <div class="footer__links">
+          <h4>სერვისები</h4>
+          <a href="qeeg.html">QEEG</a>
+          <a href="tms.html">TMS</a>
+          <a href="neurofeedback.html">ნეიროფიდბექი</a>
+          <a href="packages.html">ფასები</a>
+        </div>
+        <div class="footer__links">
+          <h4>სიახლეები</h4>
+          <a href="news-clinic-launch.html">კლინიკის გახსნა</a>
+          <a href="news-tms-ocd-research.html">TMS კვლევა OCD</a>
+          <a href="news.html">ყველა სიახლე</a>
+        </div>
+        <div class="footer__links">
+          <h4>ბლოგი</h4>
+          <a href="blog-qeeg-tbilisi.html">QEEG თბილისი</a>
+          <a href="blog-tms-tbilisi.html">TMS თბილისი</a>
+          <a href="blog-neurofeedback-georgia.html">ნეიროფიდბექი</a>
+          <a href="blog.html">ყველა სტატია</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
