@@ -1441,8 +1441,8 @@ function startConditionBrainMap(canvasId, conditionKey) {
     if (!old) return;
     const neo = document.createElement('canvas');
     neo.id = id;
-    neo.width  = 300;
-    neo.height = 300;
+    neo.width  = 180;
+    neo.height = 180;
     old.parentNode.replaceChild(neo, old);
   }
 
