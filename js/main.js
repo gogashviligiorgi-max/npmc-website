@@ -1284,7 +1284,7 @@ function startConditionBrainMap(canvasId, conditionKey) {
   if (!params) return;
 
   const ctx = cv.getContext('2d');
-  const W=180, H=180, CX=90, CY=90, HR=80, OS=100;
+  const W=420, H=420, CX=210, CY=210, HR=190, OS=240;
 
   const elecs = ELEC_POS.map(e => ({
     ...e, params: params[e.n] || [0.5,0.03,0.03,0.03,0],
@@ -1348,19 +1348,19 @@ function startConditionBrainMap(canvasId, conditionKey) {
     ctx.restore();
     [[-1],[1]].forEach(([sx])=>{
       ctx.beginPath();
-      ctx.ellipse(CX+sx*(HR+4),CY+8,6,10,0,0,Math.PI*2);
-      ctx.strokeStyle='rgba(200,185,175,.7)';ctx.lineWidth=1.5;ctx.stroke();
+      ctx.ellipse(CX+sx*(HR+9),CY+18,14,23,0,0,Math.PI*2);
+      ctx.strokeStyle='rgba(200,185,175,.7)';ctx.lineWidth=3.5;ctx.stroke();
     });
     ctx.beginPath();
-    ctx.moveTo(CX-8,CY-HR+3);
-    ctx.quadraticCurveTo(CX,CY-HR-12,CX+8,CY-HR+3);
-    ctx.strokeStyle='rgba(200,185,175,.7)';ctx.lineWidth=1.5;ctx.stroke();
+    ctx.moveTo(CX-18,CY-HR+7);
+    ctx.quadraticCurveTo(CX,CY-HR-28,CX+18,CY-HR+7);
+    ctx.strokeStyle='rgba(200,185,175,.7)';ctx.lineWidth=3.5;ctx.stroke();
     ctx.beginPath();ctx.arc(CX,CY,HR,0,Math.PI*2);
-    ctx.strokeStyle='rgba(200,185,175,.8)';ctx.lineWidth=1.5;ctx.stroke();
+    ctx.strokeStyle='rgba(200,185,175,.8)';ctx.lineWidth=3.5;ctx.stroke();
     elecs.forEach(e=>{
-      ctx.beginPath();ctx.arc(e.px,e.py,2.4,0,Math.PI*2);
+      ctx.beginPath();ctx.arc(e.px,e.py,5.5,0,Math.PI*2);
       ctx.fillStyle='rgba(0,0,0,.65)';ctx.fill();
-      ctx.beginPath();ctx.arc(e.px,e.py,1.3,0,Math.PI*2);
+      ctx.beginPath();ctx.arc(e.px,e.py,3,0,Math.PI*2);
       ctx.fillStyle='rgba(255,255,255,.88)';ctx.fill();
     });
     if(document.getElementById(canvasId)) requestAnimationFrame(loop);
@@ -1441,8 +1441,8 @@ function startConditionBrainMap(canvasId, conditionKey) {
     if (!old) return;
     const neo = document.createElement('canvas');
     neo.id = id;
-    neo.width  = 180;
-    neo.height = 180;
+    neo.width  = 420;
+    neo.height = 420;
     old.parentNode.replaceChild(neo, old);
   }
 
