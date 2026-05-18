@@ -1217,6 +1217,50 @@ const CONDITION_BRAIN_PARAMS = {
     T5: [0.34,0.02,0.04,0.04,6.40],
     O2: [0.18,0.01,0.06,0.04,0.20], O1: [0.16,0.01,0.06,0.04,0.60],
   },
+
+  /* ---- AFTER-TREATMENT PATTERNS ---- */
+  depression_after: {
+    /* Alpha symmetry restored, posterior alpha recovered */
+    Fp2:[0.55,0.04,0.04,0.02,0.00], Fp1:[0.56,0.04,0.04,0.02,0.40],
+    F8: [0.52,0.03,0.04,0.02,0.80], F4: [0.53,0.03,0.04,0.02,1.20],
+    Fz: [0.52,0.03,0.04,0.02,1.60], F3: [0.54,0.03,0.04,0.02,2.00],
+    F7: [0.51,0.03,0.04,0.02,2.40],
+    T4: [0.50,0.02,0.04,0.03,2.80], C4: [0.53,0.02,0.04,0.02,3.20],
+    Cz: [0.52,0.02,0.04,0.02,3.60], C3: [0.53,0.02,0.04,0.02,4.00],
+    T3: [0.50,0.02,0.04,0.03,4.40],
+    T6: [0.56,0.02,0.04,0.02,4.80], P4: [0.60,0.01,0.04,0.02,5.20],
+    Pz: [0.63,0.01,0.03,0.02,5.60], P3: [0.61,0.01,0.04,0.02,6.00],
+    T5: [0.57,0.02,0.04,0.02,6.40],
+    O2: [0.66,0.01,0.03,0.02,0.20], O1: [0.65,0.01,0.03,0.02,0.60],
+  },
+  adhd_after: {
+    /* Theta reduced frontally, beta-alpha ratio normalized */
+    Fp1:[0.52,0.03,0.05,0.02,0.00], Fp2:[0.52,0.03,0.05,0.02,0.30],
+    F7: [0.50,0.03,0.05,0.02,0.70], F3: [0.53,0.02,0.05,0.02,1.10],
+    Fz: [0.54,0.02,0.05,0.02,1.50], F4: [0.53,0.02,0.05,0.02,1.90],
+    F8: [0.50,0.03,0.05,0.02,2.30],
+    T3: [0.49,0.02,0.04,0.03,2.70], C3: [0.53,0.02,0.05,0.02,3.10],
+    Cz: [0.54,0.02,0.05,0.02,3.50], C4: [0.53,0.02,0.05,0.02,3.90],
+    T4: [0.49,0.02,0.04,0.03,0.50],
+    T5: [0.57,0.02,0.04,0.02,4.30], P3: [0.61,0.01,0.04,0.02,4.70],
+    Pz: [0.63,0.01,0.03,0.02,5.10], P4: [0.61,0.01,0.04,0.02,5.50],
+    T6: [0.58,0.02,0.04,0.02,5.90],
+    O1: [0.65,0.01,0.03,0.02,6.30], O2: [0.66,0.01,0.03,0.02,6.70],
+  },
+  anxiety_after: {
+    /* Beta reduced frontally, alpha restored posteriorly */
+    Fp1:[0.50,0.02,0.05,0.02,0.00], Fp2:[0.50,0.02,0.05,0.02,0.35],
+    F7: [0.49,0.02,0.04,0.02,0.70], F3: [0.51,0.02,0.05,0.02,1.10],
+    Fz: [0.52,0.02,0.05,0.02,1.50], F4: [0.51,0.02,0.05,0.02,1.90],
+    F8: [0.49,0.02,0.04,0.02,2.30],
+    T3: [0.50,0.02,0.04,0.02,2.70], C3: [0.52,0.02,0.04,0.02,3.10],
+    Cz: [0.53,0.02,0.04,0.02,3.50], C4: [0.52,0.02,0.04,0.02,3.90],
+    T4: [0.50,0.02,0.04,0.02,4.30],
+    T5: [0.57,0.02,0.04,0.02,4.70], P3: [0.61,0.01,0.03,0.02,5.10],
+    Pz: [0.63,0.01,0.03,0.02,5.50], P4: [0.61,0.01,0.03,0.02,5.90],
+    T6: [0.56,0.02,0.04,0.02,6.30],
+    O1: [0.66,0.01,0.03,0.02,0.10], O2: [0.67,0.01,0.03,0.02,0.50],
+  },
 };
 
 const ELEC_POS = [
@@ -1323,3 +1367,146 @@ function startConditionBrainMap(canvasId, conditionKey) {
   }
   requestAnimationFrame(loop);
 }
+
+/* ============================================================
+   SCROLL PROGRESS BAR
+   ============================================================ */
+(function () {
+  const bar = document.getElementById('scrollProgress');
+  if (!bar) return;
+  window.addEventListener('scroll', function () {
+    const scrolled = window.scrollY;
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = total > 0 ? (scrolled / total) * 100 : 0;
+    bar.style.width = pct + '%';
+    bar.setAttribute('aria-valuenow', Math.round(pct));
+  }, { passive: true });
+})();
+
+/* ============================================================
+   STICKY MOBILE CTA
+   ============================================================ */
+(function () {
+  const cta = document.getElementById('stickyCta');
+  if (!cta) return;
+  const hero = document.querySelector('.hero');
+  const contact = document.getElementById('contact');
+
+  const io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.target === hero) {
+        if (!entry.isIntersecting) {
+          cta.classList.add('visible');
+          cta.setAttribute('aria-hidden', 'false');
+        } else {
+          cta.classList.remove('visible');
+          cta.setAttribute('aria-hidden', 'true');
+        }
+      }
+      if (entry.target === contact && entry.isIntersecting) {
+        cta.classList.remove('visible');
+        cta.setAttribute('aria-hidden', 'true');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  if (hero) io.observe(hero);
+  if (contact) io.observe(contact);
+})();
+
+/* ============================================================
+   BEFORE / AFTER QEEG BRAIN MAP SLIDER
+   ============================================================ */
+(function () {
+  const slider   = document.getElementById('bcSlider');
+  const handle   = document.getElementById('bcHandle');
+  const afterSide = document.getElementById('bcAfterSide');
+  const note     = document.getElementById('bcNote');
+  if (!slider || !handle || !afterSide) return;
+
+  const NOTES = {
+    depression: 'Alpha ასიმეტრია — მარჯვ. ფრონტ. გადაჭარბებული. TMS + ნეიროფიდბექი ასწორებს ბალანსს.',
+    adhd:       'Theta ↑ ფრონტ. / Beta ↓ — კოგნიტური "ნისლი". ნეიროფიდბექი Theta/Beta ratio-ს ნორმალიზებს.',
+    anxiety:    'High Beta ↑ ფრონტ. / Alpha ↓ — ქრონიკული ჰიპერფხიზლობა. TMS + Alpha training ხსნის ბლოკს.',
+  };
+
+  let currentBefore = 'depression';
+  let currentAfter  = 'depression_after';
+  let animBefore = null;
+  let animAfter  = null;
+
+  /* ---- stop a running animation by replacing its canvas ---- */
+  function resetCanvas(id) {
+    const old = document.getElementById(id);
+    if (!old) return;
+    const neo = document.createElement('canvas');
+    neo.id = id;
+    neo.width  = 300;
+    neo.height = 300;
+    old.parentNode.replaceChild(neo, old);
+  }
+
+  function launchMaps(condBefore, condAfter) {
+    resetCanvas('bcBefore');
+    resetCanvas('bcAfter');
+    if (typeof startConditionBrainMap === 'function') {
+      startConditionBrainMap('bcBefore', condBefore);
+      startConditionBrainMap('bcAfter',  condAfter);
+    }
+  }
+
+  /* ---- tab switching ---- */
+  document.querySelectorAll('.bc-tab').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.bc-tab').forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentBefore = btn.dataset.condition;
+      currentAfter  = btn.dataset.after;
+      if (note) note.textContent = NOTES[currentBefore] || '';
+      launchMaps(currentBefore, currentAfter);
+      setSlider(0.5);
+    });
+  });
+
+  /* ---- slider drag ---- */
+  let dragging = false;
+
+  function setSlider(frac) {
+    frac = Math.max(0.02, Math.min(0.98, frac));
+    const pct = frac * 100;
+    afterSide.style.clipPath = 'inset(0 ' + (100 - pct).toFixed(1) + '% 0 0)';
+    handle.style.left = pct.toFixed(1) + '%';
+  }
+
+  function getX(e) {
+    const touch = e.touches ? e.touches[0] : e;
+    const rect  = slider.getBoundingClientRect();
+    return (touch.clientX - rect.left) / rect.width;
+  }
+
+  slider.addEventListener('pointerdown', function (e) {
+    dragging = true;
+    slider.setPointerCapture(e.pointerId);
+    setSlider(getX(e));
+  });
+  slider.addEventListener('pointermove', function (e) {
+    if (!dragging) return;
+    setSlider(getX(e));
+  });
+  slider.addEventListener('pointerup',   function () { dragging = false; });
+  slider.addEventListener('pointercancel', function () { dragging = false; });
+
+  /* ---- init when section scrolls into view ---- */
+  const section = document.getElementById('before-after');
+  let initiated = false;
+
+  const initObs = new IntersectionObserver(function (entries) {
+    if (entries[0].isIntersecting && !initiated) {
+      initiated = true;
+      launchMaps(currentBefore, currentAfter);
+      setSlider(0.5);
+    }
+  }, { threshold: 0.2 });
+
+  if (section) initObs.observe(section);
+})();
