@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+<meta charset="UTF-8">
+<title>ADHD Brain Map — Live Preview</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    background: #07070e;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    min-height: 100vh; margin: 0;
+    font-family: system-ui, sans-serif; color: #eee;
+    gap: 20px;
+  }
+  h2 { color: #c9a96e; margin: 0; font-size: 1rem; letter-spacing: .08em; text-transform: uppercase; }
+  .subtitle { color: #666; font-size: 0.72rem; margin: 0; letter-spacing: .04em; }
+
+  .map-wrap {
+    position: relative;
+    display: inline-block;
+  }
+  canvas#adhdMap {
+    display: block;
+    border-radius: 50%;
+    box-shadow: 0 0 40px rgba(255,60,0,.18), 0 0 80px rgba(255,60,0,.07);
+  }
+
+  /* live recording badge */
+  .rec-badge {
+    position: absolute;
+    top: 12px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; align-items: center; gap: 6px;
+    background: rgba(0,0,0,.65);
+    border: 1px solid rgba(255,80,60,.35);
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 0.62rem; color: #ff5040;
+    letter-spacing: .07em;
+    pointer-events: none;
+  }
+  .rec-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #ff3020;
+    animation: blink 1.1s ease-in-out infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.15} }
+
+  /* timestamp */
+  #ts {
+    position: absolute;
+    bottom: 16px; left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.6rem; color: rgba(201,169,110,.45);
+    letter-spacing: .06em;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  /* legend */
+  .legend {
+    display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+    margin-top: 4px;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 0.68rem; color: #999;
+  }
+  .legend-swatch {
+    width: 28px; height: 8px; border-radius: 4px;
+  }
+
+  /* wave indicator strip */
+  .wave-strip {
+    display: flex; gap: 24px; margin-top: 4px;
+  }
+  .wave-item {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+  }
+  .wave-item canvas { border-radius: 3px; }
+  .wave-label { font-size: 0.6rem; color: #666; }
+  .wave-value { font-size: 0.65rem; font-weight: 600; }
+  .wave-value.high { color: #ff5533; }
+  .wave-value.low  { color: #44aaff; }
+  .wave-value.norm { color: #66cc88; }
+</style>
+</head>
+<body>
+
+<h2>EEG Live Recording — ADHD Pattern</h2>
+<p class="subtitle">Theta/Beta protocol · 19-channel · real-time topographic map</p>
+
+<div class="map-wrap">
+  <canvas id="adhdMap" width="260" height="260"></canvas>
+  <div class="rec-badge"><div class="rec-dot"></div> REC LIVE</div>
+  <div id="ts">00:00.000</div>
+</div>
+
+<div class="legend">
+  <div class="legend-item">
+    <div class="legend-swatch" style="background:linear-gradient(90deg,#ff2200,#ff8800);"></div>
+    Theta ↑ ფრონტალური
+  </div>
+  <div class="legend-item">
+    <div class="legend-swatch" style="background:linear-gradient(90deg,#ffdd00,#00ee88);"></div>
+    ნორმა
+  </div>
+  <div class="legend-item">
+    <div class="legend-swatch" style="background:linear-gradient(90deg,#0088ff,#0044cc);"></div>
+    Beta ↓ პარიეტ./ოქციპ.
+  </div>
+</div>
+
+<div class="wave-strip">
+  <div class="wave-item">
+    <canvas id="wTheta" width="120" height="36"></canvas>
+    <div class="wave-label">Theta (4–8 Hz)</div>
+    <div class="wave-value high">↑ მომატებული</div>
+  </div>
+  <div class="wave-item">
+    <canvas id="wBeta" width="120" height="36"></canvas>
+    <div class="wave-label">Beta (13–30 Hz)</div>
+    <div class="wave-value low">↓ შემცირებული</div>
+  </div>
+  <div class="wave-item">
+    <canvas id="wAlpha" width="120" height="36"></canvas>
+    <div class="wave-label">Alpha (8–12 Hz)</div>
+    <div class="wave-value norm">✓ ნორმა</div>
+  </div>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+/* ── 19-channel 10-20 electrodes ── */
+const ELEC_DEF = [
+  {n:'Fp1', x:-.18, y:-.92},
+  {n:'Fp2', x: .18, y:-.92},
+  {n:'F7',  x:-.72, y:-.52},
+  {n:'F3',  x:-.38, y:-.46},
+  {n:'Fz',  x: .00, y:-.50},
+  {n:'F4',  x: .38, y:-.46},
+  {n:'F8',  x: .72, y:-.52},
+  {n:'T3',  x:-.96, y: .02},
+  {n:'C3',  x:-.50, y: .00},
+  {n:'Cz',  x: .00, y: .00},
+  {n:'C4',  x: .50, y: .00},
+  {n:'T4',  x: .96, y: .02},
+  {n:'T5',  x:-.78, y: .55},
+  {n:'P3',  x:-.38, y: .44},
+  {n:'Pz',  x: .00, y: .44},
+  {n:'P4',  x: .38, y: .44},
+  {n:'T6',  x: .78, y: .55},
+  {n:'O1',  x:-.24, y: .86},
+  {n:'O2',  x: .24, y: .86},
+];
+
+/*
+  Each electrode has:
+  base  — mean activation (0=cold/blue  1=hot/red)
+  theta — theta-band oscillation amplitude (slow, ~6 Hz EEG = visual 0.8 Hz)
+  beta  — beta-band oscillation amplitude  (fast, ~18 Hz EEG = visual 1.8 Hz)
+  noise — random drift amplitude
+  ph    — phase offset
+*/
+const ELEC_PARAMS = {
+  //  base  theta beta  noise  ph
+  Fp1: [0.88, 0.09, 0.01, 0.03, 0.00],
+  Fp2: [0.87, 0.09, 0.01, 0.03, 0.30],
+  F7:  [0.82, 0.10, 0.01, 0.03, 0.70],
+  F3:  [0.86, 0.10, 0.01, 0.03, 1.10],
+  Fz:  [0.90, 0.08, 0.01, 0.02, 1.50],
+  F4:  [0.85, 0.10, 0.01, 0.03, 1.90],
+  F8:  [0.81, 0.10, 0.01, 0.03, 2.30],
+  T3:  [0.55, 0.04, 0.03, 0.04, 2.60],
+  C3:  [0.50, 0.03, 0.04, 0.04, 3.00],
+  Cz:  [0.48, 0.03, 0.04, 0.03, 3.40],
+  C4:  [0.50, 0.03, 0.04, 0.04, 3.80],
+  T4:  [0.54, 0.04, 0.03, 0.04, 0.90],
+  T5:  [0.32, 0.02, 0.05, 0.04, 4.20],
+  P3:  [0.22, 0.02, 0.06, 0.04, 4.60],
+  Pz:  [0.20, 0.01, 0.06, 0.03, 5.00],
+  P4:  [0.23, 0.02, 0.06, 0.04, 5.40],
+  T6:  [0.33, 0.02, 0.05, 0.04, 5.80],
+  O1:  [0.14, 0.01, 0.07, 0.04, 6.20],
+  O2:  [0.15, 0.01, 0.07, 0.04, 6.60],
+};
+
+/* per-electrode noise states */
+const noise = {};
+ELEC_DEF.forEach(e => { noise[e.n] = Math.random() * Math.PI * 2; });
+
+function topoRGB(v) {
+  v = Math.max(0, Math.min(1, v));
+  if (v < .20) { const u=v/.20;       return [Math.round(u*10),   Math.round(u*90),  220]; }
+  if (v < .40) { const u=(v-.20)/.20; return [0, Math.round(90+u*165), Math.round(220*(1-u))]; }
+  if (v < .60) { const u=(v-.40)/.20; return [Math.round(u*255), 240, 0]; }
+  if (v < .80) { const u=(v-.60)/.20; return [255, Math.round(240-u*240), 0]; }
+  return [255, 0, 0];
+}
+
+/* ── topo map ── */
+const cv = document.getElementById('adhdMap');
+const ctx = cv.getContext('2d');
+const W=260, H=260, CX=130, CY=130, HR=115;
+const OS = 140;
+
+const elecs = ELEC_DEF.map(e => ({
+  ...e,
+  params: ELEC_PARAMS[e.n],
+  px: CX + e.x * HR * 0.93,
+  py: CY + e.y * HR * 0.93,
+}));
+
+const oc = document.createElement('canvas');
+oc.width = oc.height = OS;
+const ox = oc.getContext('2d');
+const scale = (HR * 2 * 1.02) / OS;
+const ox0 = CX - HR * 1.02;
+const oy0 = CY - HR * 1.02;
+
+function renderMap(acts) {
+  const imgd = ox.createImageData(OS, OS);
+  const d = imgd.data;
+  for (let row = 0; row < OS; row++) {
+    for (let col = 0; col < OS; col++) {
+      const cpx = ox0 + col * scale;
+      const cpy = oy0 + row * scale;
+      const dx0 = cpx - CX, dy0 = cpy - CY;
+      if (dx0*dx0 + dy0*dy0 > HR*HR) continue;
+      let wSum = 0, vSum = 0;
+      for (let i = 0; i < elecs.length; i++) {
+        const dx = cpx - elecs[i].px, dy = cpy - elecs[i].py;
+        const d2 = dx*dx + dy*dy;
+        const w = d2 < 1 ? 1e6 : 1 / d2;
+        wSum += w; vSum += w * acts[i];
+      }
+      const v = wSum > 0 ? vSum / wSum : 0.5;
+      const [r, g, b] = topoRGB(v);
+      const idx = (row * OS + col) * 4;
+      d[idx]=r; d[idx+1]=g; d[idx+2]=b; d[idx+3]=255;
+    }
+  }
+  ox.putImageData(imgd, 0, 0);
+}
+
+/* ── mini wave canvases ── */
+const waveCtxs = {
+  theta: document.getElementById('wTheta')?.getContext('2d'),
+  beta:  document.getElementById('wBeta')?.getContext('2d'),
+  alpha: document.getElementById('wAlpha')?.getContext('2d'),
+};
+
+function drawWave(ctx2, t, freq, amp, col, bgcol) {
+  if (!ctx2) return;
+  const W2=120, H2=36, mid=H2/2;
+  ctx2.fillStyle = bgcol;
+  ctx2.fillRect(0,0,W2,H2);
+  ctx2.beginPath();
+  for (let x=0; x<W2; x++) {
+    const phase = (x/W2)*Math.PI*4 - t*freq;
+    const y = mid + Math.sin(phase)*amp + Math.sin(phase*1.7+0.5)*amp*0.3;
+    x===0 ? ctx2.moveTo(x,y) : ctx2.lineTo(x,y);
+  }
+  ctx2.strokeStyle = col;
+  ctx2.lineWidth = 1.8;
+  ctx2.stroke();
+  /* glow */
+  ctx2.strokeStyle = col.replace(')', ',.25)').replace('rgb','rgba');
+  ctx2.lineWidth = 4;
+  ctx2.stroke();
+}
+
+/* ── timestamp ── */
+const tsEl = document.getElementById('ts');
+let startMs = null;
+
+/* ── main loop ── */
+function draw(ts) {
+  if (!startMs) startMs = ts;
+  const t = (ts - startMs) / 1000;
+
+  /* update noise slowly */
+  ELEC_DEF.forEach(e => { noise[e.n] += 0.008 + Math.random()*0.004; });
+
+  /* compute electrode activations */
+  const THETA_FREQ = 0.75;  /* visual theta rhythm */
+  const BETA_FREQ  = 2.1;   /* visual beta rhythm (faster) */
+
+  const acts = elecs.map(e => {
+    const [base, tAmp, bAmp, nAmp, ph] = e.params;
+    const thetaOsc = tAmp * Math.sin(t * THETA_FREQ * Math.PI * 2 + ph);
+    const betaOsc  = bAmp * Math.sin(t * BETA_FREQ  * Math.PI * 2 + ph * 1.3);
+    const noiseOsc = nAmp * Math.sin(noise[e.n]);
+    return Math.max(0, Math.min(1, base + thetaOsc + betaOsc + noiseOsc));
+  });
+
+  /* render topo */
+  renderMap(acts);
+  ctx.clearRect(0,0,W,H);
+
+  ctx.save();
+  ctx.beginPath(); ctx.arc(CX,CY,HR,0,Math.PI*2); ctx.clip();
+  ctx.drawImage(oc, ox0, oy0, HR*2*1.02, HR*2*1.02);
+  ctx.restore();
+
+  /* ears */
+  [[-1],[1]].forEach(([sx]) => {
+    ctx.beginPath();
+    ctx.ellipse(CX+sx*(HR+4), CY+8, 7, 12, 0, 0, Math.PI*2);
+    ctx.strokeStyle='rgba(200,185,175,.75)'; ctx.lineWidth=2; ctx.stroke();
+  });
+  /* nose */
+  ctx.beginPath();
+  ctx.moveTo(CX-9,CY-HR+4);
+  ctx.quadraticCurveTo(CX,CY-HR-14,CX+9,CY-HR+4);
+  ctx.strokeStyle='rgba(200,185,175,.75)'; ctx.lineWidth=2; ctx.stroke();
+  /* head circle */
+  ctx.beginPath(); ctx.arc(CX,CY,HR,0,Math.PI*2);
+  ctx.strokeStyle='rgba(200,185,175,.85)'; ctx.lineWidth=2; ctx.stroke();
+
+  /* electrode dots */
+  elecs.forEach(e => {
+    ctx.beginPath(); ctx.arc(e.px,e.py,3,0,Math.PI*2);
+    ctx.fillStyle='rgba(0,0,0,.7)'; ctx.fill();
+    ctx.beginPath(); ctx.arc(e.px,e.py,1.6,0,Math.PI*2);
+    ctx.fillStyle='rgba(255,255,255,.9)'; ctx.fill();
+  });
+
+  /* mini EEG waves */
+  drawWave(waveCtxs.theta, t, 1.8, 11, 'rgb(255,80,40)',  '#120808');
+  drawWave(waveCtxs.beta,  t, 4.5,  4, 'rgb(60,160,255)', '#080810');
+  drawWave(waveCtxs.alpha, t, 2.8,  7, 'rgb(80,220,130)', '#08100a');
+
+  /* timestamp */
+  if (tsEl) {
+    const ms = Math.floor((ts - startMs));
+    const m = Math.floor(ms/60000).toString().padStart(2,'0');
+    const s = Math.floor((ms%60000)/1000).toString().padStart(2,'0');
+    const centis = Math.floor((ms%1000)/10).toString().padStart(2,'0');
+    tsEl.textContent = `${m}:${s}.${centis}`;
+  }
+
+  requestAnimationFrame(draw);
+}
+
+requestAnimationFrame(draw);
+
+})();
+</script>
+</body>
+</html>

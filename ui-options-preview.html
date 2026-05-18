@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UI ვარიანტები — NPMC</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #07070e;
+  font-family: system-ui, -apple-system, sans-serif;
+  color: #eee;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+
+h1 { text-align: center; color: #c9a96e; font-size: 1.1rem; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 8px; }
+.subtitle { text-align: center; color: #555; font-size: 0.8rem; margin-bottom: 48px; }
+
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.option-card {
+  background: #0e0e18;
+  border: 1px solid rgba(201,169,110,.15);
+  border-radius: 14px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.option-label {
+  font-size: 0.65rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #c9a96e;
+}
+.option-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #eee;
+}
+.option-desc {
+  font-size: 0.78rem;
+  color: #666;
+  line-height: 1.5;
+}
+.demo-btn {
+  margin-top: auto;
+  padding: 11px 20px;
+  border-radius: 8px;
+  border: 1px solid rgba(201,169,110,.4);
+  background: transparent;
+  color: #c9a96e;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all .2s;
+  font-family: inherit;
+}
+.demo-btn:hover { background: rgba(201,169,110,.1); border-color: #c9a96e; }
+
+/* ═══════════════════════════════
+   SAMPLE CONDITION CARD (trigger)
+   ═══════════════════════════════ */
+.cond-card {
+  background: #0e0e18;
+  border: 1px solid rgba(109,130,255,.2);
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: border-color .2s, transform .15s;
+  display: flex; align-items: center; gap: 12px;
+}
+.cond-card:hover { border-color: rgba(109,130,255,.5); transform: translateY(-2px); }
+.cond-icon {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: rgba(109,130,255,.12);
+  display: flex; align-items: center; justify-content: center;
+  color: #6d82ff; flex-shrink: 0;
+}
+.cond-name { font-size: 0.9rem; font-weight: 600; }
+.cond-sub { font-size: 0.7rem; color: #555; }
+
+/* ═══════════════════════════════
+   OPTION 1 — MODAL
+   ═══════════════════════════════ */
+#modal1-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75);
+  backdrop-filter: blur(6px);
+  z-index: 100;
+  align-items: center; justify-content: center;
+  padding: 20px;
+}
+#modal1-overlay.open { display: flex; animation: fadeIn .25s ease; }
+.modal1-box {
+  background: #0e0e1a;
+  border: 1px solid rgba(201,169,110,.2);
+  border-radius: 18px;
+  padding: 32px;
+  max-width: 560px;
+  width: 100%;
+  position: relative;
+  animation: slideUp .3s ease;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+/* ═══════════════════════════════
+   OPTION 2 — DRAWER
+   ═══════════════════════════════ */
+#drawer2-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.5);
+  z-index: 100;
+}
+#drawer2-overlay.open { display: block; animation: fadeIn .2s ease; }
+.drawer2-panel {
+  position: fixed; top: 0; right: -440px;
+  width: 420px; max-width: 95vw;
+  height: 100vh;
+  background: #0d0d1a;
+  border-left: 1px solid rgba(201,169,110,.2);
+  padding: 32px 28px;
+  overflow-y: auto;
+  z-index: 101;
+  transition: right .35s cubic-bezier(.4,0,.2,1);
+}
+#drawer2-overlay.open .drawer2-panel { right: 0; }
+
+/* ═══════════════════════════════
+   OPTION 3 — SEPARATE PAGE SIMULATION
+   ═══════════════════════════════ */
+#page3-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: #07070e;
+  z-index: 100;
+  overflow-y: auto;
+}
+#page3-overlay.open { display: block; animation: pageSlideIn .35s ease; }
+
+/* ═══════════════════════════════
+   OPTION 4 — FULLSCREEN OVERLAY
+   ═══════════════════════════════ */
+#fs4-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: #07070e;
+  z-index: 100;
+  overflow-y: auto;
+}
+#fs4-overlay.open { display: block; animation: fsExpand .4s cubic-bezier(.4,0,.2,1); }
+
+/* ═══════════════════════════════
+   SHARED INNER CONTENT
+   ═══════════════════════════════ */
+.inner-content { display: flex; flex-direction: column; gap: 20px; }
+
+.modal-head {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(109,130,255,.12);
+}
+.modal-head-icon {
+  width: 44px; height: 44px; border-radius: 10px;
+  background: rgba(109,130,255,.12);
+  display: flex; align-items: center; justify-content: center;
+  color: #6d82ff; flex-shrink: 0; font-size: 1.3rem;
+}
+.modal-head h2 { font-size: 1.15rem; color: #eee; margin-bottom: 3px; }
+.modal-head p { font-size: 0.75rem; color: #6d82ff; }
+
+.section-label {
+  font-size: 0.65rem; letter-spacing: .1em; text-transform: uppercase;
+  color: #c9a96e; margin-bottom: 8px;
+}
+.modal-desc { font-size: 0.82rem; color: #aaa; line-height: 1.65; }
+.modal-symptoms { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.modal-symptoms li {
+  font-size: 0.8rem; color: #bbb; padding: 7px 12px;
+  background: rgba(109,130,255,.06); border-radius: 7px;
+  border-left: 2px solid rgba(109,130,255,.3);
+}
+
+.wave-rows { display: flex; flex-direction: column; gap: 8px; }
+.wave-row {
+  display: grid; grid-template-columns: 80px 70px 110px 1fr;
+  gap: 8px; align-items: center;
+  padding: 8px 12px; border-radius: 8px;
+  background: rgba(255,255,255,.03); font-size: 0.75rem;
+}
+.wave-name { font-weight: 600; color: #eee; }
+.wave-hz { color: #555; }
+.wave-up { color: #ff7755; font-weight: 600; }
+.wave-down { color: #5599ff; font-weight: 600; }
+.wave-desc { color: #666; font-size: 0.72rem; }
+
+.close-btn {
+  position: absolute; top: 16px; right: 16px;
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.1);
+  background: rgba(255,255,255,.05);
+  color: #888; cursor: pointer; font-size: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s; font-family: inherit;
+}
+.close-btn:hover { color: #eee; border-color: rgba(255,255,255,.3); background: rgba(255,255,255,.1); }
+
+.back-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: #c9a96e; font-size: 0.8rem; cursor: pointer;
+  border: none; background: none; font-family: inherit;
+  padding: 0; transition: gap .2s;
+}
+.back-btn:hover { gap: 12px; }
+
+.modal-cta-row {
+  display: flex; gap: 10px; margin-top: 4px;
+}
+.btn-primary {
+  padding: 10px 20px; border-radius: 8px;
+  background: linear-gradient(135deg,#6d82ff,#9b6dff);
+  border: none; color: #fff; font-size: 0.82rem;
+  cursor: pointer; font-family: inherit;
+}
+.btn-ghost {
+  padding: 10px 20px; border-radius: 8px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.12);
+  color: #aaa; font-size: 0.82rem;
+  cursor: pointer; font-family: inherit;
+}
+
+/* page / fullscreen wrappers */
+.page-wrap {
+  max-width: 700px; margin: 0 auto;
+  padding: 40px 24px;
+  position: relative;
+}
+
+/* ═══════════════════════════════
+   FULLSCREEN nav bar
+   ═══════════════════════════════ */
+.fs-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 32px;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  position: sticky; top: 0;
+  background: rgba(7,7,14,.9);
+  backdrop-filter: blur(12px);
+  z-index: 1;
+}
+.fs-nav .logo { color: #c9a96e; font-size: 0.85rem; letter-spacing: .1em; font-weight: 600; }
+
+.fs-hero {
+  display: flex; flex-direction: column; gap: 8px;
+  padding: 48px 32px 32px;
+  max-width: 760px; margin: 0 auto;
+}
+.fs-hero-tag {
+  font-size: 0.65rem; letter-spacing: .14em; text-transform: uppercase;
+  color: #6d82ff;
+}
+.fs-hero h1 {
+  font-size: 2rem; color: #eee; text-align: left; margin: 0;
+  letter-spacing: normal; text-transform: none;
+}
+.fs-hero p { font-size: 0.85rem; color: #666; line-height: 1.6; }
+.fs-body { max-width: 760px; margin: 0 auto; padding: 0 32px 60px; display: flex; flex-direction: column; gap: 24px; }
+
+/* ═══════════════════════════════
+   ANIMATIONS
+   ═══════════════════════════════ */
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+@keyframes slideUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+@keyframes pageSlideIn { from{opacity:0;transform:translateX(40px)} to{opacity:1;transform:translateX(0)} }
+@keyframes fsExpand { from{opacity:0;transform:scale(.97)} to{opacity:1;transform:scale(1)} }
+</style>
+</head>
+<body>
+
+<h1>UI ვარიანტები — 4 ნიმუში</h1>
+<p class="subtitle">ყოველ ბარათზე დააჭირე „სცადე" ღილაკს — ნახე როგორ გამოიყურება</p>
+
+<div class="options-grid">
+
+  <!-- OPTION 1 -->
+  <div class="option-card">
+    <div class="option-label">ვარიანტი 1</div>
+    <div class="option-title">Popup Modal</div>
+    <div class="option-desc">კლიკზე ეკრანის ცენტრში გამოჩნდება ფანჯარა. ფონი ბნელდება. X-ით ან გარეთ კლიკით იხურება.</div>
+    <div class="cond-card" onclick="openModal1()">
+      <div class="cond-icon">🧠</div>
+      <div><div class="cond-name">ADHD</div><div class="cond-sub">დააჭირე სანახავად</div></div>
+    </div>
+    <button class="demo-btn" onclick="openModal1()">▶ სცადე ვარიანტი 1</button>
+  </div>
+
+  <!-- OPTION 2 -->
+  <div class="option-card">
+    <div class="option-label">ვარიანტი 2</div>
+    <div class="option-title">გვერდითი Drawer</div>
+    <div class="option-desc">კლიკზე მარჯვნიდან შემოდის პანელი. საიტი ჩანს უკიდან. ბუნებრივი, „არ ტოვებ" გვერდს.</div>
+    <div class="cond-card" onclick="openDrawer2()">
+      <div class="cond-icon">🧠</div>
+      <div><div class="cond-name">ADHD</div><div class="cond-sub">დააჭირე სანახავად</div></div>
+    </div>
+    <button class="demo-btn" onclick="openDrawer2()">▶ სცადე ვარიანტი 2</button>
+  </div>
+
+  <!-- OPTION 3 -->
+  <div class="option-card">
+    <div class="option-label">ვარიანტი 3</div>
+    <div class="option-title">ცალკე გვერდი</div>
+    <div class="option-desc">კლიკზე გადადის ახალ URL-ზე (/adhd, /depression…). სუფთა, SEO-სთვის კარგი. „უკან" ღილაკი.</div>
+    <div class="cond-card" onclick="openPage3()">
+      <div class="cond-icon">🧠</div>
+      <div><div class="cond-name">ADHD</div><div class="cond-sub">დააჭირე სანახავად</div></div>
+    </div>
+    <button class="demo-btn" onclick="openPage3()">▶ სცადე ვარიანტი 3</button>
+  </div>
+
+  <!-- OPTION 4 -->
+  <div class="option-card">
+    <div class="option-label">ვარიანტი 4</div>
+    <div class="option-title">Full-screen Overlay</div>
+    <div class="option-desc">კლიკზე მთელი ეკრანი ივსება — ნავბარით, hero სექციით. თითქოს ახალ გვერდზე ხარ.</div>
+    <div class="cond-card" onclick="openFs4()">
+      <div class="cond-icon">🧠</div>
+      <div><div class="cond-name">ADHD</div><div class="cond-sub">დააჭირე სანახავად</div></div>
+    </div>
+    <button class="demo-btn" onclick="openFs4()">▶ სცადე ვარიანტი 4</button>
+  </div>
+
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     OPTION 1 — MODAL
+     ═══════════════════════════════════════ -->
+<div id="modal1-overlay" onclick="closeModal1(event)">
+  <div class="modal1-box" onclick="event.stopPropagation()">
+    <button class="close-btn" onclick="closeModal1()">✕</button>
+    <div class="inner-content">
+      <div class="modal-head">
+        <div class="modal-head-icon">🧠</div>
+        <div>
+          <h2>ADHD / ყურადღების დეფიციტი</h2>
+          <p>ყურადღების დეფიციტისა და ჰიპერაქტივობის სინდრომი</p>
+        </div>
+      </div>
+      <div>
+        <div class="section-label">რა არის?</div>
+        <p class="modal-desc">ADHD — ნეიროგანვითარებითი აშლილობაა, რომელშიც ფრონტალური კორტექსის დარეგულირება დარღვეულია. პრობლემა არ არის „ნებისყოფაში" — ტვინის Theta/Beta თანაფარდობა ბიოლოგიურადაა შეცვლილი.</p>
+      </div>
+      <div>
+        <div class="section-label">ძირითადი სიმპტომები</div>
+        <ul class="modal-symptoms">
+          <li>ყურადღების გაფანტვა და ამოცანის დასრულების სიძნელე</li>
+          <li>იმპულსურობა — „გაფიქრებამდე მოქმედება"</li>
+          <li>ჰიპერფოკუსი — ზოგჯერ ერთ რამეში „ჩარჩენა"</li>
+          <li>ემოციური ლაბილობა, განწყობის სწრაფი ცვლილება</li>
+        </ul>
+      </div>
+      <div>
+        <div class="section-label">QEEG სურათი</div>
+        <div class="wave-rows">
+          <div class="wave-row"><span class="wave-name">Theta</span><span class="wave-hz">4–8 Hz</span><span class="wave-up">↑ მომატებული</span><span class="wave-desc">ჭარბი ფრონტალური — ყურადღების დეფიციტი</span></div>
+          <div class="wave-row"><span class="wave-name">Beta</span><span class="wave-hz">13–30 Hz</span><span class="wave-down">↓ შემცირებული</span><span class="wave-desc">პარიეტ./ოქციპ. — კონცენტრაციის სიძნელე</span></div>
+          <div class="wave-row"><span class="wave-name">Alpha</span><span class="wave-hz">8–12 Hz</span><span style="color:#66cc88;font-weight:600">✓ ნორმა</span><span class="wave-desc">ძირითადად ნორმის ფარგლებში</span></div>
+        </div>
+      </div>
+      <div class="modal-cta-row">
+        <button class="btn-primary">დაჯავშნე კონსულტაცია</button>
+        <button class="btn-ghost">ნახე ფასები</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     OPTION 2 — DRAWER
+     ═══════════════════════════════════════ -->
+<div id="drawer2-overlay" onclick="closeDrawer2(event)">
+  <div class="drawer2-panel" onclick="event.stopPropagation()">
+    <button class="close-btn" style="position:static;margin-bottom:20px;align-self:flex-start" onclick="closeDrawer2()">✕</button>
+    <div class="inner-content">
+      <div class="modal-head" style="position:relative">
+        <div class="modal-head-icon">🧠</div>
+        <div>
+          <h2>ADHD / ყურადღების დეფიციტი</h2>
+          <p>ყურადღების დეფიციტისა და ჰიპერაქტივობის სინდრომი</p>
+        </div>
+      </div>
+      <div>
+        <div class="section-label">რა არის?</div>
+        <p class="modal-desc">ADHD — ნეიროგანვითარებითი აშლილობაა, რომელშიც ფრონტალური კორტექსის დარეგულირება დარღვეულია. პრობლემა არ არის „ნებისყოფაში" — ტვინის Theta/Beta თანაფარდობა ბიოლოგიურადაა შეცვლილი.</p>
+      </div>
+      <div>
+        <div class="section-label">ძირითადი სიმპტომები</div>
+        <ul class="modal-symptoms">
+          <li>ყურადღების გაფანტვა და ამოცანის დასრულების სიძნელე</li>
+          <li>იმპულსურობა — „გაფიქრებამდე მოქმედება"</li>
+          <li>ჰიპერფოკუსი — ზოგჯერ ერთ რამეში „ჩარჩენა"</li>
+          <li>ემოციური ლაბილობა, განწყობის სწრაფი ცვლილება</li>
+        </ul>
+      </div>
+      <div>
+        <div class="section-label">QEEG სურათი</div>
+        <div class="wave-rows">
+          <div class="wave-row"><span class="wave-name">Theta</span><span class="wave-hz">4–8 Hz</span><span class="wave-up">↑ მომატებული</span><span class="wave-desc">ჭარბი ფრონტალური</span></div>
+          <div class="wave-row"><span class="wave-name">Beta</span><span class="wave-hz">13–30 Hz</span><span class="wave-down">↓ შემცირებული</span><span class="wave-desc">პარიეტ./ოქციპ.</span></div>
+          <div class="wave-row"><span class="wave-name">Alpha</span><span class="wave-hz">8–12 Hz</span><span style="color:#66cc88;font-weight:600">✓ ნორმა</span><span class="wave-desc">ნორმის ფარგლებში</span></div>
+        </div>
+      </div>
+      <div class="modal-cta-row">
+        <button class="btn-primary">დაჯავშნე</button>
+        <button class="btn-ghost">ფასები</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     OPTION 3 — PAGE SIMULATION
+     ═══════════════════════════════════════ -->
+<div id="page3-overlay">
+  <div class="page-wrap">
+    <button class="back-btn" onclick="closePage3()" style="margin-bottom:32px">← უკან დაბრუნება</button>
+    <div class="inner-content">
+      <div class="modal-head">
+        <div class="modal-head-icon" style="width:52px;height:52px;border-radius:12px;font-size:1.6rem">🧠</div>
+        <div>
+          <h2 style="font-size:1.4rem">ADHD / ყურადღების დეფიციტი</h2>
+          <p>ყურადღების დეფიციტისა და ჰიპერაქტივობის სინდრომი</p>
+        </div>
+      </div>
+      <div>
+        <div class="section-label">რა არის?</div>
+        <p class="modal-desc">ADHD — ნეიროგანვითარებითი აშლილობაა, რომელშიც ფრონტალური კორტექსის დარეგულირება დარღვეულია. პრობლემა არ არის „ნებისყოფაში" — ტვინის Theta/Beta თანაფარდობა ბიოლოგიურადაა შეცვლილი.</p>
+      </div>
+      <div>
+        <div class="section-label">ძირითადი სიმპტომები</div>
+        <ul class="modal-symptoms">
+          <li>ყურადღების გაფანტვა და ამოცანის დასრულების სიძნელე</li>
+          <li>იმპულსურობა — „გაფიქრებამდე მოქმედება"</li>
+          <li>ჰიპერფოკუსი — ზოგჯერ ერთ რამეში „ჩარჩენა"</li>
+          <li>ემოციური ლაბილობა, განწყობის სწრაფი ცვლილება</li>
+        </ul>
+      </div>
+      <div>
+        <div class="section-label">QEEG სურათი</div>
+        <div class="wave-rows">
+          <div class="wave-row"><span class="wave-name">Theta</span><span class="wave-hz">4–8 Hz</span><span class="wave-up">↑ მომატებული</span><span class="wave-desc">ჭარბი ფრონტალური — ყურადღების დეფიციტი</span></div>
+          <div class="wave-row"><span class="wave-name">Beta</span><span class="wave-hz">13–30 Hz</span><span class="wave-down">↓ შემცირებული</span><span class="wave-desc">პარიეტ./ოქციპ. — კონცენტრაციის სიძნელე</span></div>
+          <div class="wave-row"><span class="wave-name">Alpha</span><span class="wave-hz">8–12 Hz</span><span style="color:#66cc88;font-weight:600">✓ ნორმა</span><span class="wave-desc">ძირითადად ნორმის ფარგლებში</span></div>
+        </div>
+      </div>
+      <div class="modal-cta-row">
+        <button class="btn-primary">დაჯავშნე კონსულტაცია</button>
+        <button class="btn-ghost">ნახე ფასები</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     OPTION 4 — FULLSCREEN
+     ═══════════════════════════════════════ -->
+<div id="fs4-overlay">
+  <nav class="fs-nav">
+    <span class="logo">NPMC</span>
+    <button class="back-btn" onclick="closeFs4()">← მთავარ გვერდზე დაბრუნება</button>
+  </nav>
+  <div class="fs-hero">
+    <span class="fs-hero-tag">დიაგნოსტიკა / ADHD</span>
+    <h1>ADHD / ყურადღების დეფიციტი</h1>
+    <p>ყურადღების დეფიციტისა და ჰიპერაქტივობის სინდრომი — ნეიროგანვითარებითი მდგომარეობა</p>
+  </div>
+  <div class="fs-body">
+    <div>
+      <div class="section-label">რა არის?</div>
+      <p class="modal-desc">ADHD — ნეიროგანვითარებითი აშლილობაა, რომელშიც ფრონტალური კორტექსის დარეგულირება დარღვეულია. პრობლემა არ არის „ნებისყოფაში" — ტვინის Theta/Beta თანაფარდობა ბიოლოგიურადაა შეცვლილი.</p>
+    </div>
+    <div>
+      <div class="section-label">ძირითადი სიმპტომები</div>
+      <ul class="modal-symptoms">
+        <li>ყურადღების გაფანტვა და ამოცანის დასრულების სიძნელე</li>
+        <li>იმპულსურობა — „გაფიქრებამდე მოქმედება"</li>
+        <li>ჰიპერფოკუსი — ზოგჯერ ერთ რამეში „ჩარჩენა"</li>
+        <li>ემოციური ლაბილობა, განწყობის სწრაფი ცვლილება</li>
+      </ul>
+    </div>
+    <div>
+      <div class="section-label">QEEG სურათი</div>
+      <div class="wave-rows">
+        <div class="wave-row"><span class="wave-name">Theta</span><span class="wave-hz">4–8 Hz</span><span class="wave-up">↑ მომატებული</span><span class="wave-desc">ჭარბი ფრონტალური — ყურადღების დეფიციტი</span></div>
+        <div class="wave-row"><span class="wave-name">Beta</span><span class="wave-hz">13–30 Hz</span><span class="wave-down">↓ შემცირებული</span><span class="wave-desc">პარიეტ./ოქციპ. — კონცენტრაციის სიძნელე</span></div>
+        <div class="wave-row"><span class="wave-name">Alpha</span><span class="wave-hz">8–12 Hz</span><span style="color:#66cc88;font-weight:600">✓ ნორმა</span><span class="wave-desc">ძირითადად ნორმის ფარგლებში</span></div>
+      </div>
+    </div>
+    <div class="modal-cta-row">
+      <button class="btn-primary">დაჯავშნე კონსულტაცია</button>
+      <button class="btn-ghost" onclick="closeFs4()">← უკან</button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+// OPTION 1 — MODAL
+function openModal1() { document.getElementById('modal1-overlay').classList.add('open'); document.body.style.overflow='hidden'; }
+function closeModal1(e) {
+  if (e && e.target !== document.getElementById('modal1-overlay')) return;
+  document.getElementById('modal1-overlay').classList.remove('open'); document.body.style.overflow='';
+}
+
+// OPTION 2 — DRAWER
+function openDrawer2() { document.getElementById('drawer2-overlay').classList.add('open'); document.body.style.overflow='hidden'; }
+function closeDrawer2(e) {
+  if (e && e.target !== document.getElementById('drawer2-overlay')) return;
+  document.getElementById('drawer2-overlay').classList.remove('open'); document.body.style.overflow='';
+}
+
+// OPTION 3 — PAGE
+function openPage3() { document.getElementById('page3-overlay').classList.add('open'); window.scrollTo(0,0); document.body.style.overflow='hidden'; }
+function closePage3() { document.getElementById('page3-overlay').classList.remove('open'); document.body.style.overflow=''; }
+
+// OPTION 4 — FULLSCREEN
+function openFs4() { document.getElementById('fs4-overlay').classList.add('open'); window.scrollTo(0,0); document.body.style.overflow='hidden'; }
+function closeFs4() { document.getElementById('fs4-overlay').classList.remove('open'); document.body.style.overflow=''; }
+
+// ESC to close any
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closeModal1();
+    document.getElementById('drawer2-overlay').classList.remove('open');
+    document.getElementById('page3-overlay').classList.remove('open');
+    document.getElementById('fs4-overlay').classList.remove('open');
+    document.body.style.overflow='';
+  }
+});
+</script>
+</body>
+</html>
