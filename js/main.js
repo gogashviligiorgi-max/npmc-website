@@ -1496,17 +1496,28 @@ function startConditionBrainMap(canvasId, conditionKey) {
   slider.addEventListener('pointerup',   function () { dragging = false; });
   slider.addEventListener('pointercancel', function () { dragging = false; });
 
-  /* ---- init when section scrolls into view ---- */
+  /* ---- init: try immediately, then watch for scroll ---- */
+  function tryInit() {
+    launchMaps(currentBefore, currentAfter);
+    setSlider(0.5);
+  }
+
   const section = document.getElementById('before-after');
-  let initiated = false;
+  if (section) {
+    let initiated = false;
+    const initObs = new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting && !initiated) {
+        initiated = true;
+        tryInit();
+      }
+    }, { threshold: 0.01, rootMargin: '100px 0px' });
+    initObs.observe(section);
+  }
 
-  const initObs = new IntersectionObserver(function (entries) {
-    if (entries[0].isIntersecting && !initiated) {
-      initiated = true;
-      launchMaps(currentBefore, currentAfter);
-      setSlider(0.5);
-    }
-  }, { threshold: 0.2 });
-
-  if (section) initObs.observe(section);
+  /* also init on load in case section is already visible */
+  if (document.readyState === 'complete') {
+    setTimeout(tryInit, 300);
+  } else {
+    window.addEventListener('load', function () { setTimeout(tryInit, 300); }, { once: true });
+  }
 })();
