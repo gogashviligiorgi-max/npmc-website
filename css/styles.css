@@ -2615,6 +2615,14 @@ h4 { font-size: 1.1rem; }
    The hero keeps its own inline SVG neural background, so nothing looks empty. */
 @media (max-width: 768px) {
   #neural-bg { display: none !important; }
+  /* Don't force a full 100vh hero on phones: it made the first screen a tall
+     "slide" you had to scroll through before the next section. Size to content
+     and tighten spacing so section 2 peeks in and the page flows continuously. */
+  .hero { min-height: auto; padding-top: calc(var(--nav-h) + 16px); padding-bottom: 30px; }
+  .hero__scroll { display: none; }
+  .hero__badge { margin-bottom: 16px; }
+  .hero__title { margin-bottom: 12px; }
+  .hero__subtitle { font-size: 1rem; line-height: 1.55; margin-bottom: 20px; }
 }
 
 /* Smaller hero heading on small phones so the long clinic name fits cleanly */
