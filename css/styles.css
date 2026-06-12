@@ -61,6 +61,44 @@
   src: url('../fonts/inter-600.ttf') format('truetype');
 }
 
+/* Georgian fonts — Cormorant/Inter lack Georgian glyphs, so Georgian text
+   falls back to these (per-glyph) instead of an inconsistent system serif. */
+@font-face {
+  font-family: 'Noto Serif Georgian';
+  font-style: normal; font-weight: 500; font-display: swap;
+  src: url('../fonts/serif-geo-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Noto Serif Georgian';
+  font-style: normal; font-weight: 600; font-display: swap;
+  src: url('../fonts/serif-geo-600.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Noto Serif Georgian';
+  font-style: normal; font-weight: 700; font-display: swap;
+  src: url('../fonts/serif-geo-700.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Noto Sans Georgian';
+  font-style: normal; font-weight: 300; font-display: swap;
+  src: url('../fonts/sans-geo-300.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Noto Sans Georgian';
+  font-style: normal; font-weight: 400; font-display: swap;
+  src: url('../fonts/sans-geo-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Noto Sans Georgian';
+  font-style: normal; font-weight: 500; font-display: swap;
+  src: url('../fonts/sans-geo-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Noto Sans Georgian';
+  font-style: normal; font-weight: 600; font-display: swap;
+  src: url('../fonts/sans-geo-600.woff2') format('woff2');
+}
+
 /* ---- VARIABLES ---- */
 :root {
   --bg:           #08080f;
@@ -80,8 +118,8 @@
   --radius-lg:    20px;
   --shadow:       0 4px 30px rgba(0,0,0,0.5);
   --shadow-gold:  0 4px 30px rgba(201,169,110,0.15);
-  --font-display: 'Cormorant Garamond', Georgia, serif;
-  --font-body:    'Inter', system-ui, sans-serif;
+  --font-display: 'Cormorant Garamond', 'Noto Serif Georgian', Georgia, serif;
+  --font-body:    'Inter', 'Noto Sans Georgian', system-ui, sans-serif;
   --max-w:        1200px;
   --nav-h:        80px;
   --transition:   0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -404,6 +442,11 @@ h4 { font-size: 1.1rem; }
   animation: pulse 2s ease-in-out infinite;
 }
 .hero__title {
+  /* Fits the longest Georgian word on phones, less overwhelming on desktop */
+  /* max 3.1rem keeps the long word "ნეიროფსიქომოდულაციის" on one line in the 732px hero column */
+  font-size: clamp(1.85rem, 4.6vw, 3.1rem);
+  line-height: 1.18;
+  overflow-wrap: anywhere;
   margin-bottom: 24px;
   color: var(--text);
 }
@@ -2566,6 +2609,21 @@ h4 { font-size: 1.1rem; }
 /* ============================================================
    MOBILE FIXES — comprehensive responsive repair
    ============================================================ */
+
+/* On phones, drop the full-screen fixed background canvas: it is the most
+   likely cause of touch-scroll trouble on mobile and it drains the battery.
+   The hero keeps its own inline SVG neural background, so nothing looks empty. */
+@media (max-width: 768px) {
+  #neural-bg { display: none !important; }
+}
+
+/* Smaller hero heading on small phones so the long clinic name fits cleanly */
+@media (max-width: 480px) {
+  .hero__title { font-size: 1.45rem; line-height: 1.25; }
+}
+@media (max-width: 360px) {
+  .hero__title { font-size: 1.3rem; }
+}
 
 /* Prevent ANY horizontal overflow on all screens */
 html, body {
