@@ -684,7 +684,7 @@ function openConditionModal(key) {
   const brainMapHTML = bmCfg ? `
     <div class="modal-brain-wrap">
       <div class="modal-brain-map-box">
-        <canvas id="${bmCfg.canvasId}" width="180" height="180"></canvas>
+        <canvas id="${bmCfg.canvasId}" width="420" height="420"></canvas>
         <div class="modal-brain-rec"><span class="modal-brain-dot"></span>LIVE EEG</div>
       </div>
       <div class="modal-brain-legend">
