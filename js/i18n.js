@@ -107,6 +107,18 @@
         tabPsycho:'QEEG ფსიქოთერაპია',
       },
 
+      brainCompare: {
+        tag:      'QEEG შედარება',
+        title:    'ტვინის ციფრული რუქა<br>მკურნალობამდე და შემდეგ',
+        subtitle: 'QEEG ზომავს ტვინის ელექტრულ პატერნებს. გაასრიალეთ გამყოფი ხაზი — ნახეთ რეალური ცვლილება.',
+        tabs:     ['დეპრესია', 'ADHD', 'შფოთვა', 'პანიკური შეტ.', 'OCD', 'PTSD', 'ფობია'],
+        before:   '◀ მკურნალობამდე',
+        after:    'მკურნალობის შემდეგ ▶',
+        dragHint: '← გაასრიალეთ →',
+        low:      'დაბალი',
+        high:     'მაღალი',
+      },
+
       process: {
         tag:      'პროცესი',
         title:    '3 ნაბიჯი სიცხადემდე',
@@ -412,6 +424,18 @@
         tabTms:   'TMS',
         tabNfb:   'Neurofeedback',
         tabPsycho:'QEEG Psychotherapy',
+      },
+
+      brainCompare: {
+        tag:      'QEEG Comparison',
+        title:    'The brain\'s digital map<br>before and after treatment',
+        subtitle: 'QEEG measures the brain\'s electrical patterns. Drag the divider — see the real change.',
+        tabs:     ['Depression', 'ADHD', 'Anxiety', 'Panic', 'OCD', 'PTSD', 'Phobia'],
+        before:   '◀ Before treatment',
+        after:    'After treatment ▶',
+        dragHint: '← drag →',
+        low:      'Low',
+        high:     'High',
       },
 
       process: {
@@ -946,6 +970,18 @@
         tabTms:   'ТМС',
         tabNfb:   'Нейробиоуправление',
         tabPsycho:'QEEG-психотерапия',
+      },
+
+      brainCompare: {
+        tag:      'Сравнение QEEG',
+        title:    'Цифровая карта мозга<br>до и после лечения',
+        subtitle: 'QEEG измеряет электрические паттерны мозга. Перетащите разделитель — увидите реальное изменение.',
+        tabs:     ['Депрессия', 'СДВГ', 'Тревога', 'Паника', 'ОКР', 'ПТСР', 'Фобия'],
+        before:   '◀ До лечения',
+        after:    'После лечения ▶',
+        dragHint: '← перетащите →',
+        low:      'Низкий',
+        high:     'Высокий',
       },
 
       process: {
@@ -1571,6 +1607,23 @@
         const details = step.querySelectorAll('.process__step-detail span');
         stepData[i].d.forEach((d, di) => { if (details[di]) txt(details[di], d); });
       });
+    }
+
+    /* ── BRAIN COMPARE (Before/After slider) ── */
+    const bcSection = $('.brain-compare');
+    if (bcSection && t.brainCompare) {
+      const bc = t.brainCompare;
+      txt(bcSection.querySelector('.section-tag'),      bc.tag);
+      htm(bcSection.querySelector('.section-title'),    bc.title);
+      txt(bcSection.querySelector('.section-subtitle'), bc.subtitle);
+      const bcTabs = bcSection.querySelectorAll('.bc-tab');
+      bc.tabs.forEach((label, i) => { if (bcTabs[i]) txt(bcTabs[i], label); });
+      txt(bcSection.querySelector('.bc-label--before'), bc.before);
+      txt(bcSection.querySelector('.bc-label--after'),  bc.after);
+      txt(bcSection.querySelector('.bc-drag-hint'),     bc.dragHint);
+      txt(bcSection.querySelector('.bc-legend__low'),   bc.low);
+      txt(bcSection.querySelector('.bc-legend__high'),  bc.high);
+      if (window.__bcUpdateNote) window.__bcUpdateNote();
     }
 
     /* ── CONDITIONS ── */

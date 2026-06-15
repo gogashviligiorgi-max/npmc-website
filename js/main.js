@@ -1684,7 +1684,7 @@ function startConditionBrainMap(canvasId, conditionKey) {
   const note     = document.getElementById('bcNote');
   if (!slider || !handle || !afterSide) return;
 
-  const NOTES = {
+  const NOTES_KA = {
     depression: 'Alpha ასიმეტრია — მარჯვ. ფრონტ. გადაჭარბებული. TMS + ნეიროფიდბექი ასწორებს ბალანსს.',
     adhd:       'Theta ↑ ფრონტ. / Beta ↓ — კოგნიტური "ნისლი". ნეიროფიდბექი Theta/Beta ratio-ს ნორმალიზებს.',
     anxiety:    'High Beta ↑ ფრონტ. / Alpha ↓ — ქრონიკული ჰიპერფხიზლობა. TMS + Alpha training ხსნის ბლოკს.',
@@ -1693,6 +1693,28 @@ function startConditionBrainMap(canvasId, conditionKey) {
     ptsd:       'ბილატ. High Beta ↑ + Theta ↑ + Alpha ასიმეტრია — "გაყინული" ტვინი. Alpha-Theta + TMS = ტრავმის ინტეგრაცია.',
     phobia:     'T3/T4 (ამიგდალა) ↑↑ + ფრონტ. ბეტა ↑ — შიშის ჰიპერრეაქცია. TMS + Alpha training = ინჰიბიტ. კონტროლი.',
   };
+  const NOTES_EN = {
+    depression: 'Alpha asymmetry — excess right frontal. TMS + Neurofeedback restore the balance.',
+    adhd:       'Theta ↑ frontal / Beta ↓ — cognitive "fog". Neurofeedback normalizes the Theta/Beta ratio.',
+    anxiety:    'High Beta ↑ frontal / Alpha ↓ — chronic hyperarousal. TMS + Alpha training release the block.',
+    panic:      'Extreme High Beta ↑↑ frontal + T3/T4 (amygdala) — "alarm" mode. Alpha-Theta training + TMS calm it down.',
+    ocd:        'Fz/Cz hyper-synchrony (fronto-striato-thalamic circuit) — obsessive loop. TMS SMA + Neurofeedback break the loop.',
+    ptsd:       'Bilateral High Beta ↑ + Theta ↑ + Alpha asymmetry — a "frozen" brain. Alpha-Theta + TMS = trauma integration.',
+    phobia:     'T3/T4 (amygdala) ↑↑ + frontal Beta ↑ — fear hyperreaction. TMS + Alpha training = inhibitory control.',
+  };
+  const NOTES_RU = {
+    depression: 'Асимметрия Alpha — избыток в правой лобной. TMS + нейробиоуправление восстанавливают баланс.',
+    adhd:       'Theta ↑ лобн. / Beta ↓ — когнитивный «туман». Нейробиоуправление нормализует соотношение Theta/Beta.',
+    anxiety:    'High Beta ↑ лобн. / Alpha ↓ — хроническая гипервозбудимость. TMS + Alpha-тренинг снимают блок.',
+    panic:      'Экстремальный High Beta ↑↑ лобн. + T3/T4 (миндалина) — режим «тревоги». Alpha-Theta тренинг + TMS успокаивают.',
+    ocd:        'Гиперсинхрония Fz/Cz (фронто-стриато-таламический контур) — обсессивный цикл. TMS SMA + нейробиоуправление разрывают цикл.',
+    ptsd:       'Билат. High Beta ↑ + Theta ↑ + асимметрия Alpha — «замороженный» мозг. Alpha-Theta + TMS = интеграция травмы.',
+    phobia:     'T3/T4 (миндалина) ↑↑ + лобн. Beta ↑ — гиперреакция страха. TMS + Alpha-тренинг = тормозной контроль.',
+  };
+  function getNotes() {
+    const l = document.documentElement.lang;
+    return l === 'ru' ? NOTES_RU : l === 'en' ? NOTES_EN : NOTES_KA;
+  }
 
   let currentBefore = 'depression';
   let currentAfter  = 'depression_after';
@@ -1726,11 +1748,16 @@ function startConditionBrainMap(canvasId, conditionKey) {
       btn.classList.add('active');
       currentBefore = btn.dataset.condition;
       currentAfter  = btn.dataset.after;
-      if (note) note.textContent = NOTES[currentBefore] || '';
+      if (note) note.textContent = getNotes()[currentBefore] || '';
       launchMaps(currentBefore, currentAfter);
       setSlider(0.5);
     });
   });
+
+  /* Let the language switcher refresh the caption in the active language */
+  window.__bcUpdateNote = function () {
+    if (note) note.textContent = getNotes()[currentBefore] || '';
+  };
 
   /* ---- slider drag ---- */
   let dragging = false;
