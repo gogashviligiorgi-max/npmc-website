@@ -216,7 +216,7 @@
   /* ── make sure content stays above canvas ── */
   const style = document.createElement('style');
   style.textContent = `
-    body > *:not(#neural-bg) { position: relative; z-index: 1; }
+    body > *:not(#neural-bg):not(.nav) { position: relative; z-index: 1; }
     #neural-bg { opacity: 0; animation: neuralFadeIn 2s ease forwards; }
     @keyframes neuralFadeIn { to { opacity: 1; } }
   `;
