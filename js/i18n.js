@@ -686,7 +686,6 @@
             '1,000+ studies on PubMed',
           ],
           cards: [
-            { h4: 'How it works', span: 'Mechanism', p: 'The TMS coil is placed close to the head. The electromagnetic pulse lasts 1–2 milliseconds, passing through ordinary tissue. Brain neurons are activated or inhibited according to the protocol. Over 10 sessions, the circuit undergoes structural reorganisation through neuroplasticity.' },
             { h4: 'Protocols', span: 'QEEG-tailored', p: 'Low frequency (1 Hz) — inhibitory, for hyperactive areas. High frequency (10–20 Hz) — excitatory, for hypoactive areas. TBS (Theta Burst) — short, powerful bursts. Targets: DLPFC (depression), DMPFC (ADHD), OFC (OCD) — all determined by QEEG.' },
             { h4: 'What you feel during a session', span: 'Experience', p: 'A rhythmic tapping sensation at the stimulation site — some describe a slight vibration or lightness. Serious side effects are very rare. You return to normal life after the session. No muscle contractions, no bleeding.' },
             { h4: 'Contraindications', span: 'Important', p: 'TMS is not performed in cases of: epilepsy history, ferromagnetic metallic objects in the brain (aneurysm clips, cochlear implants), or a cardiac pacemaker. All these factors are verified at the first QEEG visit.' },
@@ -1232,7 +1231,6 @@
             '1 000+ исследований в PubMed',
           ],
           cards: [
-            { h4: 'Как это работает', span: 'Механизм', p: 'Катушка ТМС размещается близко к голове. Электромагнитный импульс длится 1–2 миллисекунды и проходит через обычные ткани. Нейроны мозга активируются или тормозятся согласно протоколу. За 10 сеансов нейронная сеть подвергается структурной реорганизации через нейропластичность.' },
             { h4: 'Протоколы', span: 'На основе QEEG', p: 'Низкая частота (1 Гц) — тормозящая, для гиперактивных зон. Высокая частота (10–20 Гц) — возбуждающая, для гипоактивных зон. TBS (Theta Burst) — короткие мощные вспышки. Мишени: DLPFC (депрессия), DMPFC (СДВГ), OFC (ОКР) — все определяются по QEEG.' },
             { h4: 'Что вы чувствуете во время сеанса', span: 'Ощущения', p: 'Ритмичное постукивание в месте стимуляции — некоторые описывают лёгкую вибрацию или ощущение лёгкости. Серьёзные побочные эффекты крайне редки. После сеанса вы возвращаетесь к обычной жизни. Без сокращений мышц, без кровотечения.' },
             { h4: 'Противопоказания', span: 'Важно', p: 'ТМС не проводится при: эпилепсии в анамнезе, ферромагнитных металлических объектах в мозге (клипсы аневризм, кохлеарные импланты) или кардиостимуляторе. Все эти факторы проверяются при первом визите на QEEG.' },

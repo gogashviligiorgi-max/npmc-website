@@ -39,21 +39,22 @@
       t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
   }
 
-  /* ---------- canvases ---------- */
-  const views = ['tms-how-macro', 'tms-how-micro'].map(id => {
-    const cv = document.getElementById(id);
-    return { cv, ctx: cv.getContext('2d'), s: 1 };
-  });
+  /* ---------- canvas: one 600×430 stage; each 600×520 scene is drawn offscreen, then composited ---------- */
+  const CH = 430;
+  const stage = document.getElementById('tms-how-canvas');
+  const sctx = stage.getContext('2d');
+  const off = document.createElement('canvas');
+  const view = { ctx: off.getContext('2d'), s: 1 };
+  const MAC = { s: .84, x: 82, y: -22 };     // head scene fitted into the stage
+  const MIC = { s: .835, x: 50, y: 0 };      // neuron scene fitted into the stage
   function resize() {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    views.forEach(v => {
-      const w = v.cv.clientWidth || W;
-      v.cv.width = Math.round(w * dpr);
-      v.cv.height = Math.round(w * H / W * dpr);
-      v.s = v.cv.width / W;
-    });
+    const w = stage.clientWidth || W;
+    stage.width = off.width = Math.round(w * dpr);
+    stage.height = off.height = Math.round(w * CH / W * dpr);
+    view.s = stage.width / W;
   }
-  if ('ResizeObserver' in window) { const ro = new ResizeObserver(resize); views.forEach(v => ro.observe(v.cv)); }
+  if ('ResizeObserver' in window) new ResizeObserver(resize).observe(stage);
   window.addEventListener('resize', resize);
   resize();
 
@@ -286,8 +287,6 @@
 
   function drawMacro(v, t) {
     const ctx = v.ctx;
-    ctx.setTransform(v.s, 0, 0, v.s, 0, 0);
-    ctx.clearRect(0, 0, W, H);
     drawHead(ctx);
     drawNetwork(ctx, t);
     drawInduced(ctx, t);
@@ -388,8 +387,6 @@
 
   function drawMicro(v, t) {
     const ctx = v.ctx;
-    ctx.setTransform(v.s, 0, 0, v.s, 0, 0);
-    ctx.clearRect(0, 0, W, H);
     // cortical layers
     ctx.fillStyle = C.skin; ctx.fillRect(0, 0, W, 38);
     ctx.strokeStyle = C.bone; ctx.globalAlpha = .5; ctx.lineWidth = 1.5;
@@ -473,74 +470,114 @@
     ctx.fillStyle = C.spike; ctx.beginPath(); ctx.arc(xe, my(Vm(t)), 3.5, 0, 7); ctx.fill();
   }
 
-  /* ---------- timeline + controls ---------- */
-  const stepEls = [...root.querySelectorAll('.tms-how__step')];
+  /* ---------- story timeline (master clock τ, seconds) ----------
+     0–5.2 head: coil → field → current · 5.2–5.9 zoom into the cortex · 5.9–9.0 neurons fire
+     9.0–9.6 zoom back out · 9.6–12 activation spreads through the network */
+  const TT = 12;
+  const SP = [0, 1.3, 3.1, 5.2, TT];          // where each step of the steps card starts
+  function scenes(tau) {                       // [scene, scene time, alpha, zoom]
+    if (tau < 5.2) return [['mac', tau, 1, 1]];
+    if (tau < 5.9) {
+      const u = ease(prog(tau, 5.2, 5.9));
+      return [['mac', tau, 1 - u, 1 + 3 * u], ['mic', 4.6 + (tau - 5.2), u, .6 + .4 * u]];
+    }
+    if (tau < 9.0) return [['mic', tau - .6, 1, 1]];
+    if (tau < 9.6) {
+      const u = ease(prog(tau, 9.0, 9.6));
+      return [['mic', tau - .6, 1 - u, 1 + .3 * u], ['mac', 5.3 + (tau - 9.0) * 1.2, u, 2.2 - 1.2 * u]];
+    }
+    return [['mac', 6.0 + (tau - 9.6) * (2.6 / 2.4), 1, 1]];
+  }
+  function compose(tau) {
+    const S = view.s, c = view.ctx;
+    sctx.setTransform(1, 0, 0, 1, 0, 0);
+    sctx.globalAlpha = 1;
+    sctx.clearRect(0, 0, stage.width, stage.height);
+    scenes(tau).forEach(([name, st, alpha, zoom]) => {
+      if (alpha <= .01) return;
+      const F = name === 'mac' ? MAC : MIC;
+      c.setTransform(1, 0, 0, 1, 0, 0);
+      c.globalAlpha = 1;
+      c.clearRect(0, 0, off.width, off.height);
+      c.setTransform(S * F.s, 0, 0, S * F.s, S * F.x, S * F.y);
+      (name === 'mac' ? drawMacro : drawMicro)(view, st);
+      // zoom about the cortical hotspot (head) or the stage centre (neurons)
+      const fx = name === 'mac' ? S * (F.x + F.s * hotG.x) : stage.width / 2;
+      const fy = name === 'mac' ? S * (F.y + F.s * hotG.y) : stage.height / 2;
+      sctx.setTransform(zoom, 0, 0, zoom, fx - fx * zoom, fy - fy * zoom);
+      sctx.globalAlpha = alpha;
+      sctx.drawImage(off, 0, 0);
+    });
+    sctx.setTransform(1, 0, 0, 1, 0, 0);
+    sctx.globalAlpha = 1;
+  }
+
+  /* ---------- steps card + controls ---------- */
+  const stepsCard = document.getElementById('tms-how-steps');
+  const stepEls = stepsCard ? [...stepsCard.querySelectorAll('.tms-how__step')] : [];
   const playBtn = document.getElementById('tms-how-play');
-  const countEl = document.getElementById('tms-how-count');
   const DOM_TEXT = {
-    ka: { tag: 'როგორ მუშაობს', title: 'მაგნიტური იმპულსიდან ნეირონამდე', slow: 'შენელებული ჩვენება', pulse: 'იმპულსი №',
-          macro: 'თავის ტვინი', macroSub: 'გვერდითი ჭრილი', micro: 'ნეირონების დონე', microSub: 'ქერქის შრეები, გადიდებით',
-          s1: 'იმპულსი კოჭში', s1p: 'აპარატი კოჭში ძლიერ ელექტრულ დენს უშვებს. იმპულსი წამის ათასედზე ნაკლებ დროს გრძელდება.',
-          s2: 'მაგნიტური ველი', s2p: 'კოჭის ქვეშ ჩნდება 1.5–2 ტესლა სიძლიერის მაგნიტური ველი. ის თავისუფლად გადის კანსა და თავის ქალაში.',
-          s3: 'დენი ტვინის ქერქში', s3p: 'ცვალებადი ველი ქერქში, დაახლოებით 2 სმ სიღრმეზე, სუსტ ელექტრულ დენს წარმოქმნის (ფარადეის კანონი).',
-          s4: 'ნეირონები აქტიურდება', s4p: 'მემბრანა ზღურბლს (−55 mV) აღწევს და ნეირონი იმპულსს გასცემს. სიგნალი სინაფსებით გადადის და ღრმა ქსელებამდე აღწევს.',
-          note: 'ანიმაცია შენელებულია. რეალურად ეს ყველაფერი რამდენიმე მილიწამში ხდება. rTMS სესიაზე იმპულსი, მაგალითად, წამში 10-ჯერ (10 Hz) მეორდება, და ასე ნელ-ნელა იცვლება ქსელის აქტივობა.' },
-    en: { tag: 'How it works', title: 'From a magnetic pulse to the neuron', slow: 'slow motion', pulse: 'Pulse №',
-          macro: 'The brain', macroSub: 'side section', micro: 'Neuron level', microSub: 'cortical layers, magnified',
-          s1: 'Pulse in the coil', s1p: 'The device sends a strong electric current through the coil. The pulse lasts less than a thousandth of a second.',
-          s2: 'Magnetic field', s2p: 'A 1.5–2 tesla magnetic field forms under the coil. It passes freely through the scalp and skull.',
-          s3: 'Current in the cortex', s3p: 'The changing field induces a weak electric current in the cortex, about 2 cm deep (Faraday’s law).',
-          s4: 'Neurons activate', s4p: 'The membrane reaches threshold (−55 mV) and the neuron fires. The signal crosses synapses and reaches deeper networks.',
-          note: 'The animation is slowed down. In reality all of this happens within a few milliseconds. In an rTMS session the pulse repeats, for example, 10 times per second (10 Hz), gradually changing network activity.' },
-    ru: { tag: 'Как это работает', title: 'От магнитного импульса к нейрону', slow: 'замедленный показ', pulse: 'Импульс №',
-          macro: 'Головной мозг', macroSub: 'боковой разрез', micro: 'Уровень нейронов', microSub: 'слои коры, увеличение',
-          s1: 'Импульс в катушке', s1p: 'Аппарат пропускает через катушку мощный электрический ток. Импульс длится меньше тысячной доли секунды.',
-          s2: 'Магнитное поле', s2p: 'Под катушкой возникает магнитное поле силой 1,5–2 тесла. Оно свободно проходит через кожу и череп.',
-          s3: 'Ток в коре мозга', s3p: 'Меняющееся поле наводит в коре, на глубине около 2 см, слабый электрический ток (закон Фарадея).',
-          s4: 'Нейроны активируются', s4p: 'Мембрана достигает порога (−55 мВ), и нейрон генерирует импульс. Сигнал проходит через синапсы и достигает глубоких сетей.',
-          note: 'Анимация замедлена. В реальности всё это происходит за несколько миллисекунд. На сеансе rTMS импульс повторяется, например, 10 раз в секунду (10 Гц), постепенно меняя активность сети.' },
+    ka: { h: 'როგორ მუშაობს', hs: 'მექანიზმი', caption: 'შენელებული ჩვენება · რეალურად ეს მილიწამებში ხდება',
+          s1: 'იმპულსი კოჭში', s1p: 'აპარატი კოჭში ძლიერ დენს უშვებს, წამის ათასედზე ნაკლები ხნით.',
+          s2: 'მაგნიტური ველი', s2p: '1.5–2 ტესლა ველი უმტკივნეულოდ გადის კანსა და თავის ქალაში.',
+          s3: 'დენი ქერქში', s3p: 'ცვალებადი ველი ქერქში, დაახლოებით 2 სმ სიღრმეზე, სუსტ ელექტრულ დენს ქმნის.',
+          s4: 'ნეირონები და ქსელი', s4p: 'ნეირონები იმპულსს გასცემენ და სიგნალი ღრმა ქსელებს გადაეცემა. პროტოკოლის მიხედვით ზონა აქტიურდება ან ითრგუნება.',
+          foot: 'rTMS-ზე იმპულსი წამში რამდენჯერმე მეორდება (მაგ. 10 Hz). სესიების კურსში ქსელები ნეიროპლასტიურობის გზით გადაეწყობა.' },
+    en: { h: 'How it works', hs: 'Mechanism', caption: 'Slow motion · in reality this takes milliseconds',
+          s1: 'Pulse in the coil', s1p: 'The device sends a strong current through the coil for less than a thousandth of a second.',
+          s2: 'Magnetic field', s2p: 'A 1.5–2 tesla field passes painlessly through the scalp and skull.',
+          s3: 'Current in the cortex', s3p: 'The changing field induces a weak electric current in the cortex, about 2 cm deep.',
+          s4: 'Neurons and networks', s4p: 'Neurons fire and the signal travels on to deeper networks. Depending on the protocol, the area is excited or inhibited.',
+          foot: 'In rTMS the pulse repeats several times per second (e.g. 10 Hz). Over a course of sessions, networks reorganise through neuroplasticity.' },
+    ru: { h: 'Как работает', hs: 'Механизм', caption: 'Замедленный показ · в реальности это занимает миллисекунды',
+          s1: 'Импульс в катушке', s1p: 'Аппарат пропускает через катушку мощный ток менее чем на тысячную долю секунды.',
+          s2: 'Магнитное поле', s2p: 'Поле 1,5–2 тесла безболезненно проходит через кожу и череп.',
+          s3: 'Ток в коре', s3p: 'Меняющееся поле наводит в коре, на глубине около 2 см, слабый электрический ток.',
+          s4: 'Нейроны и сети', s4p: 'Нейроны генерируют импульс, и сигнал передаётся глубоким сетям. В зависимости от протокола зона возбуждается или тормозится.',
+          foot: 'При rTMS импульс повторяется несколько раз в секунду (например, 10 Гц). За курс сеансов сети перестраиваются благодаря нейропластичности.' },
   };
   let playing = false;
-  const setPlayLabel = () => { playBtn.textContent = playing ? L.pause : L.play; };
+  const setPlayLabel = () => {
+    playBtn.textContent = playing ? L.pause : L.play;
+    playBtn.setAttribute('aria-pressed', String(!playing));
+  };
   function applyLang() {
     const lang = langOf();
     L = TEXT[lang];
     const D = DOM_TEXT[lang];
-    root.querySelectorAll('[data-tms-t]').forEach(el => {
-      const k = el.getAttribute('data-tms-t');
-      if (D[k]) el.textContent = D[k];
+    [root, stepsCard].forEach(box => {
+      if (!box) return;
+      box.querySelectorAll('[data-tms-t]').forEach(el => {
+        const k = el.getAttribute('data-tms-t');
+        if (D[k]) el.textContent = D[k];
+      });
     });
     setPlayLabel();
   }
   new MutationObserver(applyLang).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let t = reduce ? 6.2 : 0, cycle = 1, last = performance.now();
+  let t = reduce ? 7.0 : 0, last = performance.now();
   playing = !reduce;
-  setPlayLabel();
-
-  playBtn.addEventListener('click', () => {
-    playing = !playing; setPlayLabel();
-  });
-  stepEls.forEach(el => el.addEventListener('click', () => { t = P[+el.dataset.i] + .01; }));
+  playBtn.addEventListener('click', () => { playing = !playing; setPlayLabel(); });
+  stepEls.forEach(el => el.addEventListener('click', () => { t = SP[+el.dataset.i] + .01; }));
   applyLang();
-  // skip all drawing while the TMS tab is closed or the block is scrolled out of view
+
+  // skip all drawing while the TMS tab is closed or the animation is scrolled out of view
   let onScreen = true;
   if ('IntersectionObserver' in window) new IntersectionObserver(es => { onScreen = es[0].isIntersecting; }).observe(root);
 
   function updateSteps() {
-    const i = P.findIndex((p, k) => t >= p && t < P[k + 1]);
+    const i = SP.findIndex((p, k) => t >= p && t < SP[k + 1]);
     stepEls.forEach((el, k) => {
       el.classList.toggle('on', k === i);
-      el.style.setProperty('--p', k === i ? prog(t, P[k], P[k + 1]).toFixed(3) : (k < i ? 1 : 0));
+      el.style.setProperty('--p', k === i ? prog(t, SP[k], SP[k + 1]).toFixed(3) : (k < i ? 1 : 0));
     });
   }
-
   function frame(now) {
     const dt = Math.min(.05, (now - last) / 1000); last = now;
     if (!onScreen || !root.offsetParent) { requestAnimationFrame(frame); return; }
-    if (playing) { t += dt; if (t >= T) { t -= T; cycle++; countEl.textContent = cycle; } }
-    drawMacro(views[0], t);
-    drawMicro(views[1], t);
+    if (playing) { t += dt; if (t >= TT) t -= TT; }
+    compose(t);
     updateSteps();
     requestAnimationFrame(frame);
   }

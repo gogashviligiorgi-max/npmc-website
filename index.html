@@ -148,7 +148,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="css/styles.css?v=4">
+  <link rel="stylesheet" href="css/styles.css?v=5">
 </head>
 <body>
 
@@ -567,6 +567,7 @@
 
       <!-- TMS -->
       <div class="methods__panel" id="tab-tms">
+        <div class="methods__panel-main">
         <div class="methods__panel-intro">
           <span class="section-tag">Transcranial Magnetic Stimulation</span>
           <h3>TMS — ტრანსკრანიული მაგნიტური სტიმულაცია</h3>
@@ -601,10 +602,27 @@
 
         </div>
 
+          <!-- TMS animation (js/tms-how.js). Outside .methods__panel-intro: js/i18n.js rewrites that element's HTML. -->
+          <div class="tms-how" id="tms-how">
+            <div class="tms-how__media">
+              <canvas id="tms-how-canvas" role="img" aria-label="TMS: coil pulse, magnetic field, induced cortical current, neurons firing"></canvas>
+              <button class="tms-how__play" id="tms-how-play" type="button">პაუზა</button>
+            </div>
+            <p class="tms-how__caption" data-tms-t="caption">შენელებული ჩვენება · რეალურად ეს მილიწამებში ხდება</p>
+          </div>
+        </div>
+
         <div class="methods__detail-cards">
-          <div class="methods__detail-card">
-            <h4>როგორ მუშაობს <span>მექანიზმი</span></h4>
-            <p>TMS-ის სპეციალური კოილი (მაგნიტური ხვეული) თავსდება თავის ქალასთან ახლოს. ელექტრომაგნიტური იმპულსი, რომელიც მხოლოდ 1–2 მილიწამს გრძელდება, თავისუფლად აღწევს ქსოვილებში. პროტოკოლის მიხედვით, ხდება ნეირონების გააქტიურება ან ინჰიბირება (დათრგუნვა). 10-სესიიანი კურსის შედეგად, ნეიროპლასტიურობის გზით, მიიღწევა ნეირონული სქემების სტრუქტურული გარდაქმნა.</p>
+          <!-- Steps of the TMS animation (js/tms-how.js). Not a .methods__detail-card: js/i18n.js rewrites those by index. -->
+          <div class="tms-how__card" id="tms-how-steps">
+            <h4><span data-tms-t="h">როგორ მუშაობს</span> <span class="tms-how__badge" data-tms-t="hs">მექანიზმი</span></h4>
+            <ol class="tms-how__steps">
+              <li><button class="tms-how__step" type="button" data-i="0" style="--hue: var(--spike)"><span class="tms-how__n">1</span><span><b data-tms-t="s1">იმპულსი კოჭში</b> <span data-tms-t="s1p">აპარატი კოჭში ძლიერ დენს უშვებს, წამის ათასედზე ნაკლები ხნით.</span></span></button></li>
+              <li><button class="tms-how__step" type="button" data-i="1" style="--hue: var(--field)"><span class="tms-how__n">2</span><span><b data-tms-t="s2">მაგნიტური ველი</b> <span data-tms-t="s2p">1.5–2 ტესლა ველი უმტკივნეულოდ გადის კანსა და თავის ქალაში.</span></span></button></li>
+              <li><button class="tms-how__step" type="button" data-i="2" style="--hue: var(--current)"><span class="tms-how__n">3</span><span><b data-tms-t="s3">დენი ქერქში</b> <span data-tms-t="s3p">ცვალებადი ველი ქერქში, დაახლოებით 2 სმ სიღრმეზე, სუსტ ელექტრულ დენს ქმნის.</span></span></button></li>
+              <li><button class="tms-how__step" type="button" data-i="3" style="--hue: var(--tissue)"><span class="tms-how__n">4</span><span><b data-tms-t="s4">ნეირონები და ქსელი</b> <span data-tms-t="s4p">ნეირონები იმპულსს გასცემენ და სიგნალი ღრმა ქსელებს გადაეცემა. პროტოკოლის მიხედვით ზონა აქტიურდება ან ითრგუნება.</span></span></button></li>
+            </ol>
+            <p class="tms-how__foot" data-tms-t="foot">rTMS-ზე იმპულსი წამში რამდენჯერმე მეორდება (მაგ. 10 Hz). სესიების კურსში ქსელები ნეიროპლასტიურობის გზით გადაეწყობა.</p>
           </div>
           <div class="methods__detail-card">
             <h4>პროტოკოლები <span>QEEG-ზე მორგებული</span></h4>
@@ -618,51 +636,6 @@
             <h4>კონტრაინდიკაციები <span>მნიშვნელოვანი</span></h4>
             <p>TMS-ის ჩატარება არ შეიძლება შემდეგი პირობების დროს: ეპილეფსიის ისტორია; ტვინში არსებული ლითონის ფერომაგნიტური ობიექტები (მაგ: ანევრიზმის კლიპი); კოქლეარული იმპლანტი; კარდიოსტიმულატორი. უსაფრთხოების მიზნით, ყველა ეს გარემოება დეტალურად გადამოწმდება QEEG-ის პირველივე ვიზიტისას.</p>
           </div>
-        </div>
-
-        <!-- How TMS works (js/tms-how.js). Kept outside .methods__panel-intro: js/i18n.js rewrites that element's HTML. -->
-        <div class="tms-how" id="tms-how">
-          <div class="tms-how__head">
-            <span class="section-tag" data-tms-t="tag">როგორ მუშაობს</span>
-            <h3 data-tms-t="title">მაგნიტური იმპულსიდან ნეირონამდე</h3>
-          </div>
-          <div class="tms-how__stage">
-            <figure class="tms-how__view">
-              <canvas id="tms-how-macro" role="img" aria-label="TMS coil, magnetic field and brain activation, side section"></canvas>
-              <figcaption><b data-tms-t="macro">თავის ტვინი</b><span data-tms-t="macroSub">გვერდითი ჭრილი</span></figcaption>
-            </figure>
-            <figure class="tms-how__view">
-              <canvas id="tms-how-micro" role="img" aria-label="Neurons passing an impulse to each other"></canvas>
-              <figcaption><b data-tms-t="micro">ნეირონების დონე</b><span data-tms-t="microSub">ქერქის შრეები, გადიდებით</span></figcaption>
-            </figure>
-          </div>
-          <div class="tms-how__bar">
-            <button class="tms-how__play" id="tms-how-play" type="button">პაუზა</button>
-            <span class="tms-how__meta"><span data-tms-t="pulse">იმპულსი №</span> <b id="tms-how-count">1</b> · <span data-tms-t="slow">შენელებული ჩვენება</span></span>
-          </div>
-          <ol class="tms-how__steps">
-            <li><button class="tms-how__step" type="button" data-i="0" style="--hue: var(--spike)">
-              <span class="tms-how__n">01</span>
-              <span class="tms-how__h" data-tms-t="s1">იმპულსი კოჭში</span>
-              <span class="tms-how__p" data-tms-t="s1p">აპარატი კოჭში ძლიერ ელექტრულ დენს უშვებს. იმპულსი წამის ათასედზე ნაკლებ დროს გრძელდება.</span>
-            </button></li>
-            <li><button class="tms-how__step" type="button" data-i="1" style="--hue: var(--field)">
-              <span class="tms-how__n">02</span>
-              <span class="tms-how__h" data-tms-t="s2">მაგნიტური ველი</span>
-              <span class="tms-how__p" data-tms-t="s2p">კოჭის ქვეშ ჩნდება 1.5–2 ტესლა სიძლიერის მაგნიტური ველი. ის თავისუფლად გადის კანსა და თავის ქალაში.</span>
-            </button></li>
-            <li><button class="tms-how__step" type="button" data-i="2" style="--hue: var(--current)">
-              <span class="tms-how__n">03</span>
-              <span class="tms-how__h" data-tms-t="s3">დენი ტვინის ქერქში</span>
-              <span class="tms-how__p" data-tms-t="s3p">ცვალებადი ველი ქერქში, დაახლოებით 2 სმ სიღრმეზე, სუსტ ელექტრულ დენს წარმოქმნის (ფარადეის კანონი).</span>
-            </button></li>
-            <li><button class="tms-how__step" type="button" data-i="3" style="--hue: var(--tissue)">
-              <span class="tms-how__n">04</span>
-              <span class="tms-how__h" data-tms-t="s4">ნეირონები აქტიურდება</span>
-              <span class="tms-how__p" data-tms-t="s4p">მემბრანა ზღურბლს (−55 mV) აღწევს და ნეირონი იმპულსს გასცემს. სიგნალი სინაფსებით გადადის და ღრმა ქსელებამდე აღწევს.</span>
-            </button></li>
-          </ol>
-          <p class="tms-how__note" data-tms-t="note">ანიმაცია შენელებულია. რეალურად ეს ყველაფერი რამდენიმე მილიწამში ხდება. rTMS სესიაზე იმპულსი, მაგალითად, წამში 10-ჯერ (10 Hz) მეორდება, და ასე ნელ-ნელა იცვლება ქსელის აქტივობა.</p>
         </div>
       </div>
 
@@ -1758,8 +1731,8 @@
   <script src="js/testimonials.js"></script>
   <script src="js/screening.js?v=2"></script>
   <script src="js/neural-bg.js?v=2"></script>
-  <script src="js/i18n.js?v=5"></script>
-  <script src="js/tms-how.js?v=1"></script>
+  <script src="js/i18n.js?v=6"></script>
+  <script src="js/tms-how.js?v=2"></script>
 
   <!-- NFB Feedback Loop Animation -->
   <script>
