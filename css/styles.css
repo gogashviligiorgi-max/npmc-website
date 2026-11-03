@@ -330,6 +330,25 @@ h4 { font-size: 1.1rem; }
   transition: all var(--transition);
 }
 .nav__cta:hover { background: var(--accent-light); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(201,169,110,0.3); }
+/* Link to the clinic system (app.npmc.ge): patients' and staff's personal space */
+.nav__portal {
+  padding: 8px 14px;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: all var(--transition);
+}
+.nav__portal::before { content: "🔒 "; font-size: 0.8em; }
+.nav__portal:hover { background: rgba(201,169,110,0.1); }
+/* Mid-size desktops: the full menu only just fits, so the link shows as a 🔒 icon
+   (its name is in title / aria-label). Wide screens and the mobile menu show the text. */
+@media (min-width: 1401px) and (max-width: 1799px) {
+  .nav__portal { font-size: 0; padding: 0 10px; height: 36px; display: inline-flex; align-items: center; }
+  .nav__portal::before { content: "🔒"; font-size: 1rem; line-height: 1; }
+}
 .nav__burger {
   display: none;
   flex-direction: column;
@@ -386,7 +405,7 @@ h4 { font-size: 1.1rem; }
 /* Collapse the full menu to a hamburger below 1180px: with 8 links + CTA +
    language switcher + logo, the inline menu overflowed and clipped the ქარ/ENG
    buttons on narrower desktops (3 language buttons make the bar wider). */
-@media (max-width: 1320px) {
+@media (max-width: 1400px) {
   .nav__menu {
     display: none;
     position: fixed; top: var(--nav-h); left: 0; right: 0; z-index: 1001;

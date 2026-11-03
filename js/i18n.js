@@ -24,6 +24,7 @@
         team:       'გუნდი',
         faq:        'FAQ',
         cta:        'დაჯავშნე',
+        portal:     'პირადი სივრცე',
       },
 
       hero: {
@@ -343,6 +344,7 @@
         team:       'Team',
         faq:        'FAQ',
         cta:        'Book Now',
+        portal:     'Patient login',
       },
 
       hero: {
@@ -888,6 +890,7 @@
         team:       'Команда',
         faq:        'FAQ',
         cta:        'Записаться',
+        portal:     'Личный кабинет',
       },
 
       hero: {
@@ -1477,6 +1480,12 @@
     ];
     navLinks.forEach((el, i) => { if (navLabelMap[i]) txt(el, navLabelMap[i]); });
     txt($('.nav__cta'), t.nav.cta);
+    const portal = $('.nav__portal');
+    if (portal && t.nav.portal) {
+      txt(portal, t.nav.portal);
+      portal.setAttribute('title', t.nav.portal);
+      portal.setAttribute('aria-label', t.nav.portal);
+    }
 
     /* ── HERO ── */
     txt($('.hero__badge'), t.hero.badge);
