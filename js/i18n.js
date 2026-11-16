@@ -40,9 +40,9 @@
 
       stats: {
         s1: 'წლიანი გამოცდილება',
-        s2: 'ქართულ-ამერიკული პროექტი',
+        s2: 'მკურნალობა თქვენი ტვინის რუკით',
         s3: 'დაშვებული TMS',
-        s4: 'მეთოდი ერთ სივრცეში',
+        s4: 'ნემსისა და ნარკოზის გარეშე',
       },
 
       services: {
@@ -363,9 +363,9 @@
 
       stats: {
         s1: 'Years of Experience',
-        s2: 'Georgian-American Project',
+        s2: 'Treatment built on your brain map',
         s3: 'FDA-Cleared TMS',
-        s4: 'methods under one roof',
+        s4: 'No needles, no anesthesia',
       },
 
       services: {
@@ -912,9 +912,9 @@
 
       stats: {
         s1: 'Лет опыта',
-        s2: 'Грузино-американский проект',
+        s2: 'Лечение по карте вашего мозга',
         s3: 'ТМС, разрешённый FDA',
-        s4: 'метода в одном центре',
+        s4: 'Без игл и наркоза',
       },
 
       services: {

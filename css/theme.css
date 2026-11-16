@@ -234,3 +234,7 @@ html body > a.wa-float:not(#_) { position: fixed; z-index: 9997; }   /* :not(#_)
 /* "რა გაწუხებს?": one booking button under the whole block */
 .help__cta { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 32px; }
 .help__cta .help__note { margin-top: 0; }
+
+/* Stats band: word cards (personal / painless) sit on the same line as the big numbers. */
+.stats__number.stats__number--word { font-family: 'Noto Sans Georgian','Inter',system-ui,sans-serif !important; font-size: 1.75rem; min-height: 2.4rem; display:flex; align-items:flex-end; justify-content:center; }
+@media (max-width: 600px) { .stats__number.stats__number--word { font-size: 1.3rem; min-height: auto; } }

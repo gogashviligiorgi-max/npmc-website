@@ -3,6 +3,8 @@
 (function () {
   'use strict';
   const TX = {
+    statPers: { ka: 'პერსონალური', en: 'Personal', ru: 'Персонально' },
+    statPain: { ka: 'უმტკივნეულო', en: 'Painless', ru: 'Безболезненно' },
     eegRec:   { ka: 'EEG ჩაწერა', en: 'EEG recording', ru: 'Запись ЭЭГ' },
     brainMap: { ka: 'ტვინის ციფრული რუკა', en: 'Digital brain map', ru: 'Цифровая карта мозга' },
     waTip:    { ka: 'WhatsApp-ზე დაწერე', en: 'Write on WhatsApp', ru: 'Написать в WhatsApp' },
