@@ -1482,7 +1482,7 @@
     /* ── NAV ── */
     txt($('.nav__logo-sub'), t.nav.logoSub);
     const navLinks = $$('.nav__link');
-    const navLabelMap = [t.nav.methods, t.nav.what, t.nav.pricing, t.nav.team, t.nav.blog];
+    const navLabelMap = [t.nav.methods, t.nav.what, t.nav.team, t.nav.blog];
     navLinks.forEach((el, i) => { if (navLabelMap[i]) txt(el, navLabelMap[i]); });
     $$('.nav__sublink[data-nav-sub]').forEach(el => {
       const label = t.nav.sub && t.nav.sub[el.dataset.navSub];

@@ -337,3 +337,159 @@ html.menu-open body > #navScrim:not(#_) { opacity: 1; pointer-events: auto; }
 @media (prefers-reduced-motion: reduce) {
   html body .nav .nav__menu, html body .nav .nav__menu.open, html body .nav__burger span { transition: none !important; }
 }
+
+/* ============================================================
+   iOS feel across the whole site
+   Rounded buttons with a soft top light, a gentle press (shrink + spring back),
+   frosted secondary buttons, segmented tabs, grouped FAQ, iOS-style fields,
+   and a bottom sheet for the details window on phones.
+   Scoped to the dark theme (the one the site uses).
+   ============================================================ */
+:root {
+  --ios-spring: cubic-bezier(.32, 1.25, .5, 1);
+  --ios-out: cubic-bezier(.2, .8, .2, 1);
+  --ios-glass: rgba(255,255,255,.07);
+  --ios-glass-2: rgba(255,255,255,.12);
+  --ios-line: rgba(255,255,255,.09);
+}
+
+/* Buttons */
+html:not([data-theme="combo"]) body :is(.btn, .nav__cta, .scr-submit-btn, .team-card__detail-btn, .social-btn) {
+  border-radius: 14px; font-weight: 600; letter-spacing: 0; -webkit-tap-highlight-color: transparent;
+  transition: transform .4s var(--ios-spring), background .2s ease, box-shadow .25s ease, color .2s ease, border-color .2s ease, opacity .2s ease;
+}
+html:not([data-theme="combo"]) body .btn--large { border-radius: 16px; }
+html:not([data-theme="combo"]) body :is(.btn--primary, .nav__cta, .scr-submit-btn) {
+  background: linear-gradient(180deg, #dcbf88 0%, var(--accent) 100%); color: #10101a; border: 0;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.28), 0 6px 18px rgba(201,169,110,.20);
+}
+html:not([data-theme="combo"]) body :is(.btn--primary, .nav__cta, .scr-submit-btn):hover {
+  background: linear-gradient(180deg, #e6cc98 0%, #cfaf74 100%); transform: translateY(-1px);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.32), 0 10px 26px rgba(201,169,110,.28);
+}
+html:not([data-theme="combo"]) body :is(.btn--ghost, .btn--outline, .btn--outline-white, .team-card__detail-btn, .social-btn) {
+  background: var(--ios-glass); border: 1px solid var(--ios-line); color: #f2f2f7;
+  backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%);
+}
+html:not([data-theme="combo"]) body :is(.btn--ghost, .btn--outline, .btn--outline-white, .team-card__detail-btn, .social-btn):hover {
+  background: var(--ios-glass-2); border-color: rgba(255,255,255,.16); color: #fff; transform: translateY(-1px);
+}
+
+/* Press: everything tappable shrinks a little and springs back */
+:is(.btn, .nav__cta, .scr-submit-btn, .team-card__detail-btn, .social-btn, .sticky-cta__btn,
+    .hero-chip, .scr-tab, .bc-tab, .methods__tab, .lang-btn, .nav__burger, .wa-float) {
+  -webkit-tap-highlight-color: transparent;
+}
+html body :is(.btn, .nav__cta, .scr-submit-btn, .team-card__detail-btn, .social-btn, .sticky-cta__btn,
+    .hero-chip, .scr-tab, .bc-tab, .methods__tab, .lang-btn, .nav__burger):active {
+  transform: scale(.95) !important; opacity: .82; transition: transform .08s ease, opacity .08s ease !important;
+}
+html body :is(.help__tab, .how__tile, .faq__question, .testi-card, .team-card):active {
+  transform: scale(.985) !important; transition: transform .1s ease !important;
+}
+html body a.wa-float:not(#_):active { transform: scale(.9); }
+
+/* Chips and pill tabs: frosted pills; the chosen one is filled */
+html:not([data-theme="combo"]) body :is(.hero-chip, .scr-tab, .bc-tab) {
+  border-radius: 999px; background: var(--ios-glass); border: 1px solid var(--ios-line); color: #e9e9f0;
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  transition: transform .4s var(--ios-spring), background .2s ease, color .2s ease, border-color .2s ease;
+}
+html:not([data-theme="combo"]) body :is(.hero-chip, .scr-tab, .bc-tab):hover { background: var(--ios-glass-2); color: #fff; border-color: rgba(255,255,255,.16); }
+html:not([data-theme="combo"]) body :is(.scr-tab, .bc-tab).active {
+  background: linear-gradient(180deg, #dcbf88 0%, var(--accent) 100%); color: #10101a; border-color: transparent; font-weight: 600;
+}
+
+/* Method tabs: an iOS segmented control */
+html:not([data-theme="combo"]) body .methods__tabs {
+  display: inline-flex; flex-wrap: wrap; gap: 4px; padding: 4px; border: 0; border-radius: 14px;
+  background: rgba(118,118,128,.20);
+}
+html:not([data-theme="combo"]) body .methods__tab {
+  border: 0; margin: 0; border-radius: 10px; padding: 10px 18px; color: rgba(235,235,245,.7);
+  transition: transform .4s var(--ios-spring), background .25s ease, color .2s ease, box-shadow .25s ease;
+}
+html:not([data-theme="combo"]) body .methods__tab:hover { color: #fff; }
+html:not([data-theme="combo"]) body .methods__tab.active {
+  background: rgba(255,255,255,.16); color: #fff; font-weight: 600; box-shadow: 0 3px 10px rgba(0,0,0,.25), inset 0 .5px 0 rgba(255,255,255,.2);
+}
+@media (max-width: 480px) { html:not([data-theme="combo"]) body .methods__tabs { display: grid; } }
+
+/* Help block: list on the left like iOS settings, card on the right */
+html:not([data-theme="combo"]) body .help__tab { border-radius: 14px; transition: transform .4s var(--ios-spring), background .2s ease, color .2s ease; }
+html:not([data-theme="combo"]) body .help__tab.active { background: rgba(255,255,255,.10); border-color: transparent; box-shadow: inset 0 .5px 0 rgba(255,255,255,.12); }
+html:not([data-theme="combo"]) body .help__panel {
+  border-radius: 24px; border-color: var(--ios-line);
+  background: linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.03));
+  box-shadow: 0 20px 50px rgba(0,0,0,.25);
+}
+.help__panel > * { animation: iosIn .38s var(--ios-out) both; }
+.help__panel > *:nth-child(2) { animation-delay: .03s; }
+.help__panel > *:nth-child(3) { animation-delay: .06s; }
+.help__panel > *:nth-child(n+4) { animation-delay: .09s; }
+@keyframes iosIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* Cards lift softly */
+html:not([data-theme="combo"]) body :is(.how__tile, .testi-card, .team-card) {
+  border-radius: 20px; transition: transform .45s var(--ios-spring), border-color .2s ease, background .2s ease, box-shadow .3s ease;
+}
+html:not([data-theme="combo"]) body :is(.how__tile, .testi-card, .team-card):hover { transform: translateY(-3px); box-shadow: 0 16px 36px rgba(0,0,0,.28); }
+
+/* FAQ: grouped rounded rows */
+html:not([data-theme="combo"]) body .faq__item {
+  border: 0; border-radius: 16px; margin-bottom: 10px; padding: 0 20px;
+  background: rgba(255,255,255,.045); transition: background .25s ease;
+}
+html:not([data-theme="combo"]) body .faq__item.open { background: rgba(255,255,255,.075); }
+html:not([data-theme="combo"]) body .faq__question { padding: 18px 0; }
+html:not([data-theme="combo"]) body .faq__icon {
+  width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,.08); font-size: 1.15rem;
+  transition: transform .4s var(--ios-spring), background .2s ease, color .2s ease;
+}
+html:not([data-theme="combo"]) body .faq__item.open .faq__icon { background: rgba(201,169,110,.18); }
+
+/* Fields: filled, rounded, soft gold ring on focus */
+html:not([data-theme="combo"]) body :is(.form__group input, .form__group select, .form__group textarea) {
+  border-radius: 12px; background-color: rgba(118,118,128,.16); border: 1px solid transparent;
+  transition: box-shadow .2s ease, background-color .2s ease, border-color .2s ease;
+}
+html:not([data-theme="combo"]) body :is(.form__group input, .form__group select, .form__group textarea):focus {
+  outline: none; background-color: rgba(118,118,128,.22); border-color: rgba(201,169,110,.55); box-shadow: 0 0 0 4px rgba(201,169,110,.18);
+}
+
+/* Language pill */
+html body .lang-switcher .lang-btn { border-radius: 10px; transition: transform .4s var(--ios-spring), background .2s ease; }
+
+/* Phone bottom bar: frosted like the iOS tab bar */
+html body > #stickyCta.sticky-cta {
+  background: rgba(18, 20, 32, .72); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-top: .5px solid rgba(255,255,255,.12); transition: transform .45s var(--ios-spring);
+}
+html body .sticky-cta__btn { border-radius: 14px !important; transition: transform .4s var(--ios-spring), opacity .15s ease; }
+html body .sticky-cta__btn--ghost { background: rgba(255,255,255,.09) !important; border: 0 !important; }
+
+/* Details window: springier card; a bottom sheet on phones */
+html body .fs-body { border-radius: 26px; border-color: var(--ios-line); animation: iosCard .42s var(--ios-spring); }
+@keyframes iosCard { from { opacity: 0; transform: scale(.94) translateY(14px); } to { opacity: 1; transform: none; } }
+html body .fs-nav { z-index: 2; }
+html body .fs-nav__back { border-radius: 50%; background: rgba(255,255,255,.12); border: 0; font-size: 0 !important; color: #f2f2f7;
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); transition: transform .4s var(--ios-spring), background .2s ease; }
+html body .fs-nav__back::after { font-size: .9rem; }
+html body .fs-nav__back:active { transform: scale(.9); }
+@keyframes iosSheet { from { transform: translateY(100%); } to { transform: none; } }
+@media (max-width: 600px) {
+  html body .fs-overlay[style*="flex"] { align-items: flex-end !important; padding: 0 !important; }
+  html body .fs-nav { top: calc(9vh + 14px) !important; right: 14px !important; }
+  html body .fs-body {
+    height: 91vh; max-height: 91vh; border-radius: 24px 24px 0 0; padding: 34px 20px calc(24px + env(safe-area-inset-bottom));
+    animation: iosSheet .45s var(--ios-out);
+  }
+}
+
+/* Scroll-in: shorter rise, smoother ease */
+.fade-up { transform: translateY(18px); transition: opacity .7s var(--ios-out), transform .8s var(--ios-out); }
+
+@media (prefers-reduced-motion: reduce) {
+  .help__panel > *, html body .fs-body { animation: none !important; }
+  .fade-up { transition: opacity .3s ease; transform: none; }
+}

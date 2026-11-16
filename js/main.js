@@ -960,7 +960,6 @@ function openConditionModal(key) {
     </div>
     <div class="modal-cta">
       <a href="#contact" class="btn btn--primary" onclick="closeFs()">${lbl.book}</a>
-      <a href="#pricing" class="btn btn--ghost" onclick="closeFs()">${lbl.pricing}</a>
     </div>
   `);
 
