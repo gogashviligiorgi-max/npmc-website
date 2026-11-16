@@ -12,9 +12,42 @@ window.addEventListener('scroll', () => {
 const burger = document.getElementById('navBurger');
 const navMenu = document.getElementById('navMenu');
 
-burger.addEventListener('click', () => {
-  const isOpen = navMenu.classList.toggle('open');
-  burger.setAttribute('aria-expanded', isOpen);
+// iOS-style card: placed under the burger, soft dimmed page behind, closes on tap outside / Esc.
+const navScrim = document.createElement('div');
+navScrim.id = 'navScrim';
+document.body.appendChild(navScrim);
+
+function placeMenu() {
+  const r = burger.getBoundingClientRect();
+  const vw = document.documentElement.clientWidth;
+  const w = Math.min(340, vw - 20);
+  const onRight = r.left + r.width / 2 > vw / 2;          // burger on the right → card hangs from its right edge
+  const x = Math.max(10, Math.min(onRight ? r.right - w : r.left, vw - w - 10));
+  navMenu.style.setProperty('--menu-x', x + 'px');
+  navMenu.style.setProperty('--menu-origin', onRight ? 'top right' : 'top left');
+}
+
+function setMenu(open) {
+  if (open) placeMenu();
+  navMenu.classList.toggle('open', open);
+  document.documentElement.classList.toggle('menu-open', open);
+  burger.setAttribute('aria-expanded', String(open));
+  if (!open) navMenu.querySelectorAll('.sub-open').forEach(li => li.classList.remove('sub-open'));
+}
+
+burger.addEventListener('click', () => setMenu(!navMenu.classList.contains('open')));
+navScrim.addEventListener('click', () => setMenu(false));
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+window.addEventListener('resize', () => { if (navMenu.classList.contains('open')) placeMenu(); });
+
+// "მეთოდები" in the card: first tap opens the list of methods in place.
+navMenu.querySelectorAll('.nav__item--drop > .nav__link').forEach(link => {
+  link.addEventListener('click', (e) => {
+    if (!navMenu.classList.contains('open')) return;   // wide screens: normal link
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    link.parentElement.classList.toggle('sub-open');
+  });
 });
 
 // Close menu when a link is clicked (mobile fix: manual scroll after menu closes)
@@ -28,8 +61,7 @@ navMenu.querySelectorAll('a').forEach(link => {
     } catch (_) { /* keep href */ }
     if (href && href.startsWith('#')) {
       e.preventDefault();
-      navMenu.classList.remove('open');
-      burger.setAttribute('aria-expanded', 'false');
+      setMenu(false);
       setTimeout(() => {
         const target = document.querySelector(href);
         if (target) {
@@ -39,8 +71,7 @@ navMenu.querySelectorAll('a').forEach(link => {
         }
       }, 80);
     } else {
-      navMenu.classList.remove('open');
-      burger.setAttribute('aria-expanded', 'false');
+      setMenu(false);
     }
   });
 });
