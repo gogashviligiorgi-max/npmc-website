@@ -6,6 +6,7 @@
   'use strict';
 
   const FORMSPREE_ID = 'xjgpadwp';
+  const CLINIC_LEADS_URL = 'https://app.npmc.ge/api/leads/website';
 
   /* ── Georgian Test Definitions ─────────────────────────────── */
   const TESTS_KA = {
@@ -546,21 +547,31 @@
       answers: raw.map((v, i) => `${i + 1}. ${t.questions[i]}: ${t.options[v] || v}`).join('\n'),
     };
 
-    if (FORMSPREE_ID === 'YOUR_FORM_ID') return;
+    // Two copies: the clinic system's list of numbers to call ("დაფიქსირებული ნომრები"),
+    // and the clinic's e-mail (Formspree, with the full answers). Either one arriving is enough.
+    const clinic = fetch(CLINIC_LEADS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        consent: true, test: activeTest, score: total, max: t.values[t.values.length - 1] * t.questions.length,
+        level: res.level, urgent: activeTest === 'phq9' && raw[8] > 0,
+        name: info.name, surname: info.surname, phone: info.phone, email: info.email,
+      }),
+    });
+    const mail = FORMSPREE_ID === 'YOUR_FORM_ID' ? Promise.reject(new Error('no form')) : fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload),
+    });
 
     submitBtn.disabled = true;
     try {
-      const r = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify(payload),
-      });
+      const results = await Promise.allSettled([clinic, mail]);
+      const ok = results.some(x => x.status === 'fulfilled' && x.value.ok);
       const notice = document.createElement('p');
-      notice.className = 'scr-sent-notice ' + (r.ok ? 'ok' : 'err');
-      notice.textContent = r.ok ? msg.sent : msg.sendFail;
+      notice.className = 'scr-sent-notice ' + (ok ? 'ok' : 'err');
+      notice.textContent = ok ? msg.sent : msg.sendFail;
       resultEl.appendChild(notice);
-    } catch {
-      /* silent — result is already shown */
     } finally {
       submitBtn.disabled = false;
     }
