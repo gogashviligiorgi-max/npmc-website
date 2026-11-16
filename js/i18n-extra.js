@@ -3,6 +3,7 @@
 (function () {
   'use strict';
   const TX = {
+    chatBtn:  { ka: 'ჩატი', en: 'Chat', ru: 'Чат' },
     statPers: { ka: 'პერსონალური', en: 'Personal', ru: 'Персонально' },
     statPain: { ka: 'უმტკივნეულო', en: 'Painless', ru: 'Безболезненно' },
     eegRec:   { ka: 'EEG ჩაწერა', en: 'EEG recording', ru: 'Запись ЭЭГ' },
