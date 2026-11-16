@@ -147,8 +147,7 @@
       <div class="help__panel-label">${L.howWeHelp}</div>
       <ul class="help__methods">${c[2].map(m => `<li>${m}</li>`).join('')}</ul>
       <div class="help__actions">
-        <a href="#contact" class="btn btn--primary">${L.book}</a>
-        <button type="button" class="btn btn--ghost help__details">${L.details}</button>
+        <button type="button" class="btn btn--primary help__details">${L.details} →</button>
       </div>`);
     document.querySelectorAll('.help__tab').forEach(b => {
       const on = b.dataset.cond === current;
@@ -167,6 +166,7 @@
     set('[data-h="helpTitle"]', L.helpTitle);
     set('.help__tabs', ORDER.map(k => `<button type="button" class="help__tab" role="tab" data-cond="${k}">${L.cond[k][0]}</button>`).join(''));
     set('[data-h="note"]', L.note);
+    set('[data-h="book"]', L.book);
     set('[data-h="howLabel"]', L.howLabel);
     set('[data-h="howTitle"]', L.howTitle);
     set('[data-h="methodsTitle"]', L.methodsTitle);

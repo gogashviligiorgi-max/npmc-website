@@ -230,3 +230,7 @@ html body > a.wa-float:not(#_) { position: fixed; z-index: 9997; }   /* :not(#_)
   .testimonials.section, .team.section, .faq.section, .contact.section { padding: 48px 0 !important; }
   .hero { min-height: 0 !important; }
 }
+
+/* "რა გაწუხებს?": one booking button under the whole block */
+.help__cta { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 32px; }
+.help__cta .help__note { margin-top: 0; }
