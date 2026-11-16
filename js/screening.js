@@ -335,18 +335,30 @@
       answerAll: 'გთხოვთ, უპასუხოთ ყველა კითხვას.',
       sent:      '✓ შედეგები წარმატებით გაიგზავნა. მოგვმართეთ.',
       sendFail:  'გაგზავნა ვერ მოხერხდა. გთხოვთ, პირდაპირ დაგვიკავშირდეთ.',
+      consent:   'ვეთანხმები, რომ ჩემი პასუხები და საკონტაქტო მონაცემები გადაეცეს NPMC-ს, რათა დამიკავშირდნენ. <a href="privacy.html" target="_blank" rel="noopener">კონფიდენციალურობის პოლიტიკა</a>',
+      consentHint: 'თუ არ მონიშნავთ — შედეგს მაინც ნახავთ, მაგრამ არაფერი გაიგზავნება და მონაცემების შევსებაც საჭირო არ არის.',
+      notSent:   'შედეგი მხოლოდ თქვენ ხედავთ — არაფერი გაგზავნილა. თუ გინდათ, რომ დაგიკავშირდეთ, დაგვირეკეთ: +995 511 44 00 99.',
+      crisis:    '<strong>⚠️ თქვენ მონიშნეთ, რომ გქონიათ ფიქრები საკუთარი თავის დაზიანებაზე.</strong> ეს მნიშვნელოვანია — მარტო ნუ დარჩებით ამ ფიქრებთან. თუ ახლა საფრთხეში ხართ, <strong>დარეკეთ 112-ზე</strong> (უფასო, 24/7) ან მიმართეთ უახლოეს გადაუდებელ განყოფილებას. შეგიძლიათ დაგვირეკოთ: <a href="tel:+995511440099">+995 511 44 00 99</a> (ორშ–შაბ 10:00–19:00).',
     },
     en: {
       fillInfo:  'Please fill in your first name, last name, email, and phone number.',
       answerAll: 'Please answer all questions.',
       sent:      '✓ Results sent successfully. We will contact you.',
       sendFail:  'Sending failed. Please contact us directly.',
+      consent:   'I agree that my answers and contact details are sent to NPMC so they can contact me. <a href="privacy.html" target="_blank" rel="noopener">Privacy policy</a>',
+      consentHint: 'If you leave this unticked you still see your result, but nothing is sent and you do not need to fill in your details.',
+      notSent:   'Only you can see this result — nothing was sent. If you would like us to contact you, call +995 511 44 00 99.',
+      crisis:    '<strong>⚠️ You indicated thoughts of hurting yourself.</strong> This matters — please do not stay alone with these thoughts. If you are in danger now, <strong>call 112</strong> (free, 24/7) or go to the nearest emergency department. You can also call us: <a href="tel:+995511440099">+995 511 44 00 99</a> (Mon–Sat 10:00–19:00).',
     },
     ru: {
       fillInfo:  'Пожалуйста, заполните имя, фамилию, эл. почту и номер телефона.',
       answerAll: 'Пожалуйста, ответьте на все вопросы.',
       sent:      '✓ Результаты успешно отправлены. Мы свяжемся с вами.',
       sendFail:  'Не удалось отправить. Пожалуйста, свяжитесь с нами напрямую.',
+      consent:   'Я согласен(на), чтобы мои ответы и контактные данные были переданы NPMC для связи со мной. <a href="privacy.html" target="_blank" rel="noopener">Политика конфиденциальности</a>',
+      consentHint: 'Если не отмечать — результат вы всё равно увидите, но ничего не будет отправлено и заполнять данные не нужно.',
+      notSent:   'Этот результат видите только вы — ничего не отправлено. Если хотите, чтобы мы связались с вами, позвоните: +995 511 44 00 99.',
+      crisis:    '<strong>⚠️ Вы отметили мысли о причинении себе вреда.</strong> Это важно — не оставайтесь с этими мыслями наедине. Если вы в опасности сейчас, <strong>звоните 112</strong> (бесплатно, 24/7) или обратитесь в ближайшее отделение неотложной помощи. Вы также можете позвонить нам: <a href="tel:+995511440099">+995 511 44 00 99</a> (пн–сб 10:00–19:00).',
     },
   };
 
@@ -427,6 +439,7 @@
     // Wait a tick so localStorage is updated by i18n.js first
     setTimeout(() => {
       renderQuestions(activeTest);
+      renderConsent();
       resultEl.hidden = true;
       resultEl.innerHTML = '';
       errorMsg.classList.remove('visible');
@@ -483,6 +496,7 @@
       <div class="scr-result__level">${res.level}</div>
       <div class="scr-result__desc">${res.desc}</div>
       <div class="scr-result__cta">${res.cta}</div>
+      ${testKey === 'phq9' && raw[8] > 0 ? `<div class="scr-crisis" role="alert" style="margin-top:16px; padding:14px 16px; border-radius:12px; background:rgba(220,38,38,0.12); border:1px solid rgba(220,38,38,0.5); line-height:1.6;">${getMsg().crisis}</div>` : ''}
     `;
     resultEl.hidden = false;
     resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -493,8 +507,10 @@
     errorMsg.classList.remove('visible');
     const msg = getMsg();
 
-    const info = getInfo();
-    if (!info) {
+    const consentBox = section.querySelector('#scrConsent');
+    const wantsSend = Boolean(consentBox && consentBox.checked);
+    const info = wantsSend ? getInfo() : null;
+    if (wantsSend && !info) {
       errorMsg.textContent = msg.fillInfo;
       errorMsg.classList.add('visible');
       return;
@@ -508,6 +524,13 @@
     }
 
     showResult(activeTest, raw);
+    if (!wantsSend) {
+      const notice = document.createElement('p');
+      notice.className = 'scr-sent-notice';
+      notice.textContent = msg.notSent;
+      resultEl.appendChild(notice);
+      return;
+    }
 
     const t = getTests()[activeTest];
     const total = raw.reduce((s, v) => s + v, 0);
@@ -518,6 +541,7 @@
       email:   info.email,
       phone:   info.phone,
       score:   total,
+      urgent:  activeTest === 'phq9' && raw[8] > 0 ? '⚠️ სასწრაფო: PHQ-9 მე-9 კითხვა (თვითდაზიანების აზრები) — დაუკავშირდით დღესვე' : '',
       level:   res.level,
       answers: raw.map((v, i) => `${i + 1}. ${t.questions[i]}: ${t.options[v] || v}`).join('\n'),
     };
@@ -542,7 +566,27 @@
     }
   });
 
+  /* ── Consent (added under the contact fields, in the current language) ── */
+  function renderConsent() {
+    const grid = section.querySelector('.scr-info-grid');
+    if (!grid) return;
+    let box = section.querySelector('.scr-consent');
+    const checked = box ? box.querySelector('input').checked : false;
+    if (!box) {
+      box = document.createElement('div');
+      box.className = 'scr-consent';
+      box.style.cssText = 'margin-top:14px; font-size:0.9rem; line-height:1.5;';
+      grid.insertAdjacentElement('afterend', box);
+    }
+    const m = getMsg();
+    box.innerHTML = `<label style="display:flex; gap:10px; align-items:flex-start; cursor:pointer;">
+        <input type="checkbox" id="scrConsent" style="margin-top:4px; width:18px; height:18px; flex-shrink:0;" ${checked ? 'checked' : ''}>
+        <span>${m.consent}</span></label>
+      <p style="margin:6px 0 0 28px; font-size:0.8rem; opacity:0.7;">${m.consentHint}</p>`;
+  }
+
   /* ── Init ────────────────────────────────────────────────── */
   renderQuestions(activeTest);
+  renderConsent();
 
 })();

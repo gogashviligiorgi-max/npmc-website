@@ -28,7 +28,7 @@
       },
 
       hero: {
-        badge:   'საქართველოში პირველი · QEEG+TMS+ნეიროფიდბექი',
+        badge:   'QEEG + TMS + ნეიროფიდბექი · ერთ სივრცეში',
         title:   'თქვენი ტვინი უნიკალურია,<br><span class="hero__title-accent">მკურნალობაც უნდა იყოს ასეთი.</span>',
         subtitle:'თანამედროვე QEEG დიაგნოსტიკა. TMS ნეირომოდულაცია, ინდივიდუალური ნეიროფიდბექი.<br>ტვინის სკანირებაზე დაყრდნობით ფსიქოთერაპია — ნეიროფსიქომოდულაცია',
         btn1:    'დაჯავშნე კონსულტაცია',
@@ -38,7 +38,7 @@
       stats: {
         s1: 'წლიანი გამოცდილება',
         s2: 'ქართულ-ამერიკული პროექტი',
-        s3: 'დამტკიცებული TMS',
+        s3: 'დაშვებული TMS',
         s4: 'საქართველოში',
       },
 
@@ -61,7 +61,7 @@
         tms: {
           title: 'TMS — ტრანსკრანიული მაგნიტური სტიმულაცია',
           text:  'QEEG-ზე დაფუძნებული ზუსტი ნეირომოდულაცია. მაგნიტური იმპულსები ნეირონული ქსელების სტრუქტურულ და ფუნქციურ გაუმჯობესებას ახდენს — ტკივილის, ინვაზიის და ნარკოზის გარეშე.',
-          f1:    'FDA-დამტკიცებული (დეპრესია, OCD, ADHD)',
+          f1:    'FDA-ს მიერ დაშვებული — დეპრესია და OCD',
           f2:    'არაინვაზიური, უმტკივნეულო',
           f3:    'QEEG-ზე მორგებული ინდივიდუალური პროტოკოლი',
           more:  'დეტალური ახსნა →',
@@ -189,7 +189,7 @@
       pricing: {
         tag:      'სერვისები და ფასები',
         title:    'ინვესტიცია შენს ტვინში',
-        subtitle: 'პირველი ცენტრი საქართველოში, სადაც ნეიროფსიქოლოგია და ტვინის სტიმულაცია ერთ სივრცეშია.',
+        subtitle: 'ცენტრი, სადაც ნეიროფსიქოლოგია და ტვინის სტიმულაცია ერთ სივრცეშია.',
         diagLabel:'დიაგნოსტიკა — ნაბიჯი 01',
         treatLabel:'ნეიროფსიქომოდულაცია — TMS · ნეიროფიდბექი · ფსიქოთერაპია',
         specLabel: 'სპეციალური პაკეტები · ნეიროფიდბექი + ნეიროფსიქოთერაპია',
@@ -242,7 +242,7 @@
         q2q: 'რამდენ ხანს გრძელდება მთელი კურსი?',
         q2a: 'QEEG დიაგნოსტიკა — 1 ვიზიტი (მონაცემების აღება). მონაცემების დამუშავება — 3 დღე (ანალიზი აშშ-ის ლაბორატორიაში). თერაპიული კურსი — 2 კვირა, 10 ინტენსიური სესია ყოველდღე.',
         q3q: 'TMS-ს გვერდითი ეფექტები აქვს?',
-        q3a: 'TMS (ტრანსკრანიული მაგნიტური სტიმულაცია) არის FDA-ს მიერ დამტკიცებული, მაღალი უსაფრთხოების პროფილის მქონე თერაპია. ლოკალური შეგრძნებები: ზოგიერთ პაციენტს სესიის მიმდინარეობისას შეიძლება ჰქონდეს მსუბუქი ჩხვლეტის ან „კაკუნის" შეგრძნება სკალპზე — ეს ნორმალურია და ქრება. TMS არ შედის სისხლის მიმოქცევაში, არ საჭიროებს ანესთეზიას, სერიოზული გვერდითი ეფექტები ძალზე იშვიათია. FDA-დამტკიცებული ✅ სისტემური გვერდითი ეფექტები: არ გააჩნია ✅ აღდგენითი პერიოდი: საჭირო არ არის ✅',
+        q3a: 'TMS (ტრანსკრანიული მაგნიტური სტიმულაცია) არის FDA-ს მიერ დაშვებული, მაღალი უსაფრთხოების პროფილის მქონე თერაპია. ლოკალური შეგრძნებები: ზოგიერთ პაციენტს სესიის მიმდინარეობისას შეიძლება ჰქონდეს მსუბუქი ჩხვლეტის ან „კაკუნის" შეგრძნება სკალპზე — ეს ნორმალურია და ქრება. TMS არ შედის სისხლის მიმოქცევაში, არ საჭიროებს ანესთეზიას, სერიოზული გვერდითი ეფექტები ძალზე იშვიათია. FDA-ს მიერ დაშვებული ✅ სისტემური გვერდითი ეფექტები: არ გააჩნია ✅ აღდგენითი პერიოდი: საჭირო არ არის ✅',
         q4q: 'არის თუ არა შედეგი გარანტირებული?',
         q4a: 'მკურნალობის შედეგი ყოველთვის ინდივიდუალურია. მიუხედავად ამისა, ჩვენ ვიყენებთ მხოლოდ მეცნიერულად დადასტურებულ მეთოდებს (TMS, ნეიროფიდბექი). თითოეული პაციენტის გეგმა იქმნება QEEG მონაცემების საფუძველზე, ხოლო პროგრესს ობიექტურად ვზომავთ ყოველ სესიაზე. ჩვენი პაციენტების უდიდესი უმრავლესობა აღნიშნავს მნიშვნელოვან და მდგრად გაუმჯობესებას.',
         q5q: 'ვისთვის არ არის რეკომენდებული მკურნალობის ეს მეთოდი? (უკუჩვენებები)',
@@ -296,7 +296,7 @@
         serviceL:  'სერვისი',
         serviceO0: 'აირჩიეთ სერვისი',
         serviceO1: 'QEEG დიაგნოსტიკა — 800 ₾',
-        serviceO2: 'სრული კურსი (10 სესია) — 3,500 ₾',
+        serviceO2: 'Core 10 — 10 სესია (4,000 ₾)',
         serviceO3: 'TMS 1 პროცედურა — 250 ₾',
         serviceO4: 'TMS + ფსიქოთერაპია — 400 ₾',
         serviceO5: 'ნეიროფიდბექი — 150 ₾',
@@ -358,7 +358,7 @@
       stats: {
         s1: 'Years of Experience',
         s2: 'Georgian-American Project',
-        s3: 'FDA-Approved TMS',
+        s3: 'FDA-Cleared TMS',
         s4: 'In Georgia',
       },
 
@@ -381,7 +381,7 @@
         tms: {
           title: 'TMS — Transcranial Magnetic Stimulation',
           text:  'Precision neuromodulation based on QEEG data. Magnetic pulses structurally and functionally improve neural networks — without pain, invasion or anaesthesia.',
-          f1:    'FDA-approved (Depression, OCD, ADHD)',
+          f1:    'FDA-cleared for depression and OCD',
           f2:    'Non-invasive, painless',
           f3:    'Individualised protocol based on QEEG',
           more:  'Detailed explanation →',
@@ -562,7 +562,7 @@
         q2q: 'How long does the full course last?',
         q2a: 'The full course is 5 weeks — 2 sessions per week. The QEEG diagnostic is a separate visit; the treatment course begins 1–2 weeks later. Each treatment session lasts 90–120 minutes.',
         q3q: 'Does TMS have side effects?',
-        q3a: 'TMS is an FDA-approved, highly safe procedure. Some patients may feel a local scalp sensation or mild discomfort during the session — this is normal and passes. Serious side effects are very rare.',
+        q3a: 'TMS is an FDA-cleared, highly safe procedure. Some patients may feel a local scalp sensation or mild discomfort during the session — this is normal and passes. Serious side effects are very rare.',
         q4q: 'Are results guaranteed?',
         q4a: 'Every individual is different, so results vary. The vast majority of our patients report significant improvement. The effectiveness of these methods is scientifically established. We measure progress at every session.',
         q5q: 'Who is this method not suitable for?',
@@ -616,7 +616,7 @@
         serviceL:  'Service',
         serviceO0: 'Select a service',
         serviceO1: 'QEEG Diagnostics — 800 ₾',
-        serviceO2: 'Full Course (10 sessions) — 3,500 ₾',
+        serviceO2: 'Core 10 — 10 sessions (4,000 ₾)',
         serviceO3: 'TMS Single Procedure — 250 ₾',
         serviceO4: 'TMS + Psychotherapy — 400 ₾',
         serviceO5: 'Neurofeedback — 150 ₾',
@@ -655,7 +655,7 @@
             'This is an <strong>objective, digital assessment</strong> — not a guess based on symptoms. Every subsequent treatment decision is built on these data.',
           ],
           badges: [
-            '50,000+ patient normative database',
+            'International normative database',
             'Validated in peer-reviewed publications',
             'Clinical practice standard',
           ],
@@ -709,7 +709,7 @@
           cards: [
             { h4: 'A session — step by step', span: '40–50 min', p: 'Electrode placement (similar to QEEG but fewer sensors). Sitting in front of a screen. The video/game automatically plays when the brain produces the right waves. Each session delivers 400–500 such reward signals. Progress is measurable at every session.' },
             { h4: 'What waves we train', span: 'QEEG-tailored', p: 'ADHD: Theta/Beta ratio — Beta enhancement, Theta reduction. Anxiety: Alpha enhancement occipital, Alpha/Theta parietal. Depression: Alpha asymmetry correction (F3/F4). PTSD: Theta reduction, Alpha coherence enhancement. Every protocol is based on QEEG data.' },
-            { h4: 'Children — special effectiveness', span: 'ADHD', p: 'Neurofeedback for children with ADHD is one of the most research-evidenced treatment methods available. A 2021 meta-analysis of 40+ studies confirms improvements in attention, executive control and hyperactivity. Unlike TMS, it can be used from age 6.' },
+            { h4: 'Children — special effectiveness', span: 'ADHD', p: 'Neurofeedback for children with ADHD is one of the most research-evidenced treatment methods available. A meta-analysis (Arns et al., 2009 — 15 studies, 1,194 patients) showed significant improvement in attention and impulsivity, and later work (Van Doren et al., 2019) found the effect lasts after the course. Unlike TMS, it can be used from age 6.' },
           ],
         },
         psycho: {
@@ -741,7 +741,7 @@
           'Treatment-resistant patients: when standard treatment is not producing the desired results.',
           'ADHD: when seeking differential diagnosis or an alternative to pharmacotherapy.',
           'Depression: TMS (Transcranial Magnetic Stimulation) as an augmentation or alternative therapy.',
-          'OCD (Obsessive-Compulsive Disorder): TMS therapy, officially FDA-approved.',
+          'OCD (Obsessive-Compulsive Disorder): TMS therapy, officially FDA-cleared.',
           'PTSD: an effective combination of neurofeedback and EMDR therapy.',
           'Unclear clinical picture: when the patient presents with marked symptoms yet standard clinical tests are within normal range.',
           'Reducing pharmacological burden: when the patient\'s goal is to minimise or discontinue medication.',
@@ -904,7 +904,7 @@
       stats: {
         s1: 'Лет опыта',
         s2: 'Грузино-американский проект',
-        s3: 'ТМС, одобренный FDA',
+        s3: 'ТМС, разрешённый FDA',
         s4: 'В Грузии',
       },
 
@@ -927,7 +927,7 @@
         tms: {
           title: 'ТМС — транскраниальная магнитная стимуляция',
           text:  'Точная нейромодуляция на основе данных QEEG. Магнитные импульсы структурно и функционально улучшают нейронные сети — без боли, вмешательства и наркоза.',
-          f1:    'Одобрено FDA (депрессия, ОКР, СДВГ)',
+          f1:    'Разрешено FDA — депрессия и ОКР',
           f2:    'Неинвазивно, безболезненно',
           f3:    'Индивидуальный протокол на основе QEEG',
           more:  'Подробное объяснение →',
@@ -1108,7 +1108,7 @@
         q2q: 'Сколько длится весь курс?',
         q2a: 'Полный курс — 5 недель, по 2 сеанса в неделю. QEEG-диагностика — это отдельный визит; курс лечения начинается через 1–2 недели. Каждый лечебный сеанс длится 90–120 минут.',
         q3q: 'Есть ли у ТМС побочные эффекты?',
-        q3a: 'ТМС — одобренная FDA процедура с высоким профилем безопасности. У некоторых пациентов во время сеанса может возникать локальное ощущение на коже головы или лёгкий дискомфорт — это нормально и проходит. Серьёзные побочные эффекты крайне редки.',
+        q3a: 'ТМС — разрешённая FDA процедура с высоким профилем безопасности. У некоторых пациентов во время сеанса может возникать локальное ощущение на коже головы или лёгкий дискомфорт — это нормально и проходит. Серьёзные побочные эффекты крайне редки.',
         q4q: 'Гарантирован ли результат?',
         q4a: 'Каждый человек индивидуален, поэтому результаты различаются. Подавляющее большинство наших пациентов отмечают значительное улучшение. Эффективность этих методов научно подтверждена. Мы измеряем прогресс на каждом сеансе.',
         q5q: 'Кому этот метод не подходит?',
@@ -1162,7 +1162,7 @@
         serviceL:  'Услуга',
         serviceO0: 'Выберите услугу',
         serviceO1: 'QEEG-диагностика — 800 ₾',
-        serviceO2: 'Полный курс (10 сеансов) — 3 500 ₾',
+        serviceO2: 'Core 10 — 10 сеансов (4 000 ₾)',
         serviceO3: 'ТМС, 1 процедура — 250 ₾',
         serviceO4: 'ТМС + психотерапия — 400 ₾',
         serviceO5: 'Нейробиоуправление — 150 ₾',
@@ -1201,7 +1201,7 @@
             'Это <strong>объективная, цифровая оценка</strong> — а не догадка по симптомам. Каждое последующее решение о лечении строится на этих данных.',
           ],
           badges: [
-            'Нормативная база 50 000+ пациентов',
+            'Международная нормативная база',
             'Подтверждено в рецензируемых публикациях',
             'Стандарт клинической практики',
           ],
@@ -1255,7 +1255,7 @@
           cards: [
             { h4: 'Сеанс — шаг за шагом', span: '40–50 мин', p: 'Размещение электродов (похоже на QEEG, но сенсоров меньше). Вы сидите перед экраном. Видео/игра автоматически воспроизводится, когда мозг производит нужные волны. Каждый сеанс даёт 400–500 таких сигналов-наград. Прогресс измерим на каждом сеансе.' },
             { h4: 'Какие волны мы тренируем', span: 'На основе QEEG', p: 'СДВГ: соотношение Theta/Beta — усиление Beta, снижение Theta. Тревога: усиление Alpha в затылочной области, Alpha/Theta в теменной. Депрессия: коррекция асимметрии Alpha (F3/F4). ПТСР: снижение Theta, усиление когерентности Alpha. Каждый протокол основан на данных QEEG.' },
-            { h4: 'Дети — особая эффективность', span: 'СДВГ', p: 'Нейробиоуправление для детей с СДВГ — один из наиболее научно подтверждённых методов лечения. Метаанализ 2021 года, охватывающий 40+ исследований, подтверждает улучшение внимания, исполнительного контроля и снижение гиперактивности. В отличие от ТМС, его можно применять с 6 лет.' },
+            { h4: 'Дети — особая эффективность', span: 'СДВГ', p: 'Нейробиоуправление для детей с СДВГ — один из наиболее научно подтверждённых методов лечения. Метаанализ (Arns et al., 2009 — 15 исследований, 1 194 пациента) показал значимое улучшение внимания и импульсивности, а более поздние работы (Van Doren et al., 2019) — сохранение эффекта после курса. В отличие от ТМС, его можно применять с 6 лет.' },
           ],
         },
         psycho: {
@@ -1287,7 +1287,7 @@
           'Пациенты, резистентные к лечению: когда стандартная терапия не даёт желаемых результатов.',
           'СДВГ: при поиске дифференциальной диагностики или альтернативы фармакотерапии.',
           'Депрессия: ТМС (транскраниальная магнитная стимуляция) как аугментация или альтернативная терапия.',
-          'ОКР (обсессивно-компульсивное расстройство): ТМС-терапия, официально одобренная FDA.',
+          'ОКР (обсессивно-компульсивное расстройство): ТМС-терапия, официально разрешённая FDA.',
           'ПТСР: эффективное сочетание нейробиоуправления и EMDR-терапии.',
           'Неясная клиническая картина: когда у пациента выраженные симптомы, но стандартные клинические тесты в пределах нормы.',
           'Снижение фармакологической нагрузки: когда цель пациента — минимизировать или отменить медикаменты.',
