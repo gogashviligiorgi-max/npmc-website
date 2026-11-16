@@ -243,7 +243,7 @@
         q1q: 'მტკივნეულია თუ არა QEEG კვლევა?',
         q1a: 'არა, QEEG აბსოლუტურად უსაფრთხო და არაინვაზიური პროცედურაა. კვლევისას სკალპზე თავსდება სპეციალური ელექტროდების ქუდი, რომელიც აღიქვამს ტვინის ბუნებრივ აქტივობას. ეს არის პასიური პროცესი: ჩვენ მხოლოდ ვარეგისტრირებთ ინფორმაციას, ტვინზე რაიმე სახის ზემოქმედება ან სიგნალის მიწოდება არ ხდება.',
         q2q: 'რამდენ ხანს გრძელდება მთელი კურსი?',
-        q2a: 'QEEG დიაგნოსტიკა — 1 ვიზიტი (მონაცემების აღება). მონაცემების დამუშავება — 3 დღე (ანალიზი აშშ-ის ლაბორატორიაში). თერაპიული კურსი — 2 კვირა, 10 ინტენსიური სესია ყოველდღე.',
+        q2a: 'QEEG დიაგნოსტიკა — 1 ვიზიტი (მონაცემების აღება). მონაცემების დამუშავება — 3 დღე (ანალიზი აშშ-ის ლაბორატორიაში). თერაპიული კურსი — 2–4 კვირა, 10 ან 20 ინტენსიური სესია, კვირაში 5 დღე.',
         q3q: 'TMS-ს გვერდითი ეფექტები აქვს?',
         q3a: 'TMS (ტრანსკრანიული მაგნიტური სტიმულაცია) არის FDA-ს მიერ დაშვებული, მაღალი უსაფრთხოების პროფილის მქონე თერაპია. ლოკალური შეგრძნებები: ზოგიერთ პაციენტს სესიის მიმდინარეობისას შეიძლება ჰქონდეს მსუბუქი ჩხვლეტის ან „კაკუნის" შეგრძნება სკალპზე — ეს ნორმალურია და ქრება. TMS არ შედის სისხლის მიმოქცევაში, არ საჭიროებს ანესთეზიას, სერიოზული გვერდითი ეფექტები ძალზე იშვიათია. FDA-ს მიერ დაშვებული ✅ სისტემური გვერდითი ეფექტები: არ გააჩნია ✅ აღდგენითი პერიოდი: საჭირო არ არის ✅',
         q4q: 'არის თუ არა შედეგი გარანტირებული?',
@@ -566,7 +566,7 @@
         q1q: 'Is QEEG painful?',
         q1a: 'No, completely painless. For the QEEG recording we use a sensor cap that sits on your scalp — much like headphones. We only read electrical signals from the brain; nothing is sent in.',
         q2q: 'How long does the full course last?',
-        q2a: 'The full course is 5 weeks — 2 sessions per week. The QEEG diagnostic is a separate visit; the treatment course begins 1–2 weeks later. Each treatment session lasts 90–120 minutes.',
+        q2a: 'QEEG diagnostics — 1 visit (recording). Data processing — 3 days (analysis at a US laboratory). Treatment course — 2–4 weeks: 10 or 20 intensive sessions, 5 days a week.',
         q3q: 'Does TMS have side effects?',
         q3a: 'TMS is an FDA-cleared, highly safe procedure. Some patients may feel a local scalp sensation or mild discomfort during the session — this is normal and passes. Serious side effects are very rare.',
         q4q: 'Are results guaranteed?',
@@ -1115,7 +1115,7 @@
         q1q: 'QEEG — это больно?',
         q1a: 'Нет, совершенно безболезненно. Для записи QEEG мы используем шапочку с сенсорами, которая надевается на голову — примерно как наушники. Мы только считываем электрические сигналы мозга; ничего внутрь не подаётся.',
         q2q: 'Сколько длится весь курс?',
-        q2a: 'Полный курс — 5 недель, по 2 сеанса в неделю. QEEG-диагностика — это отдельный визит; курс лечения начинается через 1–2 недели. Каждый лечебный сеанс длится 90–120 минут.',
+        q2a: 'QEEG-диагностика — 1 визит (запись). Обработка данных — 3 дня (анализ в лаборатории в США). Курс лечения — 2–4 недели: 10 или 20 интенсивных сеансов, 5 дней в неделю.',
         q3q: 'Есть ли у ТМС побочные эффекты?',
         q3a: 'ТМС — разрешённая FDA процедура с высоким профилем безопасности. У некоторых пациентов во время сеанса может возникать локальное ощущение на коже головы или лёгкий дискомфорт — это нормально и проходит. Серьёзные побочные эффекты крайне редки.',
         q4q: 'Гарантирован ли результат?',
@@ -1805,8 +1805,12 @@
         const icon = btn && btn.querySelector('.faq__icon');
         const iconHTML = icon ? icon.outerHTML : '<span class="faq__icon">+</span>';
         if (btn) btn.innerHTML = faqData[i].q + iconHTML;
-        const ans = item.querySelector('.faq__answer p');
-        if (ans) txt(ans, faqData[i].a);
+        const box = item.querySelector('.faq__answer');
+        if (box) {
+          if (box.dataset.ka === undefined) box.dataset.ka = box.innerHTML;   // original Georgian (may hold a table / list)
+          if (t.htmlLang === 'ka') box.innerHTML = box.dataset.ka;
+          else box.innerHTML = '<p>' + faqData[i].a + '</p>';
+        }
       });
     }
 

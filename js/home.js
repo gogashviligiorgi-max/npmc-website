@@ -173,6 +173,12 @@
     set('.how__steps', L.steps.map((s, i) => `<div class="how__step"><span class="how__num">0${i + 1}</span><h3>${s[0]}</h3><p>${s[1]}</p></div>`).join(''));
     set('.how__tiles', L.tiles.map((x, i) => `<a class="how__tile" href="${x[2]}"><span class="ico">${svg(ICONS[i])}</span><span><strong>${x[0]}</strong><small>${x[1]}</small></span></a>`).join(''));
     renderPanel();
+    // Testimonial avatars follow the translated names.
+    document.querySelectorAll('.testi-avatar').forEach(a => {
+      const author = a.closest('.testi-author');
+      const name = author && author.querySelector('.testi-name');
+      if (name && name.textContent.trim()) { const ch = name.textContent.trim().charAt(0); a.textContent = /[ა-ჿ]/.test(ch) ? ch : ch.toUpperCase(); }
+    });
   }
 
   document.addEventListener('click', (e) => {
