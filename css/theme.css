@@ -1,0 +1,162 @@
+/* ============================================================
+   NPMC — redesign layer (loaded after styles.css)
+   1. One menu for every page (dropdown "მეთოდები", "შესვლა", compact languages)
+   2. Phone: bottom bar  [დარეკვა] [WhatsApp] [დაჯავშნე]
+   3. Line icons instead of emoji
+   4. Two colour versions, chosen in js/theme-choice.js:
+        html[data-theme="refined"]  — dark, easier to read
+        html[data-theme="combo"]    — dark top, light and warm content
+   ============================================================ */
+
+/* ── 1. Menu ─────────────────────────────────────────────── */
+section[id] { scroll-margin-top: calc(var(--nav-h) + 12px); }
+
+.nav__menu { gap: 4px; }
+.nav__item--drop { position: relative; }
+.nav__item--drop > .nav__link::after {
+  content: ""; display: inline-block; width: 6px; height: 6px; margin-left: 7px; margin-bottom: 3px;
+  border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg); opacity: .7;
+}
+.nav__drop {
+  position: absolute; top: 100%; left: -12px; min-width: 260px; padding: 8px; margin: 0; list-style: none;
+  background: rgba(16, 18, 30, 0.98); border: 1px solid var(--border-2); border-radius: 14px;
+  box-shadow: 0 18px 40px rgba(0,0,0,.45); opacity: 0; visibility: hidden; transform: translateY(6px);
+  transition: opacity .18s ease, transform .18s ease, visibility .18s; z-index: 50;
+}
+.nav__item--drop:hover > .nav__drop,
+.nav__item--drop:focus-within > .nav__drop { opacity: 1; visibility: visible; transform: translateY(0); }
+.nav__sublink {
+  display: block; padding: 10px 12px; border-radius: 10px; color: #e9e9f0; font-size: .92rem; text-decoration: none;
+}
+.nav__sublink:hover { background: rgba(201,169,110,.12); color: var(--accent-light); }
+
+/* "შესვლა" — icon + word, always (no lone padlock) */
+.nav__portal {
+  display: inline-flex !important; align-items: center; gap: 6px; width: auto !important; height: auto !important;
+  padding: 8px 12px !important; font-size: .9rem !important; border-radius: 10px;
+}
+.nav__portal::before, .nav__portal::after { content: none !important; display: none !important; }
+.nav__portal svg { width: 16px; height: 16px; flex-shrink: 0; }
+.nav__portal .nav__portal-label { display: inline !important; }
+
+/* Languages: only the current one shows; tap / hover shows the others */
+.lang-switcher { position: relative; display: inline-flex; gap: 2px; }
+.lang-switcher .lang-btn:not(.active) { display: none; }
+.lang-switcher .lang-btn.active::after { content: " ▾"; font-size: .7em; opacity: .7; }
+.lang-switcher:hover .lang-btn, .lang-switcher:focus-within .lang-btn { display: inline-flex; }
+.lang-switcher:hover .lang-btn.active::after, .lang-switcher:focus-within .lang-btn.active::after { content: ""; }
+
+@media (max-width: 1100px) {
+  /* Phone / tablet menu (opened with ☰): the sub-pages listed in place, big tap targets */
+  .nav__drop {
+    position: static; opacity: 1; visibility: visible; transform: none; box-shadow: none; border: 0;
+    background: transparent; padding: 0 0 6px 14px; min-width: 0;
+  }
+  .nav__item--drop > .nav__link::after { display: none; }
+  .nav__sublink { padding: 9px 4px; font-size: 1rem; color: var(--text-2); }
+}
+
+/* ── 2. Phone bottom bar ─────────────────────────────────── */
+.sticky-cta {
+  display: none; position: fixed; left: 0; right: 0; bottom: 0; z-index: 90;
+  padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+  background: rgba(12, 14, 24, 0.94); backdrop-filter: blur(10px); border-top: 1px solid var(--border-2);
+  transform: translateY(110%); transition: transform .25s ease;
+}
+.sticky-cta.visible { transform: translateY(0); }
+.sticky-cta__row { display: grid; grid-template-columns: 1fr 1fr 1.3fr; gap: 8px; max-width: 560px; margin: 0 auto; }
+.sticky-cta__btn {
+  display: inline-flex !important; align-items: center; justify-content: center; gap: 6px; width: auto !important;
+  padding: 12px 8px !important; border-radius: 12px !important; font-size: .9rem !important; font-weight: 600;
+  text-decoration: none; white-space: nowrap;
+}
+.sticky-cta__btn svg { width: 17px; height: 17px; flex-shrink: 0; }
+.sticky-cta__btn--ghost { background: rgba(255,255,255,.06) !important; color: #f0f0f5 !important; border: 1px solid rgba(255,255,255,.14); box-shadow: none !important; }
+@media (max-width: 768px) {
+  .sticky-cta { display: block; }
+  .wa-float { display: none !important; }        /* WhatsApp is in the bar */
+  body { padding-bottom: 76px; }
+}
+
+/* ── 3. Line icons ───────────────────────────────────────── */
+.ico { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 12px;
+  background: rgba(201,169,110,.12); color: var(--accent); margin-bottom: 10px; }
+.ico svg { width: 22px; height: 22px; }
+
+/* ── 4a. Version 1: refined dark ─────────────────────────── */
+html[data-theme="refined"] {
+  --bg:        #0d1322;
+  --bg-2:      #121a2c;
+  --surface:   #172036;
+  --surface-2: #1c2741;
+  --surface-3: #2a3654;
+  --text:      #f5f5f8;
+  --text-2:    #d3d7e0;
+  --text-3:    #a3aabb;
+  --border:    rgba(255,255,255,0.10);
+}
+html[data-theme="refined"] body { font-size: 17px; }
+html[data-theme="refined"] p { line-height: 1.75; }
+
+/* ── 4b. Version 3: dark top, light and warm content ─────── */
+html[data-theme="combo"] :is(.services, .process, .conditions, .testimonials, .team, .faq, .contact,
+  .specialists, .methods, .screening, .brain-compare, .page-light, main, body > .wrap, body > .sep) {
+  --bg:           #f7f4ee;
+  --bg-2:         #f0eadf;
+  --surface:      #ffffff;
+  --surface-2:    #f8f4ec;
+  --surface-3:    #e7dfd0;
+  --text:         #1c2430;
+  --text-2:       #444e5c;
+  --text-3:       #6a7280;
+  --accent:       #9c7434;
+  --accent-light: #b8904f;
+  --accent-dark:  #7d5c26;
+  --border:       rgba(28,36,48,0.10);
+  --border-2:     rgba(156,116,52,0.28);
+  --shadow:       0 8px 28px rgba(28,36,48,0.08);
+  --shadow-gold:  0 8px 28px rgba(156,116,52,0.12);
+  background: var(--bg);
+  color: var(--text);
+  position: relative; z-index: 1;
+}
+html[data-theme="combo"] :is(.process, .testimonials, .faq, .specialists, .brain-compare) { background: var(--bg-2); }
+html[data-theme="combo"] body { font-size: 17px; }
+html[data-theme="combo"] main p, html[data-theme="combo"] section p { line-height: 1.75; }
+/* Text that was written white for the dark design */
+html[data-theme="combo"] :is(.services, .process, .conditions, .testimonials, .team, .faq, .contact,
+  .specialists, .methods, .screening, .brain-compare, .page-light, main, body > .wrap) :is(h1, h2, h3, h4, strong, summary, label, td, th) { color: var(--text); }
+html[data-theme="combo"] :is(.contact, .screening, main) :is(input, select, textarea) {
+  background: #fff; color: var(--text); border: 1px solid var(--surface-3);
+}
+html[data-theme="combo"] :is(.contact, .screening, main) :is(input, textarea)::placeholder { color: #9aa1ad; }
+html[data-theme="combo"] .section__label, html[data-theme="combo"] .section-label { color: var(--accent); }
+
+/* Phone menu: full screen, solid, left-aligned, big rows */
+@media (max-width: 1100px) {
+  .nav__menu.open {
+    bottom: 0; overflow-y: auto; align-items: stretch !important; text-align: left;
+    padding: 12px 20px calc(24px + env(safe-area-inset-bottom)) !important; gap: 0 !important;
+    background: #0d1120 !important;
+  }
+  .nav__menu.open > li { width: 100%; border-bottom: 1px solid rgba(255,255,255,.07); }
+  .nav__menu.open > li > .nav__link { display: block; padding: 14px 4px; font-size: 1.08rem; text-align: left; }
+  .nav__menu.open .nav__portal, .nav__menu.open .nav__cta { margin: 14px 0 0; justify-content: center; width: 100% !important; padding: 13px !important; }
+  .nav__menu.open > li:has(.nav__portal), .nav__menu.open > li:has(.nav__cta) { border-bottom: 0; }
+}
+.nav__drop { min-width: 300px; }
+
+/* An older page rule ("body > * { position: relative }") pinned the bar and the WhatsApp
+   button to the end of the page; keep both fixed to the screen. */
+html body > #stickyCta.sticky-cta { position: fixed; z-index: 9998; }
+html body > a.wa-float:not(#_) { position: fixed; z-index: 9997; }   /* :not(#_) outweighs the older rule */
+
+@media (max-width: 1100px) {
+  .nav__menu.open .nav__cta { display: flex !important; align-items: center; justify-content: center; }
+}
+/* Phone: the conditions in two columns, tighter */
+@media (max-width: 768px) {
+  .conditions__grid { grid-template-columns: 1fr 1fr !important; gap: 14px !important; }
+  .conditions__grid > * { padding: 16px 12px !important; }
+}
+.diag-card__icon, .treat-card__emoji, .youth-card__icon { font-size: 0 !important; }

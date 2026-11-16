@@ -7,6 +7,8 @@
   <meta name="description" content="როგორ აგროვებს, იყენებს და იცავს NPMC თქვენს პერსონალურ მონაცემებს.">
   <link rel="canonical" href="https://npmc.ge/privacy.html">
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/theme.css?v=1">
+  <script src="js/theme-choice.js"></script>
   <style>
     .policy { max-width: 820px; margin: 0 auto; padding: 120px 24px 80px; line-height: 1.75; color: var(--text-2); }
     .policy h1 { color: var(--text-1, #fff); font-size: clamp(1.8rem, 4vw, 2.4rem); margin-bottom: 8px; }
@@ -28,10 +30,21 @@
         <span class="nav__logo-sub">ნეიროფსიქომოდულაციის ცენტრი</span>
       </a>
       <ul class="nav__menu" id="navMenu">
-        <li><a href="/#services" class="nav__link">სერვისები</a></li>
-        <li><a href="packages.html" class="nav__link">პაკეტები</a></li>
-        <li><a href="/#faq" class="nav__link">FAQ</a></li>
-        <li><a href="https://app.npmc.ge" class="nav__portal" title="პირადი სივრცე" aria-label="პირადი სივრცე">პირადი სივრცე</a></li>
+        <li class="nav__item nav__item--drop">
+          <a href="/methods.html" class="nav__link" aria-haspopup="true">მეთოდები</a>
+          <ul class="nav__drop">
+            <li><a href="/qeeg.html" class="nav__sublink" data-nav-sub="qeeg">QEEG დიაგნოსტიკა</a></li>
+            <li><a href="/tms.html" class="nav__sublink" data-nav-sub="tms">TMS მაგნიტური სტიმულაცია</a></li>
+            <li><a href="/neurofeedback.html" class="nav__sublink" data-nav-sub="nfb">ნეიროფიდბექი</a></li>
+            <li><a href="/methods.html" class="nav__sublink" data-nav-sub="how">როგორ მუშაობს — მეცნიერება</a></li>
+            <li><a href="/screening.html" class="nav__sublink" data-nav-sub="screening">სკრინინგ-ტესტი (უფასო)</a></li>
+          </ul>
+        </li>
+        <li><a href="/#conditions" class="nav__link">რას ვმკურნალობთ</a></li>
+        <li><a href="/packages.html" class="nav__link">პაკეტები</a></li>
+        <li><a href="/#team" class="nav__link">გუნდი</a></li>
+        <li><a href="/blog.html" class="nav__link">ბლოგი</a></li>
+        <li><a href="https://app.npmc.ge" class="nav__portal" title="პირადი სივრცე"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg><span class="nav__portal-label">შესვლა</span></a></li>
         <li><a href="/#contact" class="nav__cta">დაჯავშნე</a></li>
       </ul>
       <button type="button" class="nav__burger" id="navBurger" aria-label="მენიუ" aria-expanded="false">
@@ -124,6 +137,14 @@
       </div>
     </div>
   </footer>
+
+  <div class="sticky-cta" id="stickyCta" aria-hidden="true">
+    <div class="sticky-cta__row">
+      <a href="tel:+995511440099" class="sticky-cta__btn sticky-cta__btn--ghost"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.9 2z"/></svg>დარეკვა</a>
+      <a href="https://wa.me/995511440099" class="sticky-cta__btn sticky-cta__btn--ghost" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.5A8.4 8.4 0 1 1 21 11.5z"/></svg>WhatsApp</a>
+      <a href="/#contact" class="sticky-cta__btn">დაჯავშნე</a>
+    </div>
+  </div>
 
   <script src="js/main.js"></script>
 </body>

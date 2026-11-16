@@ -24,7 +24,10 @@
         team:       'გუნდი',
         faq:        'FAQ',
         cta:        'დაჯავშნე',
-        portal:     'პირადი სივრცე',
+        portal:     'შესვლა',
+        what:       'რას ვმკურნალობთ',
+        blog:       'ბლოგი',
+        sub: { qeeg: 'QEEG დიაგნოსტიკა', tms: 'TMS მაგნიტური სტიმულაცია', nfb: 'ნეიროფიდბექი', how: 'როგორ მუშაობს — მეცნიერება', screening: 'სკრინინგ-ტესტი (უფასო)' },
       },
 
       hero: {
@@ -344,7 +347,10 @@
         team:       'Team',
         faq:        'FAQ',
         cta:        'Book Now',
-        portal:     'Patient login',
+        portal:     'Log in',
+        what:       'What We Treat',
+        blog:       'Blog',
+        sub: { qeeg: 'QEEG Diagnostics', tms: 'TMS Magnetic Stimulation', nfb: 'Neurofeedback', how: 'How it works — the science', screening: 'Free screening test' },
       },
 
       hero: {
@@ -890,7 +896,10 @@
         team:       'Команда',
         faq:        'FAQ',
         cta:        'Записаться',
-        portal:     'Личный кабинет',
+        portal:     'Вход',
+        what:       'Что мы лечим',
+        blog:       'Блог',
+        sub: { qeeg: 'QEEG-диагностика', tms: 'ТМС-стимуляция', nfb: 'Нейробиоуправление', how: 'Как это работает — наука', screening: 'Бесплатный скрининг-тест' },
       },
 
       hero: {
@@ -1473,16 +1482,16 @@
     /* ── NAV ── */
     txt($('.nav__logo-sub'), t.nav.logoSub);
     const navLinks = $$('.nav__link');
-    const navLabelMap = [
-      t.nav.services, t.nav.methods, t.nav.conditions,
-      t.nav.specialists, t.nav.screening, t.nav.pricing,
-      t.nav.team, t.nav.faq
-    ];
+    const navLabelMap = [t.nav.methods, t.nav.what, t.nav.pricing, t.nav.team, t.nav.blog];
     navLinks.forEach((el, i) => { if (navLabelMap[i]) txt(el, navLabelMap[i]); });
+    $$('.nav__sublink[data-nav-sub]').forEach(el => {
+      const label = t.nav.sub && t.nav.sub[el.dataset.navSub];
+      if (label) txt(el, label);
+    });
     txt($('.nav__cta'), t.nav.cta);
     const portal = $('.nav__portal');
     if (portal && t.nav.portal) {
-      txt(portal, t.nav.portal);
+      txt(portal.querySelector('.nav__portal-label') || portal, t.nav.portal);
       portal.setAttribute('title', t.nav.portal);
       portal.setAttribute('aria-label', t.nav.portal);
     }

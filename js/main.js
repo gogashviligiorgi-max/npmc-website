@@ -20,7 +20,12 @@ burger.addEventListener('click', () => {
 // Close menu when a link is clicked (mobile fix: manual scroll after menu closes)
 navMenu.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', (e) => {
-    const href = link.getAttribute('href');
+    let href = link.getAttribute('href');
+    // "/#team" on the home page is the same page: treat it like "#team" (close the menu, scroll).
+    try {
+      const u = new URL(link.href, location.href);
+      if (u.hash && u.pathname === location.pathname) href = u.hash;
+    } catch (_) { /* keep href */ }
     if (href && href.startsWith('#')) {
       e.preventDefault();
       navMenu.classList.remove('open');

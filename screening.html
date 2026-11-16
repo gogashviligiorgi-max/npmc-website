@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>უფასო სკრინინგ-ტესტი — დეპრესია, შფოთვა, ADHD, გადაწვა | NPMC</title>
+  <meta name="description" content="4 საერთაშორისოდ ვალიდირებული კითხვარი: PHQ-9, GAD-7, ASRS, CBI. 3 წუთი, უფასოდ, შედეგი მაშინვე.">
+  <link rel="canonical" href="https://npmc.ge/screening.html">
+  <link rel="stylesheet" href="css/styles.css?v=5">
+  <link rel="stylesheet" href="css/theme.css?v=1">
+  <script src="js/theme-choice.js"></script>
+</head>
+<body>
+
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+  <nav class="nav" id="nav">
+    <div class="nav__container">
+      <a href="/" class="nav__logo">
+        <span class="nav__logo-text">NPMC</span>
+        <span class="nav__logo-sub">ნეიროფსიქომოდულაციის ცენტრი</span>
+      </a>
+      <ul class="nav__menu" id="navMenu">
+        <li class="nav__item nav__item--drop">
+          <a href="/methods.html" class="nav__link" aria-haspopup="true">მეთოდები</a>
+          <ul class="nav__drop">
+            <li><a href="/qeeg.html" class="nav__sublink" data-nav-sub="qeeg">QEEG დიაგნოსტიკა</a></li>
+            <li><a href="/tms.html" class="nav__sublink" data-nav-sub="tms">TMS მაგნიტური სტიმულაცია</a></li>
+            <li><a href="/neurofeedback.html" class="nav__sublink" data-nav-sub="nfb">ნეიროფიდბექი</a></li>
+            <li><a href="/methods.html" class="nav__sublink" data-nav-sub="how">როგორ მუშაობს — მეცნიერება</a></li>
+            <li><a href="/screening.html" class="nav__sublink" data-nav-sub="screening">სკრინინგ-ტესტი (უფასო)</a></li>
+          </ul>
+        </li>
+        <li><a href="/#conditions" class="nav__link">რას ვმკურნალობთ</a></li>
+        <li><a href="/packages.html" class="nav__link">პაკეტები</a></li>
+        <li><a href="/#team" class="nav__link">გუნდი</a></li>
+        <li><a href="/blog.html" class="nav__link">ბლოგი</a></li>
+        <li><a href="https://app.npmc.ge" class="nav__portal" title="პირადი სივრცე"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg><span class="nav__portal-label">შესვლა</span></a></li>
+        <li><a href="/#contact" class="nav__cta">დაჯავშნე</a></li>
+      </ul>
+      <button type="button" class="nav__burger" id="navBurger" aria-label="მენიუ" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <div style="height:var(--nav-h)"></div>
+
+  <section class="screening section" id="screening">
+    <div class="screening__container">
+      <div class="section-header fade-up">
+        <span class="section-tag">სკრინინგი</span>
+        <h2 class="section-title">მენტალური ჯანმრთელობის<br>სკრინინგი</h2>
+        <p class="section-subtitle">საერთაშორისოდ ვალიდირებული კითხვარები. შეავსეთ ტესტი — მიიღეთ შეფასება.</p>
+      </div>
+
+      <!-- Test Tabs -->
+      <div class="scr-tabs fade-up">
+        <button type="button" class="scr-tab active" data-test="phq9">PHQ-9 — დეპრესია</button>
+        <button type="button" class="scr-tab" data-test="gad7">GAD-7 — შფოთვა</button>
+        <button type="button" class="scr-tab" data-test="asrs">ASRS — ADHD</button>
+        <button type="button" class="scr-tab" data-test="cbi">CBI — გადაწვა</button>
+      </div>
+
+      <!-- Form Card -->
+      <div class="scr-card fade-up">
+
+        <!-- Patient Info -->
+        <p class="scr-info-label">თქვენი მონაცემები</p>
+        <div class="scr-info-grid">
+          <input type="text"  id="scrName"    class="scr-input" placeholder="სახელი"    autocomplete="given-name">
+          <input type="text"  id="scrSurname" class="scr-input" placeholder="გვარი"     autocomplete="family-name">
+          <input type="email" id="scrEmail"   class="scr-input" placeholder="ელ-ფოსტა" autocomplete="email">
+          <input type="tel"   id="scrPhone"   class="scr-input" placeholder="ტელეფონი" autocomplete="tel">
+        </div>
+
+        <div class="scr-divider"></div>
+
+        <!-- Questions (rendered by JS) -->
+        <div id="scrQuestions"></div>
+
+        <!-- Error -->
+        <p class="scr-error-msg" id="scrErrorMsg"></p>
+
+        <!-- Submit -->
+        <div class="scr-submit-wrap">
+          <button type="button" class="scr-submit-btn" id="scrSubmit">შედეგის ნახვა →</button>
+        </div>
+
+        <!-- Result (shown by JS) -->
+        <div id="scrResult" hidden></div>
+
+      </div><!-- /scr-card -->
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="footer__container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <div class="footer__logo">NPMC</div>
+          <p>ნეიროფსიქომოდულაციის ცენტრი<br>ნ. ყიფშიძის 7ბ, თბილისი<br>+995 511 44 00 99</p>
+        </div>
+        <div class="footer__links">
+          <h4>სერვისები</h4>
+          <a href="qeeg.html">QEEG</a>
+          <a href="tms.html">TMS</a>
+          <a href="neurofeedback.html">ნეიროფიდბექი</a>
+          <a href="/#services">PEMF</a>
+        </div>
+        <div class="footer__links">
+          <h4>ინფო</h4>
+          <a href="/methods.html">მეთოდები</a>
+          <a href="/#conditions">დიაგნოზები</a>
+          <a href="/specialists.html">სპეციალისტებს</a>
+          <a href="/#faq">FAQ</a>
+        </div>
+        <div class="footer__contact">
+          <h4>კონტაქტი</h4>
+          <a href="tel:+995511440099">+995 511 44 00 99</a>
+          <a href="mailto:npmcgeorgia@gmail.com">npmcgeorgia@gmail.com</a>
+          <a href="https://instagram.com/npmcgeorgia" target="_blank" rel="noopener">@npmcgeorgia</a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>© 2026 NPMC — ნეიროფსიქომოდულაციის ცენტრი. ყველა უფლება დაცულია. · <a href="privacy.html">კონფიდენციალურობის პოლიტიკა</a></p>
+        <p>ყველა სამედიცინო პროცედურა ლიცენზირებული სპეციალისტების მიერ</p>
+      </div>
+    </div>
+  </footer>
+
+  </div>
+  <div class="sticky-cta" id="stickyCta" aria-hidden="true">
+    <div class="sticky-cta__row">
+      <a href="tel:+995511440099" class="sticky-cta__btn sticky-cta__btn--ghost"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.9 2z"/></svg>დარეკვა</a>
+      <a href="https://wa.me/995511440099" class="sticky-cta__btn sticky-cta__btn--ghost" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.5A8.4 8.4 0 1 1 21 11.5z"/></svg>WhatsApp</a>
+      <a href="/#contact" class="sticky-cta__btn">დაჯავშნე</a>
+    </div>
+  </div>
+
+  <script src="js/main.js?v=4"></script>
+  <script src="js/screening.js?v=3"></script>
+  <script src="js/neural-bg.js?v=2"></script>
+  <script src="js/i18n.js?v=6"></script>
+</body>
+</html>
