@@ -174,7 +174,7 @@
             <li><a href="/screening.html" class="nav__sublink" data-nav-sub="screening">სკრინინგ-ტესტი (უფასო)</a></li>
           </ul>
         </li>
-        <li><a href="/#conditions" class="nav__link">რას ვმკურნალობთ</a></li>
+        <li><a href="/#help" class="nav__link">რას ვმკურნალობთ</a></li>
         <li><a href="/packages.html" class="nav__link">პაკეტები</a></li>
         <li><a href="/#team" class="nav__link">გუნდი</a></li>
         <li><a href="/blog.html" class="nav__link">ბლოგი</a></li>
@@ -277,6 +277,10 @@
         <a href="#contact" class="btn btn--primary btn--large">დაჯავშნე კონსულტაცია</a>
         <a href="/methods.html" class="btn btn--ghost btn--large">გაიგე მეთოდების შესახებ</a>
       </div>
+      <div class="hero-chips fade-up">
+        <span class="hero-chips__label">რა გაწუხებს?</span>
+        <div class="hero-chips__list"></div>
+      </div>
     </div>
   </section>
 
@@ -302,313 +306,40 @@
     </div>
   </section>
 
-  <!-- ===== SERVICES ===== -->
-  <section class="conditions section" id="conditions">
-    <div class="conditions__container">
-      <div class="section-header fade-up">
-        <span class="section-tag">ვის ვეხმარებით</span>
-        <h2 class="section-title">დიაგნოზები, რომლებში<br>გვაქვს გამოცდილება</h2>
-        <p class="section-subtitle">დააჭირე ნებისმიერ დაავადებაზე — გაიგე მეტი და ნახე QEEG სურათი</p>
+  <!-- ===== WHAT TROUBLES YOU (tabs; text in js/home.js) ===== -->
+  <section class="help section" id="help">
+    <div class="help__container">
+      <div class="help__head">
+        <span class="section__label" data-h="helpLabel">რა გაწუხებს?</span>
+        <h2 class="section__title" data-h="helpTitle">აირჩიეთ — და ნახეთ, როგორ დაგეხმარებით</h2>
       </div>
-
-      <div class="conditions__grid">
-
-        <button type="button" class="condition-card condition-card--clickable fade-up" data-condition="adhd" aria-label="ADHD — დეტალები">
-          <div class="condition-card__icon">
-            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M12 20c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-              <circle cx="20" cy="20" r="3" fill="currentColor"/>
-              <path d="M20 12v2M12 20h-2M28 20h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <h3>ADHD</h3>
-          <p>ყურადღების დეფიციტი, ჰიპერაქტივობა, იმპულსურობა — ბავშვებსა და მოზრდილებში</p>
-          <span class="condition-card__link">დეტალები →</span>
-        </button>
-
-        <button type="button" class="condition-card condition-card--clickable fade-up" data-condition="depression" aria-label="დეპრესია — დეტალები">
-          <div class="condition-card__icon">
-            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M20 8c-6.6 0-12 5.4-12 12 0 3.5 1.5 6.6 3.8 8.8L10 32h8c.7.2 1.3.3 2 .3 6.6 0 12-5.4 12-12S26.6 8 20 8z" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M16 21c0-2.2 1.8-4 4-4s4 1.8 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-              <line x1="20" y1="17" x2="20" y2="15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <h3>დეპრესია</h3>
-          <p>კლინიკური დეპრესია, მათ შორის მკურნალობაზე რეზისტენტული ფორმები</p>
-          <span class="condition-card__link">დეტალები →</span>
-        </button>
-
-        <button type="button" class="condition-card condition-card--clickable fade-up" data-condition="anxiety" aria-label="შფოთვა — დეტალები">
-          <div class="condition-card__icon">
-            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M20 6v4M32 20h-4M8 20H4M28.5 11.5l-2.8 2.8M14.3 25.7l-2.8 2.8M28.5 28.5l-2.8-2.8M14.3 14.3l-2.8-2.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-              <circle cx="20" cy="20" r="7" stroke="currentColor" stroke-width="1.5"/>
-            </svg>
-          </div>
-          <h3>შფოთვა</h3>
-          <p>გენერალიზებული შფოთვის აშლილობა, სოციალური შფოთვა, GAD</p>
-          <span class="condition-card__link">დეტალები →</span>
-        </button>
-
-        <button type="button" class="condition-card condition-card--clickable fade-up" data-condition="panic" aria-label="პანიკური შეტევები — დეტალები">
-          <div class="condition-card__icon">
-            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8 20h6l3-6 5 12 3-8 3 6h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <h3>პანიკური შეტევები</h3>
-          <p>გახშირებული პანიკა, ავტონომიური სისტემის დისრეგულაცია</p>
-          <span class="condition-card__link">დეტალები →</span>
-        </button>
-
-        <button type="button" class="condition-card condition-card--clickable fade-up" data-condition="ocd" aria-label="OCD — დეტალები">
-          <div class="condition-card__icon">
-            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="20" cy="20" r="14" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M14 20c0-3.3 2.7-6 6-6s6 2.7 6 6-2.7 6-6 6-6-2.7-6-6z" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M20 14v-4M20 30v-4M14 20H10M30 20h-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <h3>OCD</h3>
-          <p>ობსესიურ-კომპულსიური აშლილობა, განმეორებადი ფიქრები და ქცევები</p>
-          <span class="condition-card__link">დეტალები →</span>
-        </button>
-
-        <button type="button" class="condition-card condition-card--clickable fade-up" data-condition="sleep" aria-label="ძილის პრობლემები — დეტალები">
-          <div class="condition-card__icon">
-            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M20 8c-1 4-4 6-6 10a10 10 0 1 0 12 0c-2-4-5-6-6-10z" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M16 26c0-2.2 1.8-4 4-4s4 1.8 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <h3>ძილის პრობლემები</h3>
-          <p>ინსომნია, ძილის ხარისხის დარღვევა, ქრონიკული დაღლილობა</p>
-          <span class="condition-card__link">დეტალები →</span>
-        </button>
-
-        <button type="button" class="condition-card condition-card--clickable fade-up" data-condition="ptsd" aria-label="PTSD — დეტალები">
-          <div class="condition-card__icon">
-            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M20 10l-8 14h16L20 10z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-              <path d="M20 18v4M20 25v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-              <circle cx="20" cy="30" r="8" stroke="currentColor" stroke-width="1.5"/>
-            </svg>
-          </div>
-          <h3>PTSD / ტრავმა</h3>
-          <p>პოსტტრავმული სტრესის აშლილობა, ტრავმული მოვლენების შედეგები</p>
-          <span class="condition-card__link">დეტალები →</span>
-        </button>
-
-        <button type="button" class="condition-card condition-card--clickable fade-up" data-condition="phobia" aria-label="ფობიები — დეტალები">
-          <div class="condition-card__icon">
-            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="10" y="8" width="20" height="24" rx="4" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M15 16h10M15 21h10M15 26h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <h3>ფობიები</h3>
-          <p>სპეციფიური და სოციალური ფობიები, შიშის სისტემის ნეიოლოგიური საფუძველი</p>
-          <span class="condition-card__link">დეტალები →</span>
-        </button>
-
+      <div class="help__layout">
+        <div class="help__tabs" role="tablist"></div>
+        <div class="help__panel" role="tabpanel" aria-live="polite"></div>
       </div>
+      <p class="help__note" data-h="note"></p>
     </div>
   </section>
 
-  <section class="services section" id="services">
-    <div class="services__container">
-      <div class="section-header fade-up">
-        <span class="section-tag">სერვისები</span>
-        <h2 class="section-title">კომპლექსური ნეიროდიაგნოსტიკა<br>და მკურნალობა</h2>
-        <p class="section-subtitle">ყველა სერვისი ინდივიდუალურად — QEEG მონაცემებზე დაყრდნობით</p>
+  <!-- ===== HOW WE WORK + METHODS ===== -->
+  <section class="how section" id="how-it-works">
+    <div class="help__container">
+      <div class="help__head">
+        <span class="section__label" data-h="howLabel">როგორ ვმუშაობთ</span>
+        <h2 class="section__title" data-h="howTitle">სამი ნაბიჯი შედეგამდე</h2>
       </div>
-
-      <div class="services__grid">
-
-        <div class="service-card service-card--featured fade-up">
-          <div class="service-card__icon">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M14 24c0-5.5 4.5-10 10-10s10 4.5 10 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-              <path d="M24 14v3M14 24h-3M34 24h3M24 34v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-              <circle cx="24" cy="24" r="4" fill="currentColor"/>
-            </svg>
-          </div>
-          <div class="service-card__tag">სავალდებულო პირველი ნაბიჯი</div>
-          <h3 class="service-card__title">QEEG — ტვინის ციფრული რუკა</h3>
-          <p class="service-card__text">რაოდენობრივი ელექტროენცეფალოგრაფია — ტვინის ელექტრული აქტივობის ზუსტი ციფრული ანალიზი. 19 ელექტროდი.</p>
-          <p class="service-card__text">ჩვენ ვხედავთ იმას, რაც სხვა მეთოდებისთვის უხილავია: ჰიპო- ან ჰიპერაქტივაცია, კოჰერენციის დარღვევები და ასიმეტრია ტვინის ნებისმიერ წერტილში.</p>
-          <p class="service-card__text">ეს მონაცემები საშუალებას გვაძლევს, ნეირონულ დონეზე დავადგინოთ მიზეზი: დეპრესია და შფოთვითი აშლილობა, პანიკური შეტევები, ADHD.</p>
-          <p class="service-card__text">შედეგი: ინდივიდუალური, მეცნიერულად დასაბუთებული მკურნალობის გეგმა და მაქსიმალური კლინიკური სიზუსტე.</p>
-          <ul class="service-card__features">
-            <li>ობიექტური, ციფრული შეფასება</li>
-            <li>19-არხიანი ჩაწერა, სტანდარტული 10-20 სისტემა</li>
-            <li>ტვინის ვიზუალური ანგარიში ნორმებთან შედარებით</li>
-          </ul>
-          <a href="#contact" class="btn btn--primary">დაჯავშნე</a>
-        </div>
-
-        <div class="service-card fade-up">
-          <div class="service-card__icon">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8 32c3-6 6-10 8-10s3 4 5 4 3-6 6-6 3 4 5 4 4-4 8-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-              <path d="M24 8v8M18 10l4 6M30 10l-4 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-              <circle cx="24" cy="38" r="4" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M24 34v-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <h3 class="service-card__title">TMS — ტრანსკრანიული მაგნიტური სტიმულაცია</h3>
-          <p class="service-card__text">
-            QEEG-ზე დაფუძნებული ზუსტი ნეირომოდულაცია. მაგნიტური იმპულსები ნეირონული ქსელების
-            სტრუქტურულ და ფუნქციურ გაუმჯობესებას ახდენს — ტკივილის, ინვაზიის და ნარკოზის გარეშე.
-          </p>
-          <ul class="service-card__features">
-            <li>FDA-ს მიერ დაშვებული — დეპრესია და OCD</li>
-            <li>არაინვაზიური, უმტკივნეულო</li>
-            <li>QEEG-ზე მორგებული ინდივიდუალური პროტოკოლი</li>
-          </ul>
-          <a href="/methods.html" class="service-card__more">დეტალური ახსნა →</a>
-        </div>
-
-        <div class="service-card fade-up">
-          <div class="service-card__icon">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8 24h8l4-8 6 16 4-12 4 8h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M6 38h36" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.3"/>
-            </svg>
-          </div>
-          <h3 class="service-card__title">ნეიროფიდბექი</h3>
-          <p class="service-card__text">
-            ტვინი სწავლობს — რეალურ დროში. ოპერანტული კონდიციონირება ნეიროლოგიურ
-            დონეზე. ტვინს ვასწავლით როგორ დაუბრუნდეს მენტალურ და კოგნიტიურ სტაბილურობას.
-          </p>
-          <ul class="service-card__features">
-            <li>50+ წლის კვლევა, მტკიცებულება ADHD-სა და სტრესში</li>
-            <li>ყოველ სესიაზე პროგრესის ზომვა</li>
-            <li>გრძელვადიანი შედეგი</li>
-          </ul>
-          <a href="/methods.html" class="service-card__more">დეტალური ახსნა →</a>
-        </div>
-
-        <div class="service-card fade-up">
-          <div class="service-card__icon">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M24 10c-3.3 0-6 2.7-6 6s2.7 6 6 6 6-2.7 6-6-2.7-6-6-6z" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M12 38c0-6.6 5.4-12 12-12s12 5.4 12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-              <path d="M34 20l4 2M36 16l2 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <h3 class="service-card__title">QEEG-ზე დაფუძნებული ფსიქოთერაპია</h3>
-          <p class="service-card__text">
-            ფსიქოთერაპია, სადაც ტვინის ობიექტური ნეიროპროფილი განსაზღვრავს მიდგომას.
-            CBT, ACT, EMDR — ინდივიდუალური ნეიროლოგიური სურათის მიხედვით.
-          </p>
-          <ul class="service-card__features">
-            <li>ტვინის მონაცემებზე მორგებული</li>
-            <li>ტრავმაზე ორიენტირებული</li>
-            <li>მოკლე ვადაში ეფექტური</li>
-          </ul>
-          <a href="/methods.html" class="service-card__more">დეტალური ახსნა →</a>
-        </div>
-
-        <div class="service-card fade-up">
-          <div class="service-card__icon">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="8" y="16" width="32" height="20" rx="4" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M16 16v-4a2 2 0 012-2h12a2 2 0 012 2v4" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M20 28l2.5 2.5L28 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <h3 class="service-card__title">PEMF თერაპია</h3>
-          <p class="service-card__text">
-            პულსირებადი ელექტრომაგნიტური ველი — უჯრედულ დონეზე აღდგენა.
-            ანთების შემცირება, ენერგეტიკული ბალანსი, ძილის ხარისხი.
-          </p>
-          <ul class="service-card__features">
-            <li>არაინვაზიური</li>
-            <li>ქრონიკული სტრესი, გამოფიტვა</li>
-            <li>ძილის ხარისხის გაუმჯობესება</li>
-          </ul>
-        </div>
-
-        <div class="service-card fade-up">
-          <div class="service-card__icon">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M24 8l3.5 7 7.5 1-5.5 5.5 1.5 7.5L24 26l-7 3.5 1.5-7.5L13 16.5l7.5-1L24 8z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-              <circle cx="24" cy="37" r="3" stroke="currentColor" stroke-width="1.5"/>
-            </svg>
-          </div>
-          <h3 class="service-card__title">ფსიქიატრის კონსულტაცია</h3>
-          <p class="service-card__text">
-            სრული კლინიკური შეფასება — ბიოლოგიური, ფსიქოლოგიური, სოციალური
-            ფაქტორების გათვალისწინებით. QEEG მონაცემებთან ინტეგრაციით.
-          </p>
-          <ul class="service-card__features">
-            <li>ყოვლისმომცველი შეფასება</li>
-            <li>QEEG-ს დამატება</li>
-            <li>მედიკამენტური მენეჯმენტი</li>
-          </ul>
-        </div>
-
-      </div>
+      <div class="how__steps"></div>
+      <h3 class="how__subtitle" data-h="methodsTitle">მეთოდები</h3>
+      <div class="how__tiles"></div>
     </div>
   </section>
 
 
 
-  <!-- ===== HOW IT WORKS ===== -->
-  <section class="process section" id="how-it-works">
-    <div class="process__container">
-      <div class="section-header fade-up">
-        <span class="section-tag">პროცესი</span>
-        <h2 class="section-title">3 ნაბიჯი სიცხადემდე</h2>
-        <p class="section-subtitle">პირველივე ვიზიტისას თქვენ მიიღებთ კონკრეტულ სამოქმედო გეგმას. ჩვენი მიდგომა ეფუძნება ობიექტურ მონაცემებს და არა ვარაუდებს.</p>
-      </div>
+  
 
-      <div class="process__steps">
-        <div class="process__step fade-up">
-          <div class="process__step-num">01</div>
-          <div class="process__step-content">
-            <h3>QEEG — ტვინის ციფრული კარტოგრაფია</h3>
-            <p>60-წუთიანი სესიის განმავლობაში, 19-არხიანი მაღალტექნოლოგიური სისტემის მეშვეობით, ხდება ტვინის ელექტრული აქტივობის უწყვეტი რეგისტრაცია. პროცედურა სრულიად არაინვაზიური, უმტკივნეულო და კომფორტულია. კვლევის დასრულებისთანავე თქვენ მიიღებთ დეტალურ, ფერადოვან ვიზუალურ ანგარიშს, რომელიც ნორმიდან ნებისმიერი ფუნქციური გადახრის ზუსტ ლოკალიზაციას ახდენს.</p>
-            <div class="process__step-detail">
-              <span>⏱ ხანგრძლივობა: 60 წუთი</span>
-              <span>სრულიად უმტკივნეულო</span>
-              <span>მყისიერი ვიზუალური ანგარიში</span>
-            </div>
-          </div>
-        </div>
 
-        <div class="process__step fade-up">
-          <div class="process__step-num">02</div>
-          <div class="process__step-content">
-            <h3>ანალიზი და ინდივიდუალური სტრატეგია</h3>
-            <p>მიღებული QEEG მონაცემების შედარება ხდება ვრცელ საერთაშორისო ნორმატიულ ბაზასთან, რაც საშუალებას გვაძლევს გამოვავლინოთ სპეციფიკური ნეიროლოგიური პატერნები (ნიმუშები). სწორედ ამ ობიექტურ ციფრებზე დაყრდნობით იქმნება თქვენი ინდივიდუალური მკურნალობის პროტოკოლი: განისაზღვრება TMS-ის სამიზნე წერტილები, ნეიროფიდბექის ოპტიმალური სიხშირეები და ფსიქოთერაპიული მიდგომის სტრატეგია. მკურნალობის ყოველი ნაბიჯი ეფუძნება თქვენი ტვინის ინდივიდუალურ საჭიროებებს.</p>
-            <div class="process__step-detail">
-              <span>ნორმატიულ ბაზასთან შედარება</span>
-              <span>ინდივიდუალური სამკურნალო გეგმა</span>
-              <span>ზუსტად განსაზღვრული სამიზნეები</span>
-            </div>
-          </div>
-        </div>
 
-        <div class="process__step fade-up">
-          <div class="process__step-num">03</div>
-          <div class="process__step-content">
-            <h3>ინტენსიური კურსი — 10 ან 20 სესია</h3>
-            <p>ჩვენი ოპტიმალური სამკურნალო კურსი გათვლილია მაქსიმალურ შედეგზე მცირე დროში. პროგრამა მოიცავს 10 (Core 10) ან 20 (Transform 20) კომპლექსურ სესიას, რომლებიც ტარდება კვირაში 5 დღე — 2-დან 4 კვირამდე. ყოველდღიური სესიები ნეიროპლასტიურობას მაქსიმალურად იყენებს. თითოეული სესია სამი კომპონენტისგან შედგება: TMS — 30 წუთი; ნეიროფიდბექი — 40 წუთი; QEEG-ზე მორგებული ფსიქოთერაპია — 30 წუთი.</p>
-            <div class="process__step-detail">
-              <span>10 სესია / 2 კვირა</span>
-              <span>სამი მეთოდის სინერგია</span>
-              <span>პროგრესის ციფრული მონიტორინგი</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- ===== CONDITIONS ===== -->
   
@@ -836,15 +567,6 @@
   </section>
 
 
-  <!-- ===== TEAM ===== -->
-    <!-- ===== SCREENING TEASER ===== -->
-  <section class="cta-banner screening-teaser">
-    <div class="container" style="text-align:center; max-width:760px; margin:0 auto; padding:0 20px;">
-      <h2 class="cta-banner__title">როგორ ხართ ბოლო ორი კვირა?</h2>
-      <p class="cta-banner__subtitle">4 საერთაშორისო ტესტი — დეპრესია, შფოთვა, ADHD, გადაწვა. 3 წუთი, უფასოდ. შედეგს მაშინვე ნახავთ.</p>
-      <div class="cta-banner__actions"><a href="/screening.html" class="btn btn--primary btn--large">შეავსე ტესტი →</a></div>
-    </div>
-  </section>
 
   <section class="team section" id="team">
     <div class="team__container">
@@ -975,60 +697,12 @@
             <p style="margin-top:12px;"><strong>მნიშვნელოვანი დაზუსტება:</strong> კბილის იმპლანტები, გვირგვინები და ბრეკეტები არ წარმოადგენს წინააღმდეგობას TMS თერაპიისთვის, რადგან ისინი არ არის დამზადებული ფერომაგნიტური მასალისგან.</p>
           </div>
         </div>
-        <div class="faq__item fade-up">
-          <button type="button" class="faq__question" aria-expanded="false">თავსებადია თუ არა ეს მეთოდები სხვა მკურნალობასთან?<span class="faq__icon">+</span></button>
-          <div class="faq__answer">
-            <p>დიახ, NPMC-ში გამოყენებული ნეიროტექნოლოგიური მეთოდები (TMS, ნეიროფიდბექი) სრულად თავსებადია მკურნალობის სხვა მიდგომებთან და ხშირად მათ ეფექტურობასაც კი აძლიერებს.</p>
-            <p style="margin-top:12px;font-weight:600;">1. მედიკამენტური მკურნალობა</p>
-            <p>ჩვენი მეთოდები არ შედის კონფლიქტში მედიკამენტებთან. პირიქით, TMS და ნეიროფიდბექი ხშირად გამოიყენება როგორც დამხმარე (Adjunctive) თერაპია. როდესაც მედიკამენტს არ აქვს საკმარისი ეფექტი, ნეიროტექნოლოგიების ჩართვა ეხმარება ტვინს სასურველი შედეგის უფრო სწრაფად მიღწევაში.</p>
-            <p style="margin-top:12px;font-weight:600;">2. ინტეგრირებული მიდგომა (Synergy)</p>
-            <p>ჩვენი თერაპია ავსებს ფსიქოთერაპიას, ოკუპაციურ თერაპიასა და სხვა სარეაბილიტაციო კურსებს. ეს არის ე.წ. „სინერგიული ეფექტი", როდესაც სხვადასხვა მეთოდი ერთმანეთის მოქმედებას აძლიერებს.</p>
-            <p style="margin-top:12px;font-weight:600;">მნიშვნელოვანია იცოდეთ:</p>
-            <p>პირველივე კონსულტაციისა და QEEG დიაგნოსტიკის დროს, გაგვიზიარეთ ინფორმაცია ამჟამინდელ მკურნალობაზე — ნებისმიერ მედიკამენტს (ანტიდეპრესანტები, დამამშვიდებლები და ა.შ.), სხვა თერაპიულ კურსებს, ვიტამინებსა და საკვებ დანამატებს. ეს გვეხმარება თქვენი სამკურნალო პროტოკოლი იყოს მაქსიმალურად უსაფრთხო და შედეგზე ორიენტირებული.</p>
-          </div>
-        </div>
-        <div class="faq__item fade-up">
-          <button type="button" class="faq__question" aria-expanded="false">მკურნალობთ თუ არა ბავშვებს ADHD-ის დიაგნოზით?<span class="faq__icon">+</span></button>
-          <div class="faq__answer">
-            <p>დიახ, NPMC-ში გვაქვს სპეციალიზებული პროგრამები ბავშვებისთვის. ჩვენი მიზანია დავეხმაროთ ბავშვს კონცენტრაციის უნარის ამაღლებაში, იმპულსურობის მართვასა და აკადემიური მოსწრების გაუმჯობესებაში.</p>
-            <p style="margin-top:12px;font-weight:600;">როგორ ვეხმარებით ბავშვებს?</p>
-            <p><strong>QEEG დიაგნოსტიკა (6 წლიდან):</strong> QEEG-ის საშუალებით ვზომავთ Theta/Beta კოეფიციენტს. ADHD-ის მქონე ბავშვების ტვინში ხშირად ფიქსირდება შენელებული ტალღების (Theta) სიჭარბე ყურადღებაზე პასუხისმგებელ ზონებში — ეს გვაძლევს ობიექტურ ციფრულ დასტურს და ზუსტი მკურნალობის საშუალებას.</p>
-            <p style="margin-top:8px;"><strong>ნეიროფიდბექი — „ტვინის ვარჯიში":</strong> ბავშვი თამაშის ან ვიდეოს ყურების მეშვეობით სწავლობს საკუთარი ტვინის ტალღების მართვას. როდესაც ყურადღება იზრდება — თამაში გრძელდება; ეფანტება — ჩერდება. ასე „ვარჯიშობს" კონცენტრაციის „კუნთი". ეს ADHD-ის ერთ-ერთი ყველაზე კვლევით დასაბუთებული მეთოდია მსოფლიოში.</p>
-            <p style="margin-top:12px;font-weight:600;">ასაკობრივი ზღვარი:</p>
-            <p>QEEG და ნეიროფიდბექი — 6 წლიდან (სრულიად უსაფრთხო, გვერდითი ეფექტები არ გააჩნია). TMS — მხოლოდ 18+ წლიდან.</p>
-            <p style="margin-top:12px;font-weight:600;">რატომ ირჩევენ მშობლები ამ მეთოდს?</p>
-            <p>არაინვაზიურია და არ საჭიროებს ქირურგიულ ჩარევას. შეიძლება გამოყენებულ იქნას მედიკამენტების გარეშე ან მათ ეფექტთან ერთად. ნეიროფიდბექი ეხმარება ტვინს ახალი, ჯანსაღი ნეირონული კავშირების ჩამოყალიბებაში — შედეგი მდგრადია გრძელვადიანად.</p>
-          </div>
-        </div>
-        <div class="faq__item fade-up">
-          <button type="button" class="faq__question" aria-expanded="false">რამდენი სესიის შემდეგ არის მოსალოდნელი შედეგის იგრძნობა?<span class="faq__icon">+</span></button>
-          <div class="faq__answer">
-            <p>მკურნალობის პროცესი ინდივიდუალურია, თუმცა არსებობს გარკვეული კანონზომიერება, რომელიც ჩვენს კლინიკურ გამოცდილებასა და საერთაშორისო სტატისტიკას ეფუძნება.</p>
-            <p style="margin-top:12px;font-weight:600;">პირველი ცვლილებები (3–5 სესია)</p>
-            <p>პაციენტთა უმრავლესობა პირველ სუბიექტურ ცვლილებებს 3–5 სესიის შემდეგ აღნიშნავს — ძილის ხარისხის გაუმჯობესება, ემოციური ფონის სტაბილიზაცია ან ენერგიის მატება.</p>
-            <p style="margin-top:12px;font-weight:600;">რატომ არ არის შედეგი მყისიერი? (ნეიროპლასტიკურობა)</p>
-            <p>ტვინს სჭირდება დრო ახალი ნეირონული კავშირების ჩამოსაყალიბებლად. თერაპია აძლევს იმპულსს, მაგრამ ცვლილებების განმტკიცებას — კონსოლიდაციას — გარკვეული პერიოდი სჭირდება.</p>
-            <p style="margin-top:12px;font-weight:600;">საბოლოო შედეგი (2–4 კვირა კურსის შემდეგ)</p>
-            <p>სრული, მდგრადი ეფექტი, როგორც წესი, იკვეთება კურსის დასრულებიდან 2–4 კვირის ვადაში — სწორედ მაშინ ხდება ნეიროპლასტიკური ცვლილებების საბოლოო კონსოლიდაცია.</p>
-            <p style="margin-top:12px;font-weight:600;">ობიექტური შეფასება: საკონტროლო QEEG</p>
-            <p>კურსის დასრულების შემდეგ ტარდება განმეორებითი QEEG დიაგნოსტიკა, რომელიც ობიექტურად, ციფრულად გვიჩვენებს ტვინის დონეზე განხორციელებულ პროგრესს.</p>
-          </div>
-        </div>
       </div>
     </div>
   </section>
 
   <!-- ===== CTA BANNER ===== -->
-  <section class="cta-banner">
-    <div class="cta-banner__container fade-up">
-      <h2>მზად ხართ პირველი ნაბიჯისთვის?</h2>
-      <p>დაჯავშნეთ QEEG კონსულტაცია — 60 წუთში გექნებათ თქვენი ტვინის სრული სურათი</p>
-      <div class="cta-banner__actions">
-        <a href="tel:+995511440099" class="btn btn--primary btn--large">📞 +995 511 44 00 99</a>
-        <a href="https://wa.me/995511440099" target="_blank" rel="noopener" class="btn btn--ghost btn--large">WhatsApp-ზე დაწერე</a>
-      </div>
-    </div>
-  </section>
+  
 
   <!-- ===== CONTACT ===== -->
   <section class="contact section" id="contact">
@@ -1042,7 +716,7 @@
         <div class="contact__info fade-up">
           <div class="contact__item">
             <div class="contact__item-icon">📍</div>
-            <div><strong>მისამართი</strong><p>ნიკოლოზ ყიფშიძის 7ბ, თბილისი</p></div>
+            <div><strong>მისამართი</strong><p>ნიკოლოზ ყიფშიძის 7ბ, თბილისი · <a href="https://maps.google.com/?q=Nikoloz+Kipshidze+7b,+Tbilisi" target="_blank" rel="noopener">რუკაზე →</a></p></div>
           </div>
           <div class="contact__item">
             <div class="contact__item-icon">📞</div>
@@ -1109,18 +783,6 @@
           </div>
         </div>
       </div>
-      <div class="contact__map fade-up">
-        <iframe
-          src="https://maps.google.com/maps?q=Nikoloz+Kipshidze+7b,+Tbilisi,+Georgia&t=&z=17&ie=UTF8&iwloc=&output=embed"
-          width="100%"
-          height="360"
-          style="border:0;"
-          allowfullscreen=""
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          title="NPMC ადგილმდებარეობა — ნ. ყიფშიძის 7ბ, თბილისი"
-        ></iframe>
-      </div>
     </div>
   </section>
 
@@ -1142,7 +804,7 @@
         <div class="footer__links">
           <h4>ინფო</h4>
           <a href="/methods.html">მეთოდები</a>
-          <a href="#conditions">დიაგნოზები</a>
+          <a href="/#help">დიაგნოზები</a>
           <a href="/specialists.html">სპეციალისტებს</a>
           <a href="#faq">FAQ</a>
         </div>
@@ -1172,6 +834,7 @@
   <script src="js/testimonials.js"></script>
   <script src="js/neural-bg.js?v=2"></script>
   <script src="js/i18n.js?v=6"></script>
+  <script src="js/home.js?v=1"></script>
 
 
   <!-- ===== WHATSAPP FLOATING BUTTON ===== -->
